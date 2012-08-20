@@ -33,6 +33,7 @@
     <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Q42.WinRT.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -132,7 +133,8 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release xcopy /y $(ProjectDir)$(OutDir)Q42.WinRT.dll $(ProjectDir)NuGet\Package\lib\winrt45\</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release xcopy /y $(ProjectDir)$(OutDir)Q42.WinRT.dll $(ProjectDir)NuGet\Package\lib\winrt45\
+if $(ConfigurationName) == Release xcopy /y $(ProjectDir)$(OutDir)Q42.WinRT.xml $(ProjectDir)NuGet\Package\lib\winrt45\</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
