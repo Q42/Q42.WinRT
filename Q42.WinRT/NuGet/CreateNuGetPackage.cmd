@@ -1,2 +1,2 @@
 @echo off
-C:\.nuget\NuGet.exe pack Package\Q42.WinRT.nuspec
+..\..\.nuget\NuGet.exe pack Package\Q42.WinRT.nuspec

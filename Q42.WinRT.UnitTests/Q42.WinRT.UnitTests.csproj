@@ -142,7 +142,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Q42.WinRT\Q42.WinRT.csproj">
       <Project>{33cb263d-5311-4cd1-9504-7b03e14fdae1}</Project>
-      <Name>Q42.WinRT %28Q42.WinRT\Q42.WinRT%29</Name>
+      <Name>Q42.WinRT</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
