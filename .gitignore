@@ -9,3 +9,4 @@ obj
 TestResults
 /Q42.WinRT/NuGet/Package/lib/winrt45/*.dll
 /Q42.WinRT/NuGet/*.nupkg
+/*.suo

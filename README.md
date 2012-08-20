@@ -6,6 +6,8 @@ There`s also a DataLoader included which functions as a wrapper around a Task<T>
 
 Please checkout the included sample application.
 
+Or download directly from NuGet [Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT).
+
 ## What`s included?
 With this library comes a fully functional sample application that shows off most of the functionality. There`s also a unit test project included.
 
