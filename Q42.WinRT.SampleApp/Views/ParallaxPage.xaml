@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="Q42.WinRT.SampleApp.Views.ParallaxPage"
+    IsTabStop="false"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Q42.WinRT.SampleApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:q42converters="using:Q42.WinRT.Converters"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <q42converters:ParallaxConverter x:Key="Parallax" />
+    </Page.Resources>
+
+    <Grid Background="Black">
+        <Image Source="/Assets/bg_paralax.png" 
+               HorizontalAlignment="Left" VerticalAlignment="Bottom" Stretch="None" >
+            <Image.RenderTransform>
+                <CompositeTransform
+                    TranslateX="{Binding ElementName=MainScrollViewer, Path=HorizontalOffset, Converter={StaticResource Parallax}}" />
+            </Image.RenderTransform>
+
+        </Image>
+
+        <ScrollViewer x:Name="MainScrollViewer" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Horizontal" Margin="120,200">
+                <TextBlock Width="320" TextWrapping="Wrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</TextBlock>
+                <TextBlock Margin="80,0"  Width="320" TextWrapping="Wrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</TextBlock>
+                <TextBlock Margin="80,0"  Width="320" TextWrapping="Wrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</TextBlock>
+                <TextBlock Margin="80,0"  Width="320" TextWrapping="Wrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</TextBlock>
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Page>

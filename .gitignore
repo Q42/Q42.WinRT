@@ -2,5 +2,10 @@
 bin
 obj
 
+/packages/Newtonsoft.Json.4.5.8
+/packages/MvvmLightLibs.4.1.23.0
+
 # mstest test results
 TestResults
+/Q42.WinRT/NuGet/Package/lib/winrt45/*.dll
+/Q42.WinRT/NuGet/*.nupkg

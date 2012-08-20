@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="Q42.WinRT.SampleApp.Views.UtilExamplePage"
+    IsTabStop="false"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Q42.WinRT.SampleApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=UtilExample}"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+
+        <StackPanel Margin="20,0">
+            <TextBlock FontSize="18">Utils Demo</TextBlock>
+            <TextBlock FontSize="18">Get application and OS version</TextBlock>
+            <TextBlock><LineBreak /></TextBlock>
+
+            <StackPanel Orientation="Horizontal" Margin="0,20">
+                <TextBlock>App Version:</TextBlock>
+                <TextBlock Text="{Binding AppVersion}" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,20">
+                <TextBlock>OS Version:</TextBlock>
+                <TextBlock Text="{Binding OsVersion}" />
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+</Page>

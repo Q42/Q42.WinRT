@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>Q42.WinRT</id>
+    <version>1.0</version>
+    <summary>Open source library for Windows 8 XAML applications.</summary>
+    <description><![CDATA[Open source library for Windows 8 XAML applications. This library is focused on web connected and data driven applications. It includes helpers to easily cache data from API calls and cache web images to the local storage. There's also a DataLoader included which functions as a wrapper around a Task<T> method. You can bind a progress bar to the DataLoader and show it as long as the task is running.]]></description>
+    <authors>Michiel Post, Q42</authors>
+    <tags>winrt metro xaml</tags>
+    <language>en-US</language> 
+    <dependencies>
+      <dependency id="Newtonsoft.Json" />
+    </dependencies>  
+  </metadata>
+  <files>
+    <file src="lib\winrt45\Q42.WinRT.dll" target="lib\winrt45" />
+  </files>
+</package>
+

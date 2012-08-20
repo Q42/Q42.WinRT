@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="Q42.WinRT.SampleApp.Views.ControlsExamplePage"
+    IsTabStop="false"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Q42.WinRT.SampleApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:q42controls="using:Q42.WinRT.Controls"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="20,0">
+            <TextBlock FontSize="20">Flyout Demo</TextBlock>
+            <Button Click="Button_Click_1">Open Flyout</Button>
+
+        </StackPanel>
+
+
+        <Grid Grid.Row="1" Margin="20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+                <TextBlock FontSize="20" Margin="0,60,0,0">Wrap Panel Demo</TextBlock>
+                <Button x:Name="AddButton" Click="AddButton_Click_1">Add block to wrappanel</Button>
+            </StackPanel>
+
+
+            <q42controls:WrapPanel x:Name="WrapPanel" Orientation="Horizontal" Width="400" Grid.Row="1" Background="White" HorizontalAlignment="Left" >
+                <Border Height="20" Width="40" Margin="5" Background="BlueViolet"  />
+                <Border Height="50" Width="160" Margin="5" Background="CornflowerBlue"  />
+                <Border Height="40" Width="60" Margin="5" Background="DarkKhaki"  />
+                <Border Height="60" Width="90" Margin="5" Background="DarkSlateBlue"  />
+                <Border Height="90" Width="90" Margin="5" Background="GreenYellow"  />
+                <Border Height="70" Width="120" Margin="5" Background="Thistle"  />
+
+            </q42controls:WrapPanel>
+        </Grid>
+
+
+
+    </Grid>
+</Page>
