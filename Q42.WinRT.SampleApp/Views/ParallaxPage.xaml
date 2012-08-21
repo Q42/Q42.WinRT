@@ -18,9 +18,8 @@
                HorizontalAlignment="Left" VerticalAlignment="Bottom" Stretch="None" >
             <Image.RenderTransform>
                 <CompositeTransform
-                    TranslateX="{Binding ElementName=MainScrollViewer, Path=HorizontalOffset, Converter={StaticResource Parallax}}" />
+                    TranslateX="{Binding ElementName=MainScrollViewer, Path=HorizontalOffset, Converter={StaticResource Parallax}, ConverterParameter=-0.10}" />
             </Image.RenderTransform>
-
         </Image>
 
         <ScrollViewer x:Name="MainScrollViewer" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
