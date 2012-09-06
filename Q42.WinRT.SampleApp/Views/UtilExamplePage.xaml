@@ -26,6 +26,11 @@
                 <TextBlock Text="{Binding OsVersion}" />
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal" Margin="0,20">
+                <TextBlock>Machine Name:</TextBlock>
+                <TextBlock Text="{Binding MachineName}" />
+            </StackPanel>
+
         </StackPanel>
 
     </Grid>

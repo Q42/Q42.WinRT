@@ -27,6 +27,18 @@ namespace Q42.WinRT.SampleApp.ViewModel
             }
         }
 
+        private string _machineName;
+
+        public string MachineName
+        {
+            get { return _machineName; }
+            set { _machineName = value;
+            RaisePropertyChanged(() => MachineName);
+            }
+        }
+        
+
+
         public UtilExampleViewModel()
         {
             //Dont load when viewing in Visual Studio or Blend
@@ -34,6 +46,8 @@ namespace Q42.WinRT.SampleApp.ViewModel
             {
                 LoadOsVersion();
             }
+
+            MachineName = Util.GetMachineName();
         }
 
         private async void LoadOsVersion()

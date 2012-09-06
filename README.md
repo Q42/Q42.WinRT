@@ -34,6 +34,7 @@ With this library comes a fully functional sample application that shows off mos
 ### Helpers
 * `Util.GetAppVersion` - Gets the application version as formatted string (1.0.0.0)
 * `Util.GetOsVersion` - Gets the version of the OS (for now: Windows NT 6.2, can change in the future)
+* `Util.GetMachineName` - Returns the machine name
 
 ## How To install?
 Download the source including the sample code from GitHub or get the assembly from NuGet [Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT).

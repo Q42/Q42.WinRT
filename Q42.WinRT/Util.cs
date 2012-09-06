@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
@@ -126,6 +127,57 @@ namespace Q42.WinRT
             return tcs.Task;
         }
 
+
+
+        ///<summary>
+        /// Want to store the hostname to send for push notifications to make
+        /// the management UI better. Take the substring up to the first period
+        /// of the first DomainName entry.
+        /// 
+        /// Thanks to Jeff Wilcox and Matthijs Hoekstra
+        ///</summary>
+        public static string GetMachineName()
+        {
+            var list = NetworkInformation.GetHostNames().ToArray();
+            string name = null;
+            if (list.Length > 0)
+            {
+                for (int i = 0; i < list.Length; i++)
+                {
+                    var entry = list[i];
+                    if (entry.Type == Windows.Networking.HostNameType.DomainName)
+                    {
+                        string s = entry.CanonicalName;
+                        if (!string.IsNullOrEmpty(s))
+                        {
+                            // Domain-joined. Requires at least a one-
+                            // character name.
+                            int j = s.IndexOf('.');
+
+                            if (j > 0)
+                            {
+                                name = s.Substring(0, j);
+                                break;
+                            }
+                            else
+                            {
+                                // Typical home machine.
+                                name = s;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                // TODO: Localize?
+                name = "Unknown Windows 8";
+            }
+
+            return name;
+
+        }
        
        
 
