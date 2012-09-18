@@ -49,3 +49,9 @@ Some code is used from other open source projects.
 * Newtonsoft.Json is used for object serialization
 * WrapPanel is based on http://www.codeproject.com/Articles/24141/WrapPanel-for-Silverlight-2-0
 * ParallaxConverter idea is based on http://w8isms.blogspot.nl/2012/06/metro-parallax-background-in-xaml.html
+
+## Related Projects
+Other useful WinRT / Windows 8 projects.
+
+*[WinRT XAML Toolkit](http://jupitertoolkit.codeplex.com/) Lots of UI controls and helpers for XAML projects
+*[Callisto](https://github.com/timheuer/callisto) Controls like SettingsFlyout, Menu and more.
