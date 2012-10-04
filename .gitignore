@@ -11,3 +11,4 @@ TestResults
 /Q42.WinRT/NuGet/*.nupkg
 /*.suo
 /Q42.WinRT/NuGet/Package/lib/winrt45/*.XML
+/Q42.WinRT.SampleApp/*.user

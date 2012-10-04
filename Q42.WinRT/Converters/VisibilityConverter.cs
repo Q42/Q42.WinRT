@@ -15,6 +15,11 @@ namespace Q42.WinRT.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+#if DEBUG
+            //Always return true for the designer, for easy blend support
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+                return Visibility.Visible;
+#endif
             bool visible = true;
             if (value is bool)
             {
