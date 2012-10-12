@@ -9,6 +9,9 @@ using Windows.Storage;
 
 namespace Q42.WinRT
 {
+    /// <summary>
+    /// Extension methods
+    /// </summary>
     public static class Extensions
     {
         /// <summary>

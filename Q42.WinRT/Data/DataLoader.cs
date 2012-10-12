@@ -9,18 +9,24 @@ using System.Threading.Tasks;
 
 namespace Q42.WinRT.Data
 {
+    /// <summary>
+    /// Possible loading states for the DataLoader
+    /// </summary>
     public enum LoadingState
     {
+        /// <summary>None</summary>
         None,
+        /// <summary>Loading</summary>
         Loading,
+        /// <summary>Finished</summary>
         Finished,
+        /// <summary>Error</summary>
         Error
     }
 
     /// <summary>
     /// DataLoader that enables easy binding to Loading / Finished / Error properties
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class DataLoader : INotifyPropertyChanged
     {
         private LoadingState _loadingState;
@@ -103,24 +109,29 @@ namespace Q42.WinRT.Data
             }
 
         }
-     
+
 
         /// <summary>
         /// DataLoader constructors
         /// </summary>
-        /// <param name="catchErrors">Swallows exceptions</param>
+        /// <param name="catchExceptions">Swallows exceptions</param>
         public DataLoader(bool? catchExceptions = null)
         {
-            if(catchExceptions.HasValue)
+            if (catchExceptions.HasValue)
                 _catchExceptions = catchExceptions.Value;
         }
 
-       /// <summary>
+
+
+
+        /// <summary>
         ///  Load data. Errors will be in errorcallback
-       /// </summary>
-       /// <param name="loadingMethod">The task is hot and already running</param>
-       /// <param name="errorCallback">optional error callback. Fires when exceptino is thrown in loadingMethod</param>
-       /// <returns></returns>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="loadingMethod"></param>
+        /// <param name="resultCallback"></param>
+        /// <param name="errorCallback">optional error callback. Fires when exceptino is thrown in loadingMethod</param>
+        /// <returns></returns>
         public async Task<T> LoadAsync<T>(Func<Task<T>> loadingMethod, Action<T> resultCallback = null, Action<Exception> errorCallback = null)
         {
             //Set loading state
@@ -131,7 +142,7 @@ namespace Q42.WinRT.Data
             try
             {
                 result = await loadingMethod();
-               
+
                 //Set finished state
                 LoadingState = Data.LoadingState.Finished;
 
@@ -146,7 +157,7 @@ namespace Q42.WinRT.Data
 
                 if (errorCallback != null)
                     errorCallback(e);
-                else if(!_catchExceptions) //swallow exception if catchexception is true
+                else if (!_catchExceptions) //swallow exception if catchexception is true
                     throw; //throw error if no callback is defined
 
             }
@@ -204,16 +215,25 @@ namespace Q42.WinRT.Data
 
 
 
-
+        /// <summary>
+        /// PropertyChanged for INotifyPropertyChanged implementation
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// RaisePropertyChanged for INotifyPropertyChanged implementation
+        /// </summary>
+        /// <param name="propertyName"></param>
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
+        /// <summary>
+        /// RaisePropertyChanged for INotifyPropertyChanged implementation
+        /// </summary>
+        /// <param name="expression"></param>
         protected void RaisePropertyChanged(Expression<Func<object>> expression)
         {
             RaisePropertyChanged(Util.GetPropertyName(expression));

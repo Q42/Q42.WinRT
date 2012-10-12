@@ -49,6 +49,7 @@ namespace Q42.WinRT.Data
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="generate"></param>
+        /// <param name="expireDate"></param>
         /// <param name="forceRefresh"></param>
         /// <returns></returns>
         public async static Task<T> GetAsync<T>(string key, Func<Task<T>> generate, DateTime? expireDate = null, bool forceRefresh = false)
@@ -105,6 +106,7 @@ namespace Q42.WinRT.Data
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
+        /// <param name="expireDate"></param>
         /// <returns></returns>
         public static Task Set<T>(string key, T value, DateTime? expireDate = null)
         {

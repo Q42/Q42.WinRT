@@ -8,9 +8,14 @@ using Windows.UI.Xaml.Controls;
 
 namespace Q42.WinRT.Controls
 {
+    /// <summary>
+    /// Attached properties for WebView
+    /// </summary>
     public static class WebViewExtensions
     {
-        // Using a DependencyProperty to use a binding to populate the webview with a HTML String instead of calling NavigateToString
+        /// <summary>
+        /// Using a DependencyProperty to use a binding to populate the webview with a HTML String instead of calling NavigateToString
+        /// </summary>
         public static readonly DependencyProperty SourceHtmlProperty =
             DependencyProperty.RegisterAttached(
                 "SourceHtml",

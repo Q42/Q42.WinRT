@@ -17,6 +17,10 @@ namespace Q42.WinRT.Controls
         private const int _width = 346;
         private Popup _popup;
 
+        /// <summary>
+        /// Show the Flyout with the UserControl as content
+        /// </summary>
+        /// <param name="control"></param>
         public void ShowFlyout(UserControl control)
         {
             _popup = new Popup();

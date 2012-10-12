@@ -11,6 +11,9 @@ using Windows.UI.Xaml.Controls;
 
 namespace Q42.WinRT
 {
+    /// <summary>
+    /// Various Utils
+    /// </summary>
     public static class Util
     {
         /// <summary>
@@ -29,12 +32,12 @@ namespace Q42.WinRT
             return memberExpression.Member.Name;
         }
 
-        /// <summary>
-        /// Gets a property name, usage: Utils.GetPropertyName<T>(x => x.PropertyName);
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="expression"></param>
-        /// <returns></returns>
+      /// <summary>
+        /// Gets a property name, usage: Utils.GetPropertyName T (x => x.PropertyName);
+      /// </summary>
+      /// <typeparam name="T"></typeparam>
+      /// <param name="expression"></param>
+      /// <returns></returns>
         public static string GetPropertyName<T>(Expression<Func<T, object>> expression)
         {
             MemberExpression memberExpression = expression.Body as MemberExpression;

@@ -13,23 +13,38 @@ namespace Q42.WinRT.Controls
     /// WrapPanel implementation ported from Silverlight
     /// http://www.codeproject.com/Articles/24141/WrapPanel-for-Silverlight-2-0
     /// </summary>
+   // [Obsolete("Check the WinRT XAML Toolkit for a better implementation of a WrapPanel. http://winrtxamltoolkit.codeplex.com")]
     public class WrapPanel : Panel
     {
+        /// <summary>
+        /// Orientation
+        /// </summary>
         public Orientation Orientation
         {
             get { return (Orientation)GetValue(OrientationProperty); }
             set { SetValue(OrientationProperty, value); }
         }
 
+        /// <summary>
+        /// OrientationProperty
+        /// </summary>
         public static readonly DependencyProperty OrientationProperty =
             DependencyProperty.Register("Orientation", typeof(Orientation), typeof(WrapPanel), null);
 
+        /// <summary>
+        /// Simple WrapPanel implementation ported from Silverlight
+        /// </summary>
         public WrapPanel()
         {
             // default orientation
             Orientation = Orientation.Horizontal;
         }
 
+        /// <summary>
+        /// MeasureOverride
+        /// </summary>
+        /// <param name="availableSize"></param>
+        /// <returns></returns>
         protected override Size MeasureOverride(Size availableSize)
         {
             foreach (UIElement child in Children)
@@ -40,6 +55,11 @@ namespace Q42.WinRT.Controls
             return base.MeasureOverride(availableSize);
         }
 
+        /// <summary>
+        /// ArrangeOverride
+        /// </summary>
+        /// <param name="finalSize"></param>
+        /// <returns></returns>
         protected override Size ArrangeOverride(Size finalSize)
         {
             Point point = new Point(0, 0);

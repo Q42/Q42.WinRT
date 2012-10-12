@@ -12,10 +12,15 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Q42.WinRT.Controls
 {
+    /// <summary>
+    /// Attached properties for Images
+    /// </summary>
     public static class ImageExtensions
     {
 
-        // Using a DependencyProperty as the backing store for WebUri.  This enables animation, styling, binding, etc...
+        /// <summary>
+        /// Using a DependencyProperty as the backing store for WebUri.  This enables animation, styling, binding, etc...
+        /// </summary>
         public static readonly DependencyProperty CacheUriProperty =
             DependencyProperty.RegisterAttached(
                 "CacheUri",

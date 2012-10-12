@@ -14,6 +14,14 @@ namespace Q42.WinRT.Converters
     /// </summary>
     public class ByteToStringConverter : IValueConverter
     {
+        /// <summary>
+        ///  Converts Bytes to Strings
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             string size = "0 KB";
@@ -41,6 +49,14 @@ namespace Q42.WinRT.Converters
 
         }
 
+        /// <summary>
+        /// NotImplementedException
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

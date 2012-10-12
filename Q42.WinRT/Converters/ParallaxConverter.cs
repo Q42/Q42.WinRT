@@ -16,6 +16,14 @@ namespace Q42.WinRT.Converters
     {
         const double _defaultFactor = -0.10;
 
+        /// <summary>
+        /// Parallax converter helper
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             double factor = _defaultFactor;
@@ -32,6 +40,14 @@ namespace Q42.WinRT.Converters
             return 0;
         }
 
+        /// <summary>
+        /// NotImplementedException
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

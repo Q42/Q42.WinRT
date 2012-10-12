@@ -13,6 +13,14 @@ namespace Q42.WinRT.Converters
     /// </summary>
     public class VisibilityConverter : IValueConverter
     {
+        /// <summary>
+        /// Converts anything to inverse visibility
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
 #if DEBUG
@@ -49,6 +57,14 @@ namespace Q42.WinRT.Converters
             return visible ? Visibility.Visible : Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// NotImplementedException
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

@@ -11,9 +11,17 @@ using Q42.WinRT;
 
 namespace Q42.WinRT.Storage
 {
+    /// <summary>
+    /// Possible storage locations
+    /// </summary>
     public enum StorageType
     {
-        Roaming, Local, Temporary
+        /// <summary>Roaming</summary>
+        Roaming,
+        /// <summary>Local</summary>
+        Local,
+        /// <summary>Temporary</summary>
+        Temporary
     }
 
     /// <summary>
@@ -28,6 +36,11 @@ namespace Q42.WinRT.Storage
         private StorageType _storageType;
         private string _subFolder;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="StorageType"></param>
+        /// <param name="subFolder"></param>
         public StorageHelper(StorageType StorageType, string subFolder = null)
         {
             _storageType = StorageType;

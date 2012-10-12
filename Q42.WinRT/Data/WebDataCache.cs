@@ -8,6 +8,9 @@ using Windows.Storage;
 
 namespace Q42.WinRT.Data
 {
+    /// <summary>
+    /// Can cache Uri data
+    /// </summary>
     public static class WebDataCache
     {
         private static readonly string CacheFolder = "_webdatacache";
@@ -17,6 +20,7 @@ namespace Q42.WinRT.Data
         /// Returns file
         /// </summary>
         /// <param name="uri"></param>
+        /// <param name="forceGet"></param>
         /// <returns></returns>
         public async static Task<StorageFile> GetAsync(Uri uri, bool forceGet = false)
         {
@@ -35,7 +39,7 @@ namespace Q42.WinRT.Data
                 file = await SetAsync(uri);
             }
 
-            if(file == null)
+            if (file == null)
                 file = await folder.GetFileAsync(key);
 
             return file;

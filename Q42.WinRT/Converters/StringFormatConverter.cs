@@ -12,6 +12,14 @@ namespace Q42.WinRT.Converters
     /// </summary>
     public class StringFormatConverter : IValueConverter
     {
+        /// <summary>
+        /// String.Format Converter
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             //Check input params
@@ -21,6 +29,14 @@ namespace Q42.WinRT.Converters
             return string.Format((string)parameter, value);
         }
 
+        /// <summary>
+        /// Returns the value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return value;
