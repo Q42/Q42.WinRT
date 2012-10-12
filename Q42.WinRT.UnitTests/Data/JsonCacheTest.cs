@@ -73,7 +73,7 @@ namespace Q42.WinRT.UnitTests.Data
             var result1 = await JsonCache.GetAsync("test", () => LongRunningOperation("result"));
             Assert.AreEqual("result", result1);
 
-            var result2 = await JsonCache.GetAsync("test", () => LongRunningOperation("result 2"), true);
+            var result2 = await JsonCache.GetAsync("test", () => LongRunningOperation("result 2"), forceRefresh: true);
             Assert.AreEqual("result 2", result2); //Not from cache
 
 
@@ -104,6 +104,31 @@ namespace Q42.WinRT.UnitTests.Data
 
             var result = await JsonCache.GetFromCache<string>("test");
             Assert.AreEqual("result set", result);
+        }
+
+
+        [TestMethod]
+        public async Task SetExpireDateValidTest()
+        {
+            //Clear the cache
+            await JsonCache.ClearAll();
+
+            await JsonCache.Set("test", "result set", DateTime.Now.AddDays(1));
+
+            var result = await JsonCache.GetFromCache<string>("test");
+            Assert.AreEqual("result set", result);
+        }
+
+        [TestMethod]
+        public async Task SetExpireDateInValidTest()
+        {
+            //Clear the cache
+            await JsonCache.ClearAll();
+
+            await JsonCache.Set("test", "result set", DateTime.Now.AddDays(-1));
+
+            var emptyResult = await JsonCache.GetFromCache<string>("test");
+            Assert.AreEqual(null, emptyResult);
         }
 
 

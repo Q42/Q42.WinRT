@@ -17,6 +17,8 @@
     </Page.Resources>
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer ZoomMode="Disabled" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled">
+            
         <StackPanel Margin="20,0">
             <TextBlock FontSize="18">Demo of DataLoader wrapper around task</TextBlock>
             <TextBlock FontSize="18">Used for easy databinding to progress bar. When the task runs, the progress bar will become active</TextBlock>
@@ -95,8 +97,15 @@
                 <TextBlock Text="{Binding Result}" />
             </StackPanel>
 
-            <TextBlock Margin="0,20,0,0" FontSize="18">Cached image. This image is downloaded once and cached locally</TextBlock>
+                <TextBlock Margin="0,50,0,0" FontSize="18">WebData cache</TextBlock>
+                <TextBlock Margin="0,20,0,0" FontSize="18">Cached image. This image is downloaded once and cached locally</TextBlock>
             <Image Stretch="None" q42controls:ImageExtensions.CacheUri="https://www.google.nl/favicon.ico" />
-        </StackPanel>
+
+                <TextBlock Margin="0,50,0,0" FontSize="18">Uri caching (debug to see in action)</TextBlock>
+                <Button Command="{Binding GetUriCommand}">Get result of Uri http://microsoft.com (from cache or internet)</Button>
+                <!--<Button Command="{Binding ClearWebDataCacheCommand}">Clear WebData cache</Button>-->
+            </StackPanel>
+        </ScrollViewer>
+
     </Grid>
 </Page>

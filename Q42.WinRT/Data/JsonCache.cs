@@ -9,6 +9,34 @@ using Windows.Storage;
 namespace Q42.WinRT.Data
 {
     /// <summary>
+    /// Used as a wrapper around the stored file to keep metadata
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class CacheObject<T>
+    {
+        /// <summary>
+        /// Expire date of cached file
+        /// </summary>
+        public DateTime? ExpireDateTime { get; set; }
+
+        /// <summary>
+        /// Actual file being stored
+        /// </summary>
+        public T File { get; set; }
+
+        /// <summary>
+        /// Is the cache file valid?
+        /// </summary>
+        public bool IsValid
+        {
+            get
+            {
+                return (ExpireDateTime == null || ExpireDateTime.Value > DateTime.Now);
+            }
+        }
+    }
+
+    /// <summary>
     /// Stores objects as json in the localstorage
     /// </summary>
     public static class JsonCache
@@ -23,7 +51,7 @@ namespace Q42.WinRT.Data
         /// <param name="generate"></param>
         /// <param name="forceRefresh"></param>
         /// <returns></returns>
-        public async static Task<T> GetAsync<T>(string key, Func<Task<T>> generate, bool forceRefresh = false)
+        public async static Task<T> GetAsync<T>(string key, Func<Task<T>> generate, DateTime? expireDate = null, bool forceRefresh = false)
         {
             object value;
 
@@ -39,7 +67,7 @@ namespace Q42.WinRT.Data
             }
 
             value = await generate();
-            await Set(key, value);
+            await Set(key, value, expireDate);
 
             return (T)value;
 
@@ -53,12 +81,22 @@ namespace Q42.WinRT.Data
         /// <returns></returns>
         public async static Task<T> GetFromCache<T>(string key)
         {
-            StorageHelper<T> storage = new StorageHelper<T>(StorageType.Local, CacheFolder);
+            StorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder);
 
             //Get cache value
-            object value = await storage.LoadAsync(key);
+            var value = await storage.LoadAsync(key);
 
-            return (T)value;
+            if (value == null)
+                return default(T);
+            else if(value.IsValid)
+                return value.File;
+            else
+            {
+                //Delete old value
+                Delete(key);
+
+                return default(T);
+            }
         }
 
         /// <summary>
@@ -68,10 +106,13 @@ namespace Q42.WinRT.Data
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Task Set<T>(string key, T value)
+        public static Task Set<T>(string key, T value, DateTime? expireDate = null)
         {
-            StorageHelper<T> storage = new StorageHelper<T>(StorageType.Local, CacheFolder);
-            return storage.SaveAsync(value, key);
+            StorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder);
+
+            CacheObject<T> cacheFile = new CacheObject<T>() { File = value, ExpireDateTime = expireDate };
+
+            return storage.SaveAsync(cacheFile, key);
         }
 
         /// <summary>

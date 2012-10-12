@@ -52,6 +52,9 @@ namespace Q42.WinRT.SampleApp.ViewModel
         public RelayCommand Button6Command { get; set; }
         public RelayCommand ClearCacheCommand { get; set; }
 
+        public RelayCommand ClearWebDataCacheCommand { get; set; }
+        public RelayCommand GetUriCommand { get; set; }
+
         public DataExampleViewModel()
         {
             MyDataLoader = new DataLoader();
@@ -69,6 +72,10 @@ namespace Q42.WinRT.SampleApp.ViewModel
             Button5Command = new RelayCommand(() => Button5Action());
             Button6Command = new RelayCommand(() => Button6Action());
             ClearCacheCommand = new RelayCommand(() => ClearCacheAction());
+
+            ClearWebDataCacheCommand = new RelayCommand(() => ClearWebDataCacheCommandAction());
+            GetUriCommand = new RelayCommand(() => GetUriCommandAction());
+
         }
 
       
@@ -99,7 +106,7 @@ namespace Q42.WinRT.SampleApp.ViewModel
             //Will show loader in the UI
             //string result = await MySecondDataLoader.Load(() => LongRunningOperationWithException());
 
-            string result = await MyDataLoader4.LoadAsync(() => JsonCache.GetAsync("samplekey_exception", () => LongRunningOperationWithException()));
+            string result = await MyDataLoader4.LoadAsync(() => JsonCache.GetAsync("samplekey_exception", () => LongRunningOperationWithException(), expireDate: DateTime.Now.AddDays(1)));
 
 
         }
@@ -122,12 +129,26 @@ namespace Q42.WinRT.SampleApp.ViewModel
 
             //Fire task
             //Will show loader in the UI
-            MyDataLoader6.LoadCacheThenRefreshAsync(() => JsonCache.GetFromCache<string>("key6"), () => JsonCache.GetAsync("key6", () => LongRunningOperation(DateTime.Now.Second.ToString()), true), x =>
+            MyDataLoader6.LoadCacheThenRefreshAsync(() => JsonCache.GetFromCache<string>("key6"), () => JsonCache.GetAsync("key6", () => LongRunningOperation(DateTime.Now.Second.ToString()), expireDate: DateTime.Now.AddDays(1), forceRefresh: true), x =>
             {
                 Result6 = x;
             });
         }
 
+        private async void GetUriCommandAction()
+        {
+            var result = await WebDataCache.GetAsync(new Uri("http://microsoft.com"), forceGet: false);
+
+            if (result == null)
+            {
+            }
+        }
+
+
+        private void ClearWebDataCacheCommandAction()
+        {
+            WebDataCache.ClearAll();
+        }
 
         private void ClearCacheAction()
         {
