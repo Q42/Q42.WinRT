@@ -25,8 +25,8 @@
             <TextBlock><LineBreak /></TextBlock>
 
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding Button1Command}">Start long running operation</Button>
-                <StackPanel Orientation="Horizontal" DataContext="{Binding MyDataLoader}">
+                <Button Command="{Binding StartLongRunningCommand}">Start long running operation</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding StartLongRunningDataLoader}">
                     <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
                     <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
                     <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
@@ -35,8 +35,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding Button2Command}">Start long running operation with exception</Button>
-                <StackPanel Orientation="Horizontal" DataContext="{Binding MyDataLoader2}">
+                    <Button Command="{Binding StartLongRunningWithExceptionCommand}">Start long running operation with exception</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding StartLongRunningWithExceptionDataLoader}">
                     <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
                     <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
                     <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
@@ -52,8 +52,8 @@
             <TextBlock><LineBreak /></TextBlock>
 
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding Button3Command}">CACHE long running operation</Button>
-                <StackPanel Orientation="Horizontal" DataContext="{Binding MyDataLoader3}">
+                <Button Command="{Binding CacheCommand}">CACHE long running operation</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding CacheDataLoader}">
                     <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
                     <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
                     <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
@@ -62,8 +62,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding Button4Command}">CACHE long running operation with exception</Button>
-                <StackPanel Orientation="Horizontal" DataContext="{Binding MyDataLoader4}">
+                    <Button Command="{Binding CacheWithExceptionCommand}">CACHE long running operation with exception</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding CacheWithExceptionDataLoader}">
                     <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
                     <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
                     <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
@@ -72,9 +72,9 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding Button6Command}">CACHE then REFRESH</Button>
-                <TextBlock Text="{Binding Result6}" />
-                <StackPanel Orientation="Horizontal" DataContext="{Binding MyDataLoader6}">
+                <Button Command="{Binding CacheRefreshCommand}">CACHE then REFRESH</Button>
+                    <TextBlock Text="{Binding CacheRefreshResult}" />
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding CacheRefreshDataLoader}">
                     <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
                     <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
                     <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
@@ -87,8 +87,8 @@
             <Button Command="{Binding ClearCacheCommand}" Margin="0,0,0,20">Clear Cache</Button>
 
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding Button5Command}">get from source A then refresh with source B</Button>
-                <StackPanel Orientation="Horizontal" DataContext="{Binding MyDataLoader5}">
+                <Button Command="{Binding SourceABCommand}">get from source A then refresh with source B</Button>
+                <StackPanel Orientation="Horizontal" DataContext="{Binding SourceABDataLoader}">
                     <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
                     <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
                     <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
