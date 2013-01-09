@@ -47,12 +47,77 @@ namespace Q42.WinRT.Controls
         /// <returns></returns>
         protected override Size MeasureOverride(Size availableSize)
         {
+            Point point = new Point(0, 0);
+            int i = 0;
+
             foreach (UIElement child in Children)
             {
                 child.Measure(new Size(availableSize.Width, availableSize.Height));
             }
 
-            return base.MeasureOverride(availableSize);
+            if (Orientation == Orientation.Horizontal)
+            {
+                double largestHeight = 0.0;
+
+                foreach (UIElement child in Children)
+                {
+                    if (child.DesiredSize.Height > largestHeight)
+                        largestHeight = child.DesiredSize.Height;
+
+
+                    point.X = point.X + child.DesiredSize.Width;
+
+
+                    if ((i + 1) < Children.Count)
+                    {
+                        if ((point.X + Children[i + 1].DesiredSize.Width) > availableSize.Width)
+                        {
+                            point.X = 0;
+                            point.Y = point.Y + largestHeight;
+                            largestHeight = 0.0;
+                        }
+                    }
+                    else
+                    {
+                        point.X = availableSize.Width;
+                        point.Y = point.Y + largestHeight;
+                    }
+                    i++;
+                }
+            }
+            else
+            {
+                double largestWidth = 0.0;
+                foreach (UIElement child in Children)
+                {
+                    if (child.DesiredSize.Width > largestWidth)
+                        largestWidth = child.DesiredSize.Width;
+
+
+                    point.Y = point.Y + child.DesiredSize.Height;
+
+
+                    if ((i + 1) < Children.Count)
+                    {
+                        if ((point.Y + Children[i + 1].DesiredSize.Height) > availableSize.Height)
+                        {
+                            point.Y = 0;
+                            point.X = point.X + largestWidth;
+                            largestWidth = 0.0;
+                        }
+                    }
+                    else
+                    {
+                        point.X = point.X + largestWidth;
+                        point.Y = availableSize.Height;
+                    }
+
+
+                    i++;
+                }
+            }
+
+            return new Size(point.X, point.Y);
         }
 
         /// <summary>

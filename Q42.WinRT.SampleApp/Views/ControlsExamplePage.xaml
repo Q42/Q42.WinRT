@@ -34,7 +34,7 @@
             </StackPanel>
 
 
-            <q42controls:WrapPanel x:Name="WrapPanel" Orientation="Horizontal" Width="400" Grid.Row="1" Background="White" HorizontalAlignment="Left" >
+            <q42controls:WrapPanel x:Name="WrapPanel" Orientation="Horizontal" Width="400" Grid.Row="1" Background="Green" HorizontalAlignment="Left" >
                 <Border Height="20" Width="40" Margin="5" Background="BlueViolet"  />
                 <Border Height="50" Width="160" Margin="5" Background="CornflowerBlue"  />
                 <Border Height="40" Width="60" Margin="5" Background="DarkKhaki"  />
