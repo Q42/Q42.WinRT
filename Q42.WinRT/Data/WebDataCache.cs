@@ -29,18 +29,18 @@ namespace Q42.WinRT.Data
             StorageFile file = null;
 
             //Try get the data from the cache
-            var folder = await GetFolderAsync();
-            var exist = await folder.ContainsFileAsync(key);
+            var folder = await GetFolderAsync().ConfigureAwait(false);
+            var exist = await folder.ContainsFileAsync(key).ConfigureAwait(false);
 
             //If file is not available or we want to force getting this file
             if (!exist || forceGet)
             {
                 //else, load the data
-                file = await SetAsync(uri);
+              file = await SetAsync(uri).ConfigureAwait(false);
             }
 
             if (file == null)
-                file = await folder.GetFileAsync(key);
+              file = await folder.GetFileAsync(key);
 
             return file;
         }
@@ -53,26 +53,27 @@ namespace Q42.WinRT.Data
         /// <returns></returns>
         public async static Task<Uri> GetLocalUriAsync(Uri uri)
         {
-            //Ignore these uri schemes
-            if (uri.Scheme == "ms-resource"
-                || uri.Scheme == "ms-appx"
-                || uri.Scheme == "ms-appdata")
-                return uri;
+          //Ignore these uri schemes
+          if (uri.Scheme == "ms-resource"
+              || uri.Scheme == "ms-appx"
+              || uri.Scheme == "ms-appdata")
+            return uri;
 
-            string key = uri.ToCacheKey();
+          string key = uri.ToCacheKey();
 
-            //Try get the data from the cache
-            var folder = await GetFolderAsync();
+          //Try get the data from the cache
+          var folder = await GetFolderAsync().ConfigureAwait(false);
 
-            if (!await folder.ContainsFileAsync(key))
-            {
-                //else, load the data
-                await SetAsync(uri);
-            }
+          var contains = await folder.ContainsFileAsync(key).ConfigureAwait(false);
+          if (!contains)
+          {
+            //else, load the data
+            await SetAsync(uri).ConfigureAwait(false);
+          }
 
-            string localUri = string.Format("ms-appdata:///local/{0}/{1}", CacheFolder, key);
+          string localUri = string.Format("ms-appdata:///local/{0}/{1}", CacheFolder, key);
 
-            return new Uri(localUri);
+          return new Uri(localUri);
 
         }
 
@@ -86,7 +87,7 @@ namespace Q42.WinRT.Data
 
             if (!string.IsNullOrEmpty(CacheFolder))
             {
-                folder = await folder.CreateFolderAsync(CacheFolder, CreationCollisionOption.OpenIfExists);
+              folder = await folder.CreateFolderAsync(CacheFolder, CreationCollisionOption.OpenIfExists);
             }
 
             //StorageFolder.GetFolderFromPathAsync
@@ -106,7 +107,7 @@ namespace Q42.WinRT.Data
             var folder = await GetFolderAsync();
 
             HttpClient webClient = new HttpClient();
-            var bytes = await webClient.GetByteArrayAsync(uri);
+            var bytes = await webClient.GetByteArrayAsync(uri).ConfigureAwait(false);
 
             //Save data to cache
             var file = await folder.CreateFileAsync(key, Windows.Storage.CreationCollisionOption.ReplaceExisting);
@@ -123,7 +124,7 @@ namespace Q42.WinRT.Data
         {
             return Task.Run(async () =>
                 {
-                    var file = await GetAsync(uri);
+                  var file = await GetAsync(uri).ConfigureAwait(false);
 
                     await file.DeleteAsync();
                 });
@@ -137,11 +138,11 @@ namespace Q42.WinRT.Data
         {
             return Task.Run(async () =>
             {
-                var folder = await GetFolderAsync();
+              var folder = await GetFolderAsync().ConfigureAwait(false);
 
                 try
                 {
-                    await folder.DeleteAsync(StorageDeleteOption.PermanentDelete).AsTask();
+                  await folder.DeleteAsync(StorageDeleteOption.PermanentDelete).AsTask().ConfigureAwait(false);
                 }
                 catch (UnauthorizedAccessException)
                 {

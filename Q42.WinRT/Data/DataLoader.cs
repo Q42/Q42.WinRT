@@ -141,7 +141,7 @@ namespace Q42.WinRT.Data
 
             try
             {
-                result = await loadingMethod();
+              result = await loadingMethod();
 
                 //Set finished state
                 LoadingState = Data.LoadingState.Finished;
@@ -185,7 +185,7 @@ namespace Q42.WinRT.Data
 
             try
             {
-                cacheResult = await cacheLoadingMethod();
+              cacheResult = await cacheLoadingMethod();
 
                 if (resultCallback != null)
                     resultCallback(cacheResult);
