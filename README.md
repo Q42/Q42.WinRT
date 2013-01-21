@@ -39,6 +39,12 @@ With this library comes a fully functional sample application that shows off mos
 ## How To install?
 Download the source including the sample code from GitHub or get the assembly from NuGet [Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT).
 
+## License
+Q42.WinRT is licensed under [MIT](http://www.opensource.org/licenses/mit-license.php "Read more about the MIT license form"). Refer to [license.txt](https://github.com/Q42/Q42.WinRT/blob/master/LICENSE.txt) for more information.
+
+## Contributions
+Contributions are welcome. Fork this repository and send a pull request if you have something useful to add.
+
 ## Credits
 * [Q42](http://www.q42.nl) ([@q42](http://twitter.com/q42)) - Inventors of products, games and solutions from the Netherlands.
 * [Michiel Post](http://www.michielpost.nl) ([@michielpostnl](http://twitter.com/michielpostnl)) - core contributor
