@@ -58,7 +58,7 @@ namespace Q42.WinRT.Controls
                 try
                 {
                     //Get image from cache (download and set in cache if needed)
-                    var cacheUri = await WebDataCache.GetLocalUriAsync(newCacheUri).ConfigureAwait(false);
+                    var cacheUri = await WebDataCache.GetLocalUriAsync(newCacheUri);
 
                     //Set cache uri as source for the image
                     image.Source = new BitmapImage(cacheUri);
