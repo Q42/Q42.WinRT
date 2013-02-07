@@ -59,5 +59,5 @@ Some code is used from other open source projects.
 ## Related Projects
 Other useful WinRT / Windows 8 projects.
 
-* [WinRT XAML Toolkit](http;//winrtxamltoolkit.codeplex.com) Lots of UI controls and helpers for XAML projects
+* [WinRT XAML Toolkit](http://winrtxamltoolkit.codeplex.com) Lots of UI controls and helpers for XAML projects
 * [Callisto](https://github.com/timheuer/callisto) Controls like SettingsFlyout, Menu and more.
