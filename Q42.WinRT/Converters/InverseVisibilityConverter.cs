@@ -32,7 +32,11 @@ namespace Q42.WinRT.Converters
 #endif
         
             bool visible = true;
-            if (value is bool)
+            if (value is Visibility)
+            {
+                visible = (Visibility.Visible == (Visibility)value);
+            } 
+            else if (value is bool)
             {
                 visible = (bool)value;
             }

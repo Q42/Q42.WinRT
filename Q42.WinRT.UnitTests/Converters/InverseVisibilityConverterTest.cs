@@ -122,5 +122,27 @@ namespace Q42.WinRT.UnitTests.Converters
             Assert.AreEqual(Visibility.Collapsed, result);
         }
 
+        [TestMethod]
+        public void TestVisibiliyVisible()
+        {
+            Visibility input = Visibility.Visible;
+
+            InverseVisibilityConverter converter = new InverseVisibilityConverter();
+            Visibility result = (Visibility)converter.Convert(input, typeof(Visibility), null, null);
+
+            Assert.AreEqual(Visibility.Collapsed, result);
+        }
+
+        [TestMethod]
+        public void TestVisibiliyCollapsed()
+        {
+            Visibility input = Visibility.Collapsed;
+
+            InverseVisibilityConverter converter = new InverseVisibilityConverter();
+            Visibility result = (Visibility)converter.Convert(input, typeof(Visibility), null, null);
+
+            Assert.AreEqual(Visibility.Visible, result);
+        }
+
     }
 }
