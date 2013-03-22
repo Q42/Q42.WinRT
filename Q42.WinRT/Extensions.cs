@@ -5,7 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
 using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace Q42.WinRT
 {
@@ -25,10 +28,24 @@ namespace Q42.WinRT
                 throw new ArgumentNullException("uri");
 
             string result = uri.AbsoluteUri
-                .Replace("/", "_")
-                .Replace("?", "_")
-                .Replace("&", "_")
-                .Replace(":", "_");
+                    .Replace("/", "_")
+                    .Replace("?", "_")
+                    .Replace("&", "_")
+                    .Replace(":", "_");
+
+            //FileIO.WriteBytesAsync crashes if total path length >= 247 characters 
+            //https://connect.microsoft.com/VisualStudio/feedback/details/781729/fileio-writebytesasync-crashes-if-total-path-length-247-characters-winrt
+
+            //Hash each value above 240 characters
+            if (result.Length >= 240)
+            {
+                IBuffer buffer = CryptographicBuffer.ConvertStringToBinary(result, BinaryStringEncoding.Utf8);
+                HashAlgorithmProvider hashAlgorithm = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
+                IBuffer hashBuffer = hashAlgorithm.HashData(buffer);
+                var hashedResult = CryptographicBuffer.EncodeToBase64String(hashBuffer);
+
+                return hashedResult;
+            }
 
             return result;
         }
