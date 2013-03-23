@@ -27,11 +27,7 @@ namespace Q42.WinRT
             if (uri == null)
                 throw new ArgumentNullException("uri");
 
-            string result = uri.AbsoluteUri
-                    .Replace("/", "_")
-                    .Replace("?", "_")
-                    .Replace("&", "_")
-                    .Replace(":", "_");
+            string result = uri.AbsoluteUri;
 
             //FileIO.WriteBytesAsync crashes if total path length >= 247 characters 
             //https://connect.microsoft.com/VisualStudio/feedback/details/781729/fileio-writebytesasync-crashes-if-total-path-length-247-characters-winrt
