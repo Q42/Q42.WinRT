@@ -63,8 +63,12 @@ namespace Q42.WinRT.Controls
                     //Set cache uri as source for the image
                     image.Source = new BitmapImage(cacheUri);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Debug.WriteLine(ex);
+
+                    //Revert to using passed URI
+                    image.Source = new BitmapImage(newCacheUri);
                 }
             }
             else
