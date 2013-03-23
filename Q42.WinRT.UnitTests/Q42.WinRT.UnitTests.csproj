@@ -115,6 +115,7 @@
     <Compile Include="Converters\VisibilityConverterTest.cs" />
     <Compile Include="Data\DataLoaderTest.cs" />
     <Compile Include="Data\JsonCacheTest.cs" />
+    <Compile Include="Data\WebDataCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\StorageHelperTest.cs" />
     <Compile Include="UtilTest.cs" />

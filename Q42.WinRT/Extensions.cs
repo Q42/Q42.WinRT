@@ -36,18 +36,15 @@ namespace Q42.WinRT
             //FileIO.WriteBytesAsync crashes if total path length >= 247 characters 
             //https://connect.microsoft.com/VisualStudio/feedback/details/781729/fileio-writebytesasync-crashes-if-total-path-length-247-characters-winrt
 
-            //Hash each value above 240 characters
-            if (result.Length >= 240)
-            {
-                IBuffer buffer = CryptographicBuffer.ConvertStringToBinary(result, BinaryStringEncoding.Utf8);
-                HashAlgorithmProvider hashAlgorithm = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
-                IBuffer hashBuffer = hashAlgorithm.HashData(buffer);
-                var hashedResult = CryptographicBuffer.EncodeToBase64String(hashBuffer);
+            //Hash each value so we wont get long filepaths
+            //Max is 260 for fully qualified file name
+            IBuffer buffer = CryptographicBuffer.ConvertStringToBinary(result, BinaryStringEncoding.Utf8);
+            HashAlgorithmProvider hashAlgorithm = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
+            IBuffer hashBuffer = hashAlgorithm.HashData(buffer);
+            var hashedResult = CryptographicBuffer.EncodeToBase64String(hashBuffer);
 
-                return hashedResult;
-            }
+            return hashedResult;
 
-            return result;
         }
 
         /// <summary>
