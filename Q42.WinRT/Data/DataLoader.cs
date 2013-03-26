@@ -213,6 +213,66 @@ namespace Q42.WinRT.Data
 
         }
 
+        /// <summary>
+        /// Loads data from source A, if this fails, load it from source B (cache)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="refreshLoadingMethod"></param>
+        /// <param name="cacheLoadingMethod"></param>
+        /// <param name="resultCallback"></param>
+        /// <param name="errorCallback"></param>
+        /// <returns></returns>
+        public async Task LoadFallbackToCacheAsync<T>(Func<Task<T>> refreshLoadingMethod, Func<Task<T>> cacheLoadingMethod, Action<T> resultCallback = null, Action<Exception> errorCallback = null)
+        {
+            //Set loading state
+            LoadingState = Data.LoadingState.Loading;
+            
+            T refreshResult = default(T);
+            T cacheResult = default(T);
+
+            bool refreshSourceFail = false;
+
+            try
+            {
+                refreshResult = await refreshLoadingMethod();
+                if (resultCallback != null)
+                    resultCallback(refreshResult);
+
+                //Set finished state
+                LoadingState = Data.LoadingState.Finished;
+            }
+            catch (Exception e)
+            {
+                refreshSourceFail = true;
+
+                if (errorCallback != null)
+                    errorCallback(e);
+            }
+
+            //Did the loading fail? Load data from source B (cache)
+            if (refreshSourceFail)
+            {
+                try
+                {
+                    cacheResult = await cacheLoadingMethod();
+                    if (resultCallback != null)
+                        resultCallback(cacheResult);
+                    
+                    //Set finished state
+                    LoadingState = Data.LoadingState.Finished;
+                }
+                catch (Exception e)
+                {
+                    //Set error state
+                    LoadingState = Data.LoadingState.Error;
+
+                    if (errorCallback != null)
+                        errorCallback(e);
+                }
+            }
+        }
+
+
 
 
         /// <summary>

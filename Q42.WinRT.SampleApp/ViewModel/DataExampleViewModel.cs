@@ -23,6 +23,30 @@ namespace Q42.WinRT.SampleApp.ViewModel
             }
         }
 
+        private string _result2;
+
+        public string Result2
+        {
+            get { return _result2; }
+            set
+            {
+                _result2 = value;
+                RaisePropertyChanged("Result2");
+            }
+        }
+
+        private string _result3;
+
+        public string Result3
+        {
+            get { return _result3; }
+            set
+            {
+                _result3 = value;
+                RaisePropertyChanged("Result3");
+            }
+        }
+
         private string _cacheRefreshResult;
 
         public string CacheRefreshResult
@@ -42,6 +66,9 @@ namespace Q42.WinRT.SampleApp.ViewModel
         public DataLoader CacheWithExceptionDataLoader { get; set; }
         public DataLoader SourceABDataLoader { get; set; }
         public DataLoader CacheRefreshDataLoader { get; set; }
+        public DataLoader FailCacheDataLoader { get; set; }
+        public DataLoader FailCacheSuccessDataLoader { get; set; }
+
 
 
         public RelayCommand StartLongRunningCommand { get; set; }
@@ -51,6 +78,8 @@ namespace Q42.WinRT.SampleApp.ViewModel
         public RelayCommand SourceABCommand { get; set; }
         public RelayCommand CacheRefreshCommand { get; set; }
         public RelayCommand ClearCacheCommand { get; set; }
+        public RelayCommand FailCacheCommand { get; set; }
+        public RelayCommand FailCacheSuccessCommand { get; set; }
 
         public RelayCommand ClearWebDataCacheCommand { get; set; }
         public RelayCommand GetUriCommand { get; set; }
@@ -63,6 +92,8 @@ namespace Q42.WinRT.SampleApp.ViewModel
             CacheWithExceptionDataLoader = new DataLoader(true); //swallow exceptions
             SourceABDataLoader = new DataLoader(true); //swallow exceptions
             CacheRefreshDataLoader = new DataLoader(true); //swallow exceptions
+            FailCacheDataLoader = new DataLoader(); 
+            FailCacheSuccessDataLoader = new DataLoader();
 
 
             StartLongRunningCommand = new RelayCommand(() => StartLongRunningAction());
@@ -72,12 +103,15 @@ namespace Q42.WinRT.SampleApp.ViewModel
             SourceABCommand = new RelayCommand(() => SourceABAction());
             CacheRefreshCommand = new RelayCommand(() => CacheRefreshAction());
             ClearCacheCommand = new RelayCommand(() => ClearCacheAction());
+            FailCacheCommand = new RelayCommand(() => FailCacheAction());
+            FailCacheSuccessCommand = new RelayCommand(() => FailCacheSuccessAction());
 
             ClearWebDataCacheCommand = new RelayCommand(() => ClearWebDataCacheCommandAction());
             GetUriCommand = new RelayCommand(() => GetUriCommandAction());
 
         }
 
+       
         /// <summary>
         /// Shows data loader for long running operation
         /// </summary>
@@ -135,6 +169,32 @@ namespace Q42.WinRT.SampleApp.ViewModel
                     Result = x;
                 });
         }
+
+        private void FailCacheAction()
+        {
+            Result3 = string.Empty;
+
+            //Fire task
+            //Will show loader in the UI
+            FailCacheDataLoader.LoadFallbackToCacheAsync(() => LongRunningOperationWithException(), () => LongRunningOperation("source B result"), x =>
+            {
+                Result3 = x;
+            });
+        }
+
+        private void FailCacheSuccessAction()
+        {
+            Result2 = string.Empty;
+
+            //Fire task
+            //Will show loader in the UI
+            FailCacheSuccessDataLoader.LoadFallbackToCacheAsync(() => LongRunningOperation("source A result"), () => LongRunningOperation("source B result"), x =>
+            {
+                Result2 = x;
+            });
+        }
+
+
 
         /// <summary>
         /// First return cached result, then refresh this result with live value

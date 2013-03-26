@@ -97,6 +97,29 @@
                 <TextBlock Text="{Binding Result}" />
             </StackPanel>
 
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding FailCacheSuccessCommand}">get from source A if it fails from source B (success)</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding FailCacheSuccessDataLoader}">
+                        <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+                        <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
+                        <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
+                        <TextBlock Visibility="{Binding IsError, Converter={StaticResource Vis}}">Error</TextBlock>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Result2}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding FailCacheCommand}">get from source A if it fails from source B (fail)</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding FailCacheDataLoader}">
+                        <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+                        <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
+                        <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
+                        <TextBlock Visibility="{Binding IsError, Converter={StaticResource Vis}}">Error</TextBlock>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Result3}" />
+                </StackPanel>
+
+
                 <TextBlock Margin="0,50,0,0" FontSize="18">WebData cache</TextBlock>
                 <TextBlock Margin="0,20,0,0" FontSize="18">Cache images with HTTPS uri. This image is downloaded once and cached locally</TextBlock>
                 <TextBlock FontSize="18">Source already caches http uri's by default. This extension can be used when you want to cache https data.</TextBlock>

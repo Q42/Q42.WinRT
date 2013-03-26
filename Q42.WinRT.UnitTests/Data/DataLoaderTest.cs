@@ -138,6 +138,56 @@ namespace Q42.WinRT.UnitTests.Data
 
         }
 
+        [TestMethod]
+        public async Task DataLoaderLoadFallbackToCacheAsyncTest()
+        {
+            DataLoader a = new DataLoader();
+
+            int count = 0;
+
+            await a.LoadFallbackToCacheAsync(() => LongRunningOperation(), () => LongRunningOperation(),
+                (result) =>
+                {
+                    count++;
+                });
+
+            Assert.AreEqual(LoadingState.Finished, a.LoadingState);
+
+            Assert.IsTrue(a.IsFinished);
+            Assert.IsFalse(a.IsBusy);
+            Assert.IsFalse(a.IsError);
+
+            Assert.AreEqual(1, count);
+
+        }
+
+        [TestMethod]
+        public async Task DataLoaderLoadFallbackToCacheAsync_FailTest()
+        {
+            DataLoader a = new DataLoader();
+
+            int count = 0;
+
+            await a.LoadFallbackToCacheAsync(() => LongRunningOperationThrowsError(), () => LongRunningOperation(),
+                (result) =>
+                {
+                    count++;
+                }, errorCallback: e =>
+                {
+                    count++;
+                    //Handle error
+                });
+
+            Assert.AreEqual(LoadingState.Finished, a.LoadingState);
+
+            Assert.IsTrue(a.IsFinished);
+            Assert.IsFalse(a.IsBusy);
+            Assert.IsFalse(a.IsError);
+
+            Assert.AreEqual(2, count);
+
+        }
+
 
 
         private async Task<string> LongRunningOperation()
