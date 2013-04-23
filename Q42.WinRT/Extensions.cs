@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
@@ -39,8 +40,14 @@ namespace Q42.WinRT
             IBuffer hashBuffer = hashAlgorithm.HashData(buffer);
             var hashedResult = CryptographicBuffer.EncodeToBase64String(hashBuffer);
 
-            return hashedResult;
+            //http://stackoverflow.com/questions/3009284/using-regex-to-replace-invalid-characters
+            string pattern = "[\\~#%&*{}/:<>?|\"-]";
+            string replacement = " ";
 
+            Regex regEx = new Regex(pattern);
+            string sanitized = Regex.Replace(regEx.Replace(hashedResult, replacement), @"\s+", "_");
+
+            return sanitized;
         }
 
         /// <summary>

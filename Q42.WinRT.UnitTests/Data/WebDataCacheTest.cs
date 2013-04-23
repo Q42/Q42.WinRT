@@ -28,6 +28,14 @@ namespace Q42.WinRT.UnitTests.Data
 
             await WebDataCache.GetAsync(new Uri(baseUri + q), true);
         }
+
+        [TestMethod]
+        public async Task AsyncFileValidFilename()
+        {
+          string key = Extensions.ToCacheKey(new Uri("http://afisha.tut.by/film.php?fid=2710"));
+
+          Assert.IsFalse(key.Contains("/"));
+        }
     }
    
 }
