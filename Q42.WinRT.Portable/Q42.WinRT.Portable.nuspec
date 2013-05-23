@@ -10,9 +10,6 @@
     <language>en-US</language> 
     <projectUrl>https://github.com/Q42/Q42.WinRT</projectUrl>
     <iconUrl>http://a0.twimg.com/profile_images/2142700938/q42-logo-big-square.png</iconUrl>
-    <dependencies>
-      <dependency id="Newtonsoft.Json" />
-    </dependencies>  
   </metadata>  
 </package>
 
