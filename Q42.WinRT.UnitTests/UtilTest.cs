@@ -33,7 +33,7 @@ namespace Q42.WinRT.UnitTests
         public void GetPropertyName()
         {
             //Returns property as string
-            Assert.AreEqual("TestProperty", Util.GetPropertyName(() => TestProperty));
+            Assert.AreEqual("TestProperty", Q42.WinRT.Portable.Util.GetPropertyName(() => TestProperty));
         }
     }
 }

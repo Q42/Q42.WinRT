@@ -112,7 +112,6 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Converters\TextToLowerConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
-    <Compile Include="Data\DataLoader.cs" />
     <Compile Include="Data\JsonCache.cs" />
     <Compile Include="Data\WebDataCache.cs" />
     <Compile Include="Extensions.cs" />
@@ -128,6 +127,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Q42.WinRT.Portable\Q42.WinRT.Portable.csproj">
+      <Project>{c63d709a-617f-4ad8-a5ed-358036ad9057}</Project>
+      <Name>Q42.WinRT.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

@@ -103,6 +103,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\Q42.WinRT.Portable\Q42.WinRT.Portable.csproj">
+      <Project>{c63d709a-617f-4ad8-a5ed-358036ad9057}</Project>
+      <Name>Q42.WinRT.Portable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Q42.WinRT\Q42.WinRT.csproj">
       <Project>{33cb263d-5311-4cd1-9504-7b03e14fdae1}</Project>
       <Name>Q42.WinRT</Name>

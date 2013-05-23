@@ -12,11 +12,8 @@
     <iconUrl>http://a0.twimg.com/profile_images/2142700938/q42-logo-big-square.png</iconUrl>
     <dependencies>
       <dependency id="Newtonsoft.Json" />
+	  <dependency id="Q42.WinRT.Portable" />
     </dependencies>  
   </metadata>
-  <files>
-    <file src="lib\winrt45\Q42.WinRT.dll" target="lib\winrt45" />
-    <file src="lib\winrt45\Q42.WinRT.xml" target="lib\winrt45" />
-  </files>
 </package>
 

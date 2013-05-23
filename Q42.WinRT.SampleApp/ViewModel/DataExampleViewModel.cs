@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Q42.WinRT.Data;
+using Q42.WinRT.Portable.Data;
 
 namespace Q42.WinRT.SampleApp.ViewModel
 {

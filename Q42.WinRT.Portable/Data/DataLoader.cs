@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Q42.WinRT.Portable;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Q42.WinRT.Data
+namespace Q42.WinRT.Portable.Data
 {
     /// <summary>
     /// Possible loading states for the DataLoader

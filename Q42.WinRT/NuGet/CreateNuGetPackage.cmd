@@ -1,2 +1,2 @@
 @echo off
-..\..\.nuget\NuGet.exe pack Package\Q42.WinRT.nuspec
+..\..\.nuget\NuGet.exe pack ..\Q42.WinRT.csproj -Prop Configuration=Release
