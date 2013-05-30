@@ -1,12 +1,17 @@
 Q42.WinRT
 =========
 
-Open source library for Windows 8 C#/XAML applications. This library is focused on web connected and data driven applications. It includes helpers to easily cache data from API calls and cache web images to the local storage.
-There`s also a DataLoader included which functions as a wrapper around a Task<T> method. You can bind a ProgressBar or ProgressRing to the DataLoader and show it as long as the task is running.
+Open source library for Windows Phone and Windows 8 C#/XAML applications. This library was originally developed for Windows 8, but now also includes a Portable Class Library which is compatible with WIndows Phone.
+The library is focused on web connected and data driven applications. It includes helpers to easily cache data from API calls and cache web images to the local storage.
+
+## Included in PCL (Compatible with Windows Phone and Win8)
+DataLoader which functions as a wrapper around a Task<T> method. You can bind a ProgressBar or ProgressRing to the DataLoader and show it as long as the task is running.
 
 Please checkout the included sample application.
 
-Or download directly from NuGet [Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT).
+Or download directly from NuGet:
+[Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT)
+[Q42.WinRT.Portable on NuGet](https://nuget.org/packages/Q42.WinRT.Portable)
 
 ## What`s included?
 With this library comes a fully functional sample application that shows off most of the functionality. There`s also a unit test project included.
