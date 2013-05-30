@@ -4,7 +4,7 @@ Q42.WinRT
 Open source library for Windows Phone and Windows 8 C#/XAML applications. This library was originally developed for Windows 8, but now also includes a Portable Class Library which is compatible with WIndows Phone.
 The library is focused on web connected and data driven applications. It includes helpers to easily cache data from API calls and cache web images to the local storage.
 
-## Included in PCL (Compatible with Windows Phone and Win8)
+### Included in PCL (Compatible with Windows Phone and Win8)
 DataLoader which functions as a wrapper around a Task<T> method. You can bind a ProgressBar or ProgressRing to the DataLoader and show it as long as the task is running.
 
 Please checkout the included sample application.
