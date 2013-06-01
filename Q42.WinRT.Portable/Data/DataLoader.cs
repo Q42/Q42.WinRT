@@ -57,12 +57,6 @@ namespace Q42.WinRT.Portable.Data
         {
             get
             {
-#if DEBUG
-                //Always return true for the designer, for easy blend support
-                if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-                    return true;
-#endif
-
                 if (LoadingState == LoadingState.Error)
                     return true;
 
@@ -77,12 +71,6 @@ namespace Q42.WinRT.Portable.Data
         {
             get
             {
-#if DEBUG
-                //Always return true for the designer, for easy blend support
-                if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-                    return true;
-#endif
-
                 if (LoadingState == LoadingState.Loading)
                     return true;
 
@@ -98,11 +86,6 @@ namespace Q42.WinRT.Portable.Data
         {
             get
             {
-#if DEBUG
-                //Always return true for the designer, for easy blend support
-                if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-                    return true;
-#endif
                 if (LoadingState == LoadingState.Finished)
                     return true;
 
