@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Windows.Storage;
-using Q42.WinRT;
+
+#if WINDOWS_PHONE
+using Q42.WinRT.Phone;
+#endif
 
 namespace Q42.WinRT.Storage
 {
@@ -16,19 +14,23 @@ namespace Q42.WinRT.Storage
   /// </summary>
   public enum StorageType
   {
-    /// <summary>Roaming</summary>
-    Roaming,
+    
     /// <summary>Local</summary>
     Local,
+
+#if NETFX_CORE
     /// <summary>Temporary</summary>
-    Temporary
+    Temporary,
+    /// <summary>Roaming</summary>
+    Roaming,
+#endif
   }
 
   /// <summary>
   /// Save object to local storage, serializes as json and writes object to a file
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  public class StorageHelper<T>
+  public class StorageHelper<T> : IStorageHelper<T>
   {
     private readonly string _fileExtension = ".json";
 
@@ -151,15 +153,17 @@ namespace Q42.WinRT.Storage
       StorageFolder folder;
       switch (_storageType)
       {
-        case StorageType.Roaming:
-          folder = _appData.RoamingFolder;
-          break;
         case StorageType.Local:
           folder = _appData.LocalFolder;
+          break;
+#if NETFX_CORE
+        case StorageType.Roaming:
+          folder = _appData.RoamingFolder;
           break;
         case StorageType.Temporary:
           folder = _appData.TemporaryFolder;
           break;
+#endif
         default:
           throw new Exception(String.Format("Unknown StorageType: {0}", _storageType));
       }
@@ -170,6 +174,23 @@ namespace Q42.WinRT.Storage
       }
 
       return folder;
+    }
+
+    /// <summary>
+    /// Deletes all files in current folder
+    /// </summary>
+    /// <returns></returns>
+    public async Task DeleteAllFiles()
+    {
+      StorageFolder folder = await GetFolderAsync().ConfigureAwait(false);
+
+      try
+      {
+        await folder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+      }
+      catch (UnauthorizedAccessException)
+      {
+      }
     }
 
     /// <summary>

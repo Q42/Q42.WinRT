@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Q42.WinRT.Storage;
-using Windows.Storage;
 
 namespace Q42.WinRT.Data
 {
@@ -82,7 +78,7 @@ namespace Q42.WinRT.Data
     /// <returns></returns>
     public async static Task<T> GetFromCache<T>(string key)
     {
-      StorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder);
+      IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder);
 
       //Get cache value
       var value = await storage.LoadAsync(key).ConfigureAwait(false);
@@ -111,7 +107,7 @@ namespace Q42.WinRT.Data
     /// <returns></returns>
     public static Task Set<T>(string key, T value, DateTime? expireDate = null)
     {
-      StorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder);
+      IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder);
 
       CacheObject<T> cacheFile = new CacheObject<T>() { File = value, ExpireDateTime = expireDate };
 
@@ -125,7 +121,8 @@ namespace Q42.WinRT.Data
     /// <returns></returns>
     public static Task Delete(string key)
     {
-      StorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
+      IStorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
+
       return storage.DeleteAsync(key);
     }
 
@@ -135,25 +132,8 @@ namespace Q42.WinRT.Data
     /// <returns></returns>
     public static Task ClearAll()
     {
-      return Task.Run(async () =>
-          {
-            StorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
-            var folder = await storage.GetFolderAsync().ConfigureAwait(false);
-
-            try
-            {
-              await folder.DeleteAsync(StorageDeleteOption.PermanentDelete);
-            }
-            catch (UnauthorizedAccessException)
-            {
-            }
-
-            //foreach (var file in await folder.GetFilesAsync())
-            //{
-            //    await file.DeleteAsync();
-            //}
-
-          });
+      IStorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
+      return storage.DeleteAllFiles();
     }
   }
 }

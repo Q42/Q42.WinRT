@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Windows.Security.Cryptography;
-using Windows.Security.Cryptography.Core;
 using Windows.Storage;
 using Windows.Storage.Streams;
+
+#if NETFX_CORE
+using System.Collections.Concurrent;
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
+#endif
 
 namespace Q42.WinRT
 {
@@ -18,37 +20,68 @@ namespace Q42.WinRT
     /// </summary>
     public static class Extensions
     {
-        /// <summary>
-        /// Converts Uri to cache key extension method
-        /// </summary>
-        /// <param name="uri"></param>
-        /// <returns></returns>
-        public static string ToCacheKey(this Uri uri)
-        {
-            if (uri == null)
-                throw new ArgumentNullException("uri");
 
-            string result = uri.AbsoluteUri;
 
-            //FileIO.WriteBytesAsync crashes if total path length >= 247 characters 
-            //https://connect.microsoft.com/VisualStudio/feedback/details/781729/fileio-writebytesasync-crashes-if-total-path-length-247-characters-winrt
+#if NETFX_CORE
 
-            //Hash each value so we wont get long filepaths
-            //Max is 260 for fully qualified file name
-            IBuffer buffer = CryptographicBuffer.ConvertStringToBinary(result, BinaryStringEncoding.Utf8);
-            HashAlgorithmProvider hashAlgorithm = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
-            IBuffer hashBuffer = hashAlgorithm.HashData(buffer);
-            var hashedResult = CryptographicBuffer.EncodeToBase64String(hashBuffer);
+      #region Windows 8 Extensions
 
-            //http://stackoverflow.com/questions/3009284/using-regex-to-replace-invalid-characters
-            string pattern = "[\\~#%&*{}/:<>?|\"-]";
-            string replacement = " ";
+      /// <summary>
+      /// Similar in nature to Parallel.ForEach, with the primary difference being that Parallel.ForEach is a synchronous method and uses synchronous delegates.
+      /// http://blogs.msdn.com/b/pfxteam/archive/2012/03/05/10278165.aspx
+      /// </summary>
+      /// <typeparam name="T"></typeparam>
+      /// <param name="source"></param>
+      /// <param name="dop"></param>
+      /// <param name="body"></param>
+      /// <returns></returns>
+      public static Task ForEachAsync<T>(this IEnumerable<T> source, int dop, Func<T, Task> body)
+      {
+        return Task.WhenAll(
+            from partition in Partitioner.Create(source).GetPartitions(dop)
+            select Task.Run(async delegate
+            {
+              using (partition)
+                while (partition.MoveNext())
+                  await body(partition.Current).ConfigureAwait(false);
+            }));
+      }
 
-            Regex regEx = new Regex(pattern);
-            string sanitized = Regex.Replace(regEx.Replace(hashedResult, replacement), @"\s+", "_");
+      /// <summary>
+      /// Converts Uri to cache key extension method
+      /// </summary>
+      /// <param name="uri"></param>
+      /// <returns></returns>
+      public static string ToCacheKey(this Uri uri)
+      {
+        if (uri == null)
+          throw new ArgumentNullException("uri");
 
-            return sanitized;
-        }
+        string result = uri.AbsoluteUri;
+
+        //FileIO.WriteBytesAsync crashes if total path length >= 247 characters 
+        //https://connect.microsoft.com/VisualStudio/feedback/details/781729/fileio-writebytesasync-crashes-if-total-path-length-247-characters-winrt
+
+        //Hash each value so we wont get long filepaths
+        //Max is 260 for fully qualified file name
+        IBuffer buffer = CryptographicBuffer.ConvertStringToBinary(result, BinaryStringEncoding.Utf8);
+        HashAlgorithmProvider hashAlgorithm = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
+        IBuffer hashBuffer = hashAlgorithm.HashData(buffer);
+        var hashedResult = CryptographicBuffer.EncodeToBase64String(hashBuffer);
+
+        //http://stackoverflow.com/questions/3009284/using-regex-to-replace-invalid-characters
+        string pattern = "[\\~#%&*{}/:<>?|\"-]";
+        string replacement = " ";
+
+        Regex regEx = new Regex(pattern);
+        string sanitized = Regex.Replace(regEx.Replace(hashedResult, replacement), @"\s+", "_");
+
+        return sanitized;
+      }
+
+      #endregion
+
+#endif
 
         /// <summary>
         /// Extension method to check if file exist in folder
@@ -79,25 +112,6 @@ namespace Q42.WinRT
         }
 
 
-        /// <summary>
-        /// Similar in nature to Parallel.ForEach, with the primary difference being that Parallel.ForEach is a synchronous method and uses synchronous delegates.
-        /// http://blogs.msdn.com/b/pfxteam/archive/2012/03/05/10278165.aspx
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="source"></param>
-        /// <param name="dop"></param>
-        /// <param name="body"></param>
-        /// <returns></returns>
-        public static Task ForEachAsync<T>(this IEnumerable<T> source, int dop, Func<T, Task> body)
-        {
-            return Task.WhenAll(
-                from partition in Partitioner.Create(source).GetPartitions(dop)
-                select Task.Run(async delegate
-                {
-                    using (partition)
-                        while (partition.MoveNext())
-                          await body(partition.Current).ConfigureAwait(false);
-                }));
-        }
+       
     }
 }
