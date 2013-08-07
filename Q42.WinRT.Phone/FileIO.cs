@@ -23,6 +23,14 @@ namespace Q42.WinRT.Phone
       }
     }
 
+    internal async static Task WriteBytesAsync(IStorageFile storageFile, byte[] bytes)
+    {
+      using (Stream stream = await storageFile.OpenStreamForWriteAsync())
+      {
+        await stream.WriteAsync(bytes, 0, bytes.Length);
+      }
+    }
+
     internal async static Task<string> ReadTextAsync(IStorageFile storageFile)
     {
       string text;

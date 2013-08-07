@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+
+#if WINDOWS_PHONE
+using Q42.WinRT.Phone;
+#endif
 
 namespace Q42.WinRT.Data
 {
@@ -56,7 +57,8 @@ namespace Q42.WinRT.Data
           //Ignore these uri schemes
           if (uri.Scheme == "ms-resource"
               || uri.Scheme == "ms-appx"
-              || uri.Scheme == "ms-appdata")
+              || uri.Scheme == "ms-appdata"
+            || uri.Scheme == "isostore")
             return uri;
 
           string key = uri.ToCacheKey();
@@ -71,7 +73,11 @@ namespace Q42.WinRT.Data
             await SetAsync(uri).ConfigureAwait(false);
           }
 
+#if NETFX_CORE
           string localUri = string.Format("ms-appdata:///local/{0}/{1}", CacheFolder, key);
+#elif WINDOWS_PHONE
+          string localUri = string.Format("isostore:/{0}/{1}", CacheFolder, key);
+#endif
 
           return new Uri(localUri);
 
@@ -111,7 +117,7 @@ namespace Q42.WinRT.Data
 
             //Save data to cache
             var file = await folder.CreateFileAsync(key, Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            await Windows.Storage.FileIO.WriteBytesAsync(file, bytes);
+            await FileIO.WriteBytesAsync(file, bytes);
             return file;
         }
 

@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Q42.WinRT.Data;
+
+#if NETFX_CORE
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+#elif WINDOWS_PHONE
+using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
+#endif
 
 namespace Q42.WinRT.Controls
 {

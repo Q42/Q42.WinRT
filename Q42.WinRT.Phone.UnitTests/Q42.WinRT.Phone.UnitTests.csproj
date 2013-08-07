@@ -76,6 +76,9 @@
     <Compile Include="..\Q42.WinRT.UnitTests\Data\JsonCacheTest.cs">
       <Link>Data\JsonCacheTest.cs</Link>
     </Compile>
+    <Compile Include="..\Q42.WinRT.UnitTests\Data\WebDataCacheTest.cs">
+      <Link>Data\WebDataCacheTest.cs</Link>
+    </Compile>
     <Compile Include="..\Q42.WinRT.UnitTests\Storage\StorageHelperTest.cs">
       <Link>Storage\StorageHelperTest.cs</Link>
     </Compile>

@@ -47,6 +47,11 @@ namespace Q42.WinRT
             }));
       }
 
+  
+      #endregion
+
+#endif
+
       /// <summary>
       /// Converts Uri to cache key extension method
       /// </summary>
@@ -57,17 +62,7 @@ namespace Q42.WinRT
         if (uri == null)
           throw new ArgumentNullException("uri");
 
-        string result = uri.AbsoluteUri;
-
-        //FileIO.WriteBytesAsync crashes if total path length >= 247 characters 
-        //https://connect.microsoft.com/VisualStudio/feedback/details/781729/fileio-writebytesasync-crashes-if-total-path-length-247-characters-winrt
-
-        //Hash each value so we wont get long filepaths
-        //Max is 260 for fully qualified file name
-        IBuffer buffer = CryptographicBuffer.ConvertStringToBinary(result, BinaryStringEncoding.Utf8);
-        HashAlgorithmProvider hashAlgorithm = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
-        IBuffer hashBuffer = hashAlgorithm.HashData(buffer);
-        var hashedResult = CryptographicBuffer.EncodeToBase64String(hashBuffer);
+        string hashedResult = uri.GetHashCode().ToString();
 
         //http://stackoverflow.com/questions/3009284/using-regex-to-replace-invalid-characters
         string pattern = "[\\~#%&*{}/:<>?|\"-]";
@@ -79,9 +74,6 @@ namespace Q42.WinRT
         return sanitized;
       }
 
-      #endregion
-
-#endif
 
         /// <summary>
         /// Extension method to check if file exist in folder

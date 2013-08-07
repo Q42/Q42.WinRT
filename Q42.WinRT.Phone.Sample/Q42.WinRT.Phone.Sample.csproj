@@ -147,6 +147,16 @@
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Q42.WinRT.Phone\Q42.WinRT.Phone.csproj">
+      <Project>{9DE59194-DAF1-4633-AB58-33922A7E4627}</Project>
+      <Name>Q42.WinRT.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Q42.WinRT.Portable\Q42.WinRT.Portable.csproj">
+      <Project>{C63D709A-617F-4AD8-A5ED-358036AD9057}</Project>
+      <Name>Q42.WinRT.Portable</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

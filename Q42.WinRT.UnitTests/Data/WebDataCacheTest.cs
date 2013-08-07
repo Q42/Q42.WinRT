@@ -30,11 +30,33 @@ namespace Q42.WinRT.UnitTests.Data
         }
 
         [TestMethod]
-        public async Task AsyncFileValidFilename()
+        public void AsyncFileValidFilename()
         {
           string key = Extensions.ToCacheKey(new Uri("http://afisha.tut.by/film.php?fid=2710"));
 
           Assert.IsFalse(key.Contains("/"));
+        }
+
+        [TestMethod]
+        public void SameHashTest()
+        {
+          string key1 = Extensions.ToCacheKey(new Uri("http://afisha.tut.by/film.php?fid=2710"));
+          string key2 = Extensions.ToCacheKey(new Uri("http://afisha.tut.by/film.php?fid=2710"));
+
+          Assert.AreEqual(key1, key2);
+
+        }
+
+        [TestMethod]
+        public void UniqueHashTest()
+        {
+          string key1 = Extensions.ToCacheKey(new Uri("http://afisha.tut.by/film.php?fid=2710"));
+
+          //Different querystring param
+          string key2 = Extensions.ToCacheKey(new Uri("http://afisha.tut.by/film.php?fid=2711"));
+
+          Assert.AreNotEqual(key1, key2);
+
         }
     }
    

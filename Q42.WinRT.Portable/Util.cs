@@ -26,6 +26,7 @@ namespace Q42.WinRT.Portable
 				memberExpression = (MemberExpression)((UnaryExpression)expression.Body).Operand;
 
 			return memberExpression.Member.Name;
+
 		}
 
 		/// <summary>
