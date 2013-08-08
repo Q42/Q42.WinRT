@@ -11,7 +11,7 @@ Or download directly from NuGet:
 - [Q42.WinRT.Phone on NuGet](https://nuget.org/packages/Q42.WinRT.Phone)
 - [Q42.WinRT.Portable on NuGet](https://nuget.org/packages/Q42.WinRT.Portable)
 
-## What`s included?
+## What's included?
 With this library comes a fully functional sample application that shows off most of the functionality. There`s also a unit test project included.
 
 | Data     | Windows 8 | Windows Phone | 
