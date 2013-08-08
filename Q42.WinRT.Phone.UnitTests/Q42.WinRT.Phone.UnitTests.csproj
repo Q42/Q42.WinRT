@@ -70,6 +70,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Q42.WinRT.UnitTests\Converters\ByteToStringConverterTest.cs">
+      <Link>Converters\ByteToStringConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Q42.WinRT.UnitTests\Converters\InverseVisibilityConverterTest.cs">
+      <Link>Converters\InverseVisibilityConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Q42.WinRT.UnitTests\Converters\VisibilityConverterTest.cs">
+      <Link>Converters\VisibilityConverterTest.cs</Link>
+    </Compile>
     <Compile Include="..\Q42.WinRT.UnitTests\Data\DataLoaderTest.cs">
       <Link>Data\DataLoaderTest.cs</Link>
     </Compile>

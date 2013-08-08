@@ -85,8 +85,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Q42.WinRT\Controls\ImageExtensions.cs">
-      <Link>Controls\ImageExtensions.cs</Link>
+    <Compile Include="..\Q42.WinRT\Converters\ByteToStringConverter.cs">
+      <Link>Converters\ByteToStringConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Q42.WinRT\Converters\InverseVisibilityConverter.cs">
+      <Link>Converters\InverseVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Q42.WinRT\Converters\VisibilityConverter.cs">
+      <Link>Converters\VisibilityConverter.cs</Link>
     </Compile>
     <Compile Include="..\Q42.WinRT\Data\JsonCache.cs">
       <Link>Data\JsonCache.cs</Link>
@@ -123,6 +129,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <ProjectExtensions />

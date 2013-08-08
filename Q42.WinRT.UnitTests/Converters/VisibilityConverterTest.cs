@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Q42.WinRT.Converters;
+
+#if NETFX_CORE
 using Windows.UI.Xaml;
+#elif WINDOWS_PHONE
+using System.Windows;
+#endif
 
 namespace Q42.WinRT.UnitTests.Converters
 {

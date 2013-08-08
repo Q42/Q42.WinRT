@@ -47,7 +47,10 @@ namespace Q42.WinRT.SampleApp.ViewModel
             SimpleIoc.Default.Register<ConvertersExampleViewModel>();
             SimpleIoc.Default.Register<DataExampleViewModel>();
             SimpleIoc.Default.Register<StorageExampleViewModel>();
+
+#if NETFX_CORE
             SimpleIoc.Default.Register<UtilExampleViewModel>();
+#endif
 
         }
 
@@ -83,6 +86,7 @@ namespace Q42.WinRT.SampleApp.ViewModel
             }
         }
 
+#if NETFX_CORE
         public UtilExampleViewModel UtilExample
         {
             get
@@ -90,6 +94,8 @@ namespace Q42.WinRT.SampleApp.ViewModel
                 return ServiceLocator.Current.GetInstance<UtilExampleViewModel>();
             }
         }
+#endif
+
         
         public static void Cleanup()
         {

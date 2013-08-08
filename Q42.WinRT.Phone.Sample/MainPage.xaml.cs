@@ -18,24 +18,24 @@ namespace Q42.WinRT.Phone.Sample
     {
       InitializeComponent();
 
-      // Sample code to localize the ApplicationBar
-      //BuildLocalizedApplicationBar();
     }
 
-    // Sample code for building a localized ApplicationBar
-    //private void BuildLocalizedApplicationBar()
-    //{
-    //    // Set the page's ApplicationBar to a new instance of ApplicationBar.
-    //    ApplicationBar = new ApplicationBar();
+    private void DataButton_Click_1(object sender, RoutedEventArgs e)
+    {
+      this.NavigationService.Navigate(new Uri("/Views/DataExamplePage.xaml", UriKind.Relative));
 
-    //    // Create a new button and set the text value to the localized string from AppResources.
-    //    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-    //    appBarButton.Text = AppResources.AppBarButtonText;
-    //    ApplicationBar.Buttons.Add(appBarButton);
+    }
 
-    //    // Create a new menu item with the localized string from AppResources.
-    //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-    //    ApplicationBar.MenuItems.Add(appBarMenuItem);
-    //}
+    private void StorageButton_Click_1(object sender, RoutedEventArgs e)
+    {
+      this.NavigationService.Navigate(new Uri("/Views/StorageExamplePage.xaml", UriKind.Relative));
+    }
+
+    private void ConvertsButton_Click_1(object sender, RoutedEventArgs e)
+    {
+      this.NavigationService.Navigate(new Uri("/Views/ConvertersExamplePage.xaml", UriKind.Relative));
+
+    }
+
   }
 }

@@ -1,25 +1,46 @@
 Q42.WinRT
 =========
 
-Open source library for Windows Phone and Windows 8 C#/XAML applications. This library was originally developed for Windows 8, but now also includes a Portable Class Library which is compatible with WIndows Phone.
+Open source library for Windows Phone and Windows 8 C#/XAML applications. This library was originally developed for Windows 8, but most functionality is also compatible with Windows Phone.
 The library is focused on web connected and data driven applications. It includes helpers to easily cache data from API calls and cache web images to the local storage.
 
-### Included in PCL (Compatible with Windows Phone and Win8)
-DataLoader which functions as a wrapper around a Task<T> method. You can bind a ProgressBar or ProgressRing to the DataLoader and show it as long as the task is running.
-
-Please checkout the included sample application.
+Please checkout the included sample application for Windows 8 and Windows Phone.
 
 Or download directly from NuGet:
-[Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT)
-[Q42.WinRT.Portable on NuGet](https://nuget.org/packages/Q42.WinRT.Portable)
+- [Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT)
+- [Q42.WinRT.Phone on NuGet](https://nuget.org/packages/Q42.WinRT.Phone)
+- [Q42.WinRT.Portable on NuGet](https://nuget.org/packages/Q42.WinRT.Portable)
 
 ## What`s included?
 With this library comes a fully functional sample application that shows off most of the functionality. There`s also a unit test project included.
 
-### Controls
-* `WrapPanel` - WrapPanel ported from Silverlight. Allows variable sized controls and wraps to a new line when needed.
-* `Background Parallax` - Creates a background parallax effect like on the Windows 8 start screen
-* `Settings Flyout` - Flyout that hosts a UserControl with custom data. Can be used to create a Settings Flyout and have full control over the layout
+| Data     | Windows 8 | Windows Phone | 
+| ------------- |:---------:|:-------------:|
+| DataLoader      | x |x | 
+| JsonCache      | x |x |  
+| WebDataCache      | x|x|
+| StorageHelper      | x|x|
+| ImageExtensions.CacheUri      | x||
+
+| Converters     | Windows 8 | Windows Phone | 
+| ------------- |:---------:|:-------------:|
+| VisibilityConverter      | x |x |  
+| InverseVisibilityConverter      | x |x |  
+| ByteToStringConverter      | x |x |  
+| StringFormatConverter      | x||
+| TextToLowerConverter      | x||
+
+| Helpers     | Windows 8 | Windows Phone | 
+| ------------- |:---------:|:-------------:|
+| Util.GetAppVersion      | x||
+| Util.GetOsVersion      | x||
+| Util.GetMachineName      | x||
+
+| Controls     | Windows 8 | Windows Phone | 
+| ------------- |:---------:|:-------------:|
+| WrapPanel      | x||
+| Background Parallax      | x||
+| Settings Flyout      | x||
 
 ### Data
 * `DataLoader` - Input a task, enables easy binding to Loading / Finished / Error properties (show progress bar as long as task is running)
@@ -41,8 +62,47 @@ With this library comes a fully functional sample application that shows off mos
 * `Util.GetOsVersion` - Gets the version of the OS (for now: Windows NT 6.2, can change in the future)
 * `Util.GetMachineName` - Returns the machine name
 
-## How To install?
+### Controls
+* `WrapPanel` - WrapPanel ported from Silverlight. Allows variable sized controls and wraps to a new line when needed.
+* `Background Parallax` - Creates a background parallax effect like on the Windows 8 start screen
+* `Settings Flyout` - Flyout that hosts a UserControl with custom data. Can be used to create a Settings Flyout and have full control over the layout
+
+
+## How To Install?
 Download the source including the sample code from GitHub or get the assembly from NuGet [Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT).
+
+## How To Use?
+Check out the included sample app and unit tests for Windows 8 and Windows Phone.
+
+### DataLoader introduction
+Let's say you have a long running async operation which gets some data from the web.
+
+	var result = await LoadWebData();
+	
+You want to show a nice progress bar when you're busy loading the data. Use the DataLoader for that, it wraps around your existing code:
+
+	//public property you can bind to
+	public DataLoader DL { get; set; }
+	
+	var result = DL.LoadAsync(() => LongRunningOperation());
+	
+You can now bind your ProgressBar to the DataLoader's IsBusy property in your XAML:
+	
+	<ProgressBar DataContext="{Binding DL}" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+	
+For more advanced scenarios, see the included sample apps and unit tests.
+
+### JsonCache introduction
+Let's say you want to cache the result when you grab some data from an external source
+
+	List<MyData> result = JsonCache.GetAsync("your_key", () => LoadWebData());
+	
+The next time you do the same call, you get the cached result.
+You can combine this with the DataLoader to show a ProgressBar:
+
+	List<MyData> result = DL.LoadAsync(() => JsonCache.GetAsync("your_key", () => LoadWebData()));
+
+For more advanced scenarios, see the included sample apps and unit tests.
 
 ## License
 Q42.WinRT is licensed under [MIT](http://www.opensource.org/licenses/mit-license.php "Read more about the MIT license form"). Refer to [license.txt](https://github.com/Q42/Q42.WinRT/blob/master/LICENSE.txt) for more information.

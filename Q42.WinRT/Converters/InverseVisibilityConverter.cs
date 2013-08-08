@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#if NETFX_CORE
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
+#elif WINDOWS_PHONE
+using System.Windows.Data;
+using System.Windows;
+#endif
 
 namespace Q42.WinRT.Converters
 {
@@ -22,7 +24,12 @@ namespace Q42.WinRT.Converters
         /// <param name="parameter"></param>
         /// <param name="language"></param>
         /// <returns></returns>
+       
+#if NETFX_CORE
         public object Convert(object value, Type targetType, object parameter, string language)
+#elif WINDOWS_PHONE
+      public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+#endif
         {
 
 #if DEBUG
@@ -72,9 +79,14 @@ namespace Q42.WinRT.Converters
         /// <param name="parameter"></param>
         /// <param name="language"></param>
         /// <returns></returns>
+#if NETFX_CORE
         public object ConvertBack(object value, Type targetType, object parameter, string language)
+#elif WINDOWS_PHONE
+      public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+#endif
         {
             throw new NotImplementedException();
         }
+       
     }
 }
