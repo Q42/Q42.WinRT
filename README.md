@@ -9,7 +9,6 @@ Please checkout the included sample application for Windows 8 and Windows Phone.
 Or download directly from NuGet:
 - [Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT)
 - [Q42.WinRT.Phone on NuGet](https://nuget.org/packages/Q42.WinRT.Phone)
-- [Q42.WinRT.Portable on NuGet](https://nuget.org/packages/Q42.WinRT.Portable)
 
 ## What's included?
 With this library comes a fully functional sample application that shows off most of the functionality. There's also a unit test project included.
@@ -69,7 +68,9 @@ With this library comes a fully functional sample application that shows off mos
 
 
 ## How To Install?
-Download the source including the sample code from GitHub or get the assembly from NuGet [Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT).
+Download the source including the sample code from GitHub or install from NuGet:
+- [Q42.WinRT](https://nuget.org/packages/Q42.WinRT)
+- [Q42.WinRT.Phone](https://nuget.org/packages/Q42.WinRT.Phone)
 
 ## How To Use?
 Check out the included sample app and unit tests for Windows 8 and Windows Phone.
@@ -84,7 +85,7 @@ You want to show a nice progress bar when you're busy loading the data. Use the 
 	//public property you can bind to
 	public DataLoader DL { get; set; }
 	
-	var result = DL.LoadAsync(() => LongRunningOperation());
+	var result = DL.LoadAsync(() => LoadWebData());
 	
 You can now bind your ProgressBar to the DataLoader's IsBusy property in your XAML:
 	
