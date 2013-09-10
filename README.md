@@ -39,7 +39,7 @@ With this library comes a fully functional sample application that shows off mos
 | ------------- |:---------:|:-------------:|
 | WrapPanel      | x||
 | Background Parallax      | x||
-| Settings Flyout      | x||
+| UserControl Flyout      | x||
 
 ### Data
 * `DataLoader` - Input a task, enables easy binding to Loading / Finished / Error properties (show progress bar as long as task is running)
@@ -64,7 +64,7 @@ With this library comes a fully functional sample application that shows off mos
 ### Controls
 * `WrapPanel` - WrapPanel ported from Silverlight. Allows variable sized controls and wraps to a new line when needed.
 * `Background Parallax` - Creates a background parallax effect like on the Windows 8 start screen
-* `Settings Flyout` - Flyout that hosts a UserControl with custom data. Can be used to create a Settings Flyout and have full control over the layout
+* `UserControl Flyout` - Flyout that hosts a UserControl with custom data. Can be used to create a Settings Flyout and have full control over the layout
 
 
 ## How To Install?

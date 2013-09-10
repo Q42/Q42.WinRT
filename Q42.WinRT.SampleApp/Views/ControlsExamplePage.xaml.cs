@@ -53,7 +53,7 @@ namespace Q42.WinRT.SampleApp.Views
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            SettingsFlyout flyout = new SettingsFlyout();
+            UserControlFlyout flyout = new UserControlFlyout();
             flyout.ShowFlyout(new FlyoutContentUserControl());
         }
 

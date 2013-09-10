@@ -12,7 +12,7 @@ namespace Q42.WinRT.Controls
     /// <summary>
     /// Flyout that can host a UserControl
     /// </summary>
-    public class SettingsFlyout
+    public class UserControlFlyout
     {
         private const int _width = 346;
         private Popup _popup;
