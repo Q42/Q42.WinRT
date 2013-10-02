@@ -10,6 +10,8 @@ using Windows.UI.Xaml.Media.Imaging;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
+using System.IO;
+using System.IO.IsolatedStorage;
 #endif
 
 namespace Q42.WinRT.Controls
@@ -62,8 +64,23 @@ namespace Q42.WinRT.Controls
                     //Get image from cache (download and set in cache if needed)
                     var cacheUri = await WebDataCache.GetLocalUriAsync(newCacheUri);
 
-                    //Set cache uri as source for the image
-                    image.Source = new BitmapImage(cacheUri);
+                    #if NETFX_CORE
+                        //Set cache uri as source for the image
+                        image.Source = new BitmapImage(cacheUri);
+
+                    #elif WINDOWS_PHONE
+                        BitmapImage bimg = new BitmapImage();
+
+                        using (IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication())
+                        {
+                            using (IsolatedStorageFileStream stream = iso.OpenFile(cacheUri.PathAndQuery, FileMode.Open, FileAccess.Read))
+                            {
+                                bimg.SetSource(stream);
+                            }
+                        }
+                        //Set cache uri as source for the image
+                        image.Source = bimg;
+                    #endif
                 }
                 catch (Exception ex)
                 {
