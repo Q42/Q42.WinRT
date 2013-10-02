@@ -51,6 +51,7 @@
                 <Button x:Name="DataButton" Click="DataButton_Click_1">Data and caching</Button>
                 <Button x:Name="StorageButton" Click="StorageButton_Click_1">Storage</Button>
                 <Button x:Name="ConvertsButton" Click="ConvertsButton_Click_1">Converters</Button>
+                <Button x:Name="ImageCacheButton" Click="ImageCacheButton_Click_1">Image Cache</Button>
     
             </StackPanel>
         </Grid>

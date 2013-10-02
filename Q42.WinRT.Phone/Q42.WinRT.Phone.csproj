@@ -87,6 +87,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Q42.WinRT\Controls\ImageExtensions.cs">
+      <Link>Controls\ImageExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Q42.WinRT\Converters\ByteToStringConverter.cs">
       <Link>Converters\ByteToStringConverter.cs</Link>
     </Compile>

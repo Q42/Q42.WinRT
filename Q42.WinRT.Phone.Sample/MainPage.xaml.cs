@@ -37,5 +37,11 @@ namespace Q42.WinRT.Phone.Sample
 
     }
 
+    private void ImageCacheButton_Click_1(object sender, RoutedEventArgs e)
+    {
+        this.NavigationService.Navigate(new Uri("/Views/ImageCacheExamplePage.xaml", UriKind.Relative));
+
+    }
+
   }
 }

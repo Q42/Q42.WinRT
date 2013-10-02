@@ -6,7 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-     xmlns:q42converters="clr-namespace:Q42.WinRT.Converters;assembly=Q42.WinRT.Phone"
+    xmlns:q42converters="clr-namespace:Q42.WinRT.Converters;assembly=Q42.WinRT.Phone"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -128,12 +128,7 @@
 
 
                     <TextBlock Margin="0,50,0,0" FontSize="18">WebData cache</TextBlock>
-                    <!--<TextBlock TextWrapping="Wrap" Margin="0,20,0,0" FontSize="18">Cache images with HTTPS uri. This image is downloaded once and cached locally</TextBlock>
-                    <TextBlock TextWrapping="Wrap" FontSize="18">Source already caches http uri's by default. This extension can be used when you want to cache https data.</TextBlock>
-                    <Image HorizontalAlignment="Left" Stretch="None" q42controls:ImageExtensions.CacheUri="http://a0.twimg.com/profile_images/2142700938/q42-logo-big-square.png" />
-                    <TextBlock>Normal:</TextBlock>
-                    <Image HorizontalAlignment="Left" Stretch="None" Source="http://a0.twimg.com/profile_images/2142700938/q42-logo-big-square.png" />-->
-
+                    
                     <TextBlock Margin="0,30,0,0" FontSize="18">Experimental: Uri result caching (debug to see in action)</TextBlock>
                     <Button Command="{Binding GetUriCommand}">Get result of Uri http://microsoft.com (from cache or internet)</Button>
                     <!--<Button Command="{Binding ClearWebDataCacheCommand}">Clear WebData cache</Button>-->

@@ -19,7 +19,7 @@ With this library comes a fully functional sample application that shows off mos
 | JsonCache      | x |x |  
 | WebDataCache      | x|x|
 | StorageHelper      | x|x|
-| ImageExtensions.CacheUri      | x||
+| ImageExtensions.CacheUri      | x|x|
 
 | Converters     | Windows 8 | Windows Phone | 
 | ------------- |:---------:|:-------------:|
@@ -112,8 +112,8 @@ Q42.WinRT is licensed under [MIT](http://www.opensource.org/licenses/mit-license
 Contributions are welcome. Fork this repository and send a pull request if you have something useful to add.
 
 ## Credits
-* [Q42](http://www.q42.nl) ([@q42](http://twitter.com/q42)) - Inventors of products, games and solutions from the Netherlands.
 * [Michiel Post](http://www.michielpost.nl) ([@michielpostnl](http://twitter.com/michielpostnl)) - core contributor
+* [Q42](http://www.q42.nl) ([@q42](http://twitter.com/q42)) - Inventors of products, games and solutions from the Netherlands.
 
 ### Open Source Project Credits
 Some code is used from other open source projects.

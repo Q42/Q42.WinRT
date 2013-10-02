@@ -126,6 +126,9 @@
     <Compile Include="Views\DataExamplePage.xaml.cs">
       <DependentUpon>DataExamplePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ImageCacheExamplePage.xaml.cs">
+      <DependentUpon>ImageCacheExamplePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StorageExamplePage.xaml.cs">
       <DependentUpon>StorageExamplePage.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DataExamplePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImageCacheExamplePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
