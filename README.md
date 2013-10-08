@@ -10,6 +10,9 @@ Or download directly from NuGet:
 - [Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT)
 - [Q42.WinRT.Phone on NuGet](https://nuget.org/packages/Q42.WinRT.Phone)
 
+Looking for the old version compatible with Windows 8.0?
+[Last 8.0 commit](https://github.com/Q42/Q42.WinRT/tree/72c32592a8681154c17c246904b4d010c916bd5c) / [NuGet package 1.0.14.42](https://www.nuget.org/packages/Q42.WinRT/1.0.14.42)
+
 ## What's included?
 With this library comes a fully functional sample application that shows off most of the functionality. There's also a unit test project included.
 
