@@ -47,6 +47,7 @@ namespace Q42.WinRT.Data
     /// <param name="generate"></param>
     /// <param name="expireDate"></param>
     /// <param name="forceRefresh"></param>
+    /// <param name="serializerType">JSON or XML serializer</param>
     /// <returns></returns>
     public async static Task<T> GetAsync<T>(string key, Func<Task<T>> generate, DateTime? expireDate = null, bool forceRefresh = false, StorageSerializer serializerType = StorageSerializer.JSON)
     {
@@ -75,6 +76,7 @@ namespace Q42.WinRT.Data
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
+    /// <param name="serializerType">JSON or XML serializer</param>
     /// <returns></returns>
     public async static Task<T> GetFromCache<T>(string key, StorageSerializer serializerType = StorageSerializer.JSON)
     {
@@ -104,6 +106,7 @@ namespace Q42.WinRT.Data
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <param name="expireDate"></param>
+    /// <param name="serializerType">JSON or XML serializer</param>
     /// <returns></returns>
     public static Task Set<T>(string key, T value, DateTime? expireDate = null, StorageSerializer serializerType = StorageSerializer.JSON)
     {
@@ -118,6 +121,7 @@ namespace Q42.WinRT.Data
     /// Delete key from cache
     /// </summary>
     /// <param name="key"></param>
+    /// <param name="serializerType">JSON or XML serializer</param>
     /// <returns></returns>
     public static Task Delete(string key, StorageSerializer serializerType = StorageSerializer.JSON)
     {
