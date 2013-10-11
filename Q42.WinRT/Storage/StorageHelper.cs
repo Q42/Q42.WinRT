@@ -29,9 +29,14 @@ namespace Q42.WinRT.Storage
 #endif
   }
 
+  /// <summary>
+  /// Type of Serializer used
+  /// </summary>
   public enum StorageSerializer
   {
+      /// <summary>JSON</summary>
       JSON,
+      /// <summary>XML</summary>
       XML
   }
 
@@ -53,6 +58,7 @@ namespace Q42.WinRT.Storage
     /// </summary>
     /// <param name="StorageType"></param>
     /// <param name="subFolder"></param>
+    /// <param name="serializerType"></param>
     public StorageHelper(StorageType StorageType, string subFolder = null, StorageSerializer serializerType = StorageSerializer.JSON)
     {
       _storageType = StorageType;
@@ -71,10 +77,8 @@ namespace Q42.WinRT.Storage
         {
             case StorageSerializer.JSON:
                 return ".json";
-                break;
             case StorageSerializer.XML:
                 return ".xml";
-                break;
         }
 
         return string.Empty;
@@ -107,15 +111,15 @@ namespace Q42.WinRT.Storage
     /// <summary>
     /// Save object from file
     /// </summary>
-    /// <param name="Obj"></param>
+    /// <param name="obj"></param>
     /// <param name="fileName"></param>
-    public async Task SaveAsync(T Obj, string fileName)
+    public async Task SaveAsync(T obj, string fileName)
     {
 
         fileName = fileName + GetFileExtension();
       try
       {
-        if (Obj != null)
+        if (obj != null)
         {
           //Get file
           StorageFile file = null;
@@ -128,14 +132,14 @@ namespace Q42.WinRT.Storage
           switch (_serializerType)
           {
               case StorageSerializer.JSON:
-                  storageString = JsonConvert.SerializeObject(Obj);
+                  storageString = JsonConvert.SerializeObject(obj);
                   break;
               case StorageSerializer.XML:
                   XmlSerializer serializer = new XmlSerializer(typeof(T));
                   var sb = new StringBuilder();
                   using (TextWriter writer = new StringWriter(sb))
                   {
-                      serializer.Serialize(writer, Obj);
+                      serializer.Serialize(writer, obj);
                   }
                   storageString = sb.ToString();
                   break;
