@@ -85,11 +85,11 @@ namespace Q42.WinRT.SampleApp.ViewModel
         public DataExampleViewModel()
         {
             StartLongRunningDataLoader = new DataLoader();
-            StartLongRunningWithExceptionDataLoader = new DataLoader(true); //swallow exceptions
+            StartLongRunningWithExceptionDataLoader = new DataLoader(); //swallow exceptions by default
             CacheDataLoader = new DataLoader();
-            CacheWithExceptionDataLoader = new DataLoader(true); //swallow exceptions
-            SourceABDataLoader = new DataLoader(true); //swallow exceptions
-            CacheRefreshDataLoader = new DataLoader(true); //swallow exceptions
+            CacheWithExceptionDataLoader = new DataLoader(); //swallow exceptions by default
+            SourceABDataLoader = new DataLoader(); //swallow exceptions by default
+            CacheRefreshDataLoader = new DataLoader(); //swallow exceptions by default
             FailCacheDataLoader = new DataLoader(); 
             FailCacheSuccessDataLoader = new DataLoader();
 

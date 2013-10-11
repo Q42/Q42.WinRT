@@ -45,7 +45,8 @@ namespace Q42.WinRT.UnitTests.Data
         [TestMethod]
         public async Task DataLoaderLoadErrorTest()
         {
-            DataLoader a = new DataLoader();
+            //false indicates: Do not swallow exception!
+            DataLoader a = new DataLoader(false);
 
             var task = a.LoadAsync(() => LongRunningOperationThrowsError());
 
@@ -69,8 +70,8 @@ namespace Q42.WinRT.UnitTests.Data
         [TestMethod]
         public async Task DataLoaderLoadErrorSwallowTest()
         {
-            //Set true to swallow exception
-            DataLoader a = new DataLoader(true);
+            //Swallow exceptions by default
+            DataLoader a = new DataLoader();
 
             var task = a.LoadAsync(() => LongRunningOperationThrowsError());
 

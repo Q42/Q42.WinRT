@@ -31,7 +31,7 @@ namespace Q42.WinRT.Portable.Data
     public class DataLoader : INotifyPropertyChanged
     {
         private LoadingState _loadingState;
-        private bool _catchExceptions = false;
+        private bool _swallowExceptions;
 
         /// <summary>
         /// Current loading state
@@ -98,15 +98,11 @@ namespace Q42.WinRT.Portable.Data
         /// <summary>
         /// DataLoader constructors
         /// </summary>
-        /// <param name="catchExceptions">Swallows exceptions</param>
-        public DataLoader(bool? catchExceptions = null)
+        /// <param name="swallowExceptions">Swallows exceptions. Defaults to true. It's a more common scenario to swallow exceptions and just bind to the IsError property. You don't want to surround each DataLoader with a try/catch block. You can listen to the error callback at all times to get the error.</param>
+        public DataLoader(bool swallowExceptions = true)
         {
-            if (catchExceptions.HasValue)
-                _catchExceptions = catchExceptions.Value;
+          _swallowExceptions = swallowExceptions;
         }
-
-
-
 
         /// <summary>
         ///  Load data. Errors will be in errorcallback
@@ -141,7 +137,7 @@ namespace Q42.WinRT.Portable.Data
 
                 if (errorCallback != null)
                     errorCallback(e);
-                else if (!_catchExceptions) //swallow exception if catchexception is true
+                else if (!_swallowExceptions) //swallow exception if _swallowExceptions is true
                     throw; //throw error if no callback is defined
 
             }
@@ -190,7 +186,7 @@ namespace Q42.WinRT.Portable.Data
 
                 if (errorCallback != null)
                     errorCallback(e);
-                else if (!_catchExceptions) //swallow exception if catchexception is true
+                else if (!_swallowExceptions) //swallow exception if catchexception is true
                     throw; //throw error if no callback is defined
 
             }

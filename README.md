@@ -88,7 +88,8 @@ You want to show a nice progress bar when you're busy loading the data. Use the 
 	//public property you can bind to
 	public DataLoader DL { get; set; }
 	
-	var result = DL.LoadAsync(() => LoadWebData());
+	DL = new DataLoader();
+	var result = await DL.LoadAsync(() => LoadWebData());
 	
 You can now bind your ProgressBar to the DataLoader's IsBusy property in your XAML:
 	
@@ -99,12 +100,12 @@ For more advanced scenarios, see the included sample apps and unit tests.
 ### DataCache introduction
 Let's say you want to cache the result when you grab some data from an external source
 
-	List<MyData> result = DataCache.GetAsync("your_key", () => LoadWebData());
+	List<MyData> result = await DataCache.GetAsync("your_key", () => LoadWebData());
 	
 The next time you do the same call, you get the cached result.
 You can combine this with the DataLoader to show a ProgressBar:
 
-	List<MyData> result = DL.LoadAsync(() => DataCache.GetAsync("your_key", () => LoadWebData()));
+	List<MyData> result = await DL.LoadAsync(() => DataCache.GetAsync("your_key", () => LoadWebData()));
 
 For more advanced scenarios, see the included sample apps and unit tests.
 
