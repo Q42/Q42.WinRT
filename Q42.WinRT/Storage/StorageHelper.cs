@@ -17,7 +17,7 @@ namespace Q42.WinRT.Storage
   /// </summary>
   public enum StorageType
   {
-    
+
     /// <summary>Local</summary>
     Local,
 
@@ -34,10 +34,10 @@ namespace Q42.WinRT.Storage
   /// </summary>
   public enum StorageSerializer
   {
-      /// <summary>JSON</summary>
-      JSON,
-      /// <summary>XML</summary>
-      XML
+    /// <summary>JSON</summary>
+    JSON,
+    /// <summary>XML</summary>
+    XML
   }
 
   /// <summary>
@@ -51,7 +51,7 @@ namespace Q42.WinRT.Storage
     private string _subFolder;
     private StorageSerializer _serializerType;
 
-    
+
 
     /// <summary>
     /// Default constructor
@@ -73,15 +73,15 @@ namespace Q42.WinRT.Storage
     /// <returns></returns>
     private string GetFileExtension()
     {
-        switch (_serializerType)
-        {
-            case StorageSerializer.JSON:
-                return ".json";
-            case StorageSerializer.XML:
-                return ".xml";
-        }
+      switch (_serializerType)
+      {
+        case StorageSerializer.JSON:
+          return ".json";
+        case StorageSerializer.XML:
+          return ".xml";
+      }
 
-        return string.Empty;
+      return string.Empty;
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ namespace Q42.WinRT.Storage
     /// <param name="fileName"></param>
     public async Task DeleteAsync(string fileName)
     {
-        fileName = fileName + GetFileExtension();
+      fileName = fileName + GetFileExtension();
       try
       {
         StorageFolder folder = await GetFolderAsync().ConfigureAwait(false);
@@ -116,7 +116,7 @@ namespace Q42.WinRT.Storage
     public async Task SaveAsync(T obj, string fileName)
     {
 
-        fileName = fileName + GetFileExtension();
+      fileName = fileName + GetFileExtension();
       try
       {
         if (obj != null)
@@ -127,22 +127,22 @@ namespace Q42.WinRT.Storage
           file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
 
-          //Serialize object
+          //Serialize object with JSON or XML serializer
           string storageString = null;
           switch (_serializerType)
           {
-              case StorageSerializer.JSON:
-                  storageString = JsonConvert.SerializeObject(obj);
-                  break;
-              case StorageSerializer.XML:
-                  XmlSerializer serializer = new XmlSerializer(typeof(T));
-                  var sb = new StringBuilder();
-                  using (TextWriter writer = new StringWriter(sb))
-                  {
-                      serializer.Serialize(writer, obj);
-                  }
-                  storageString = sb.ToString();
-                  break;
+            case StorageSerializer.JSON:
+              storageString = JsonConvert.SerializeObject(obj);
+              break;
+            case StorageSerializer.XML:
+              XmlSerializer serializer = new XmlSerializer(typeof(T));
+              var sb = new StringBuilder();
+              using (TextWriter writer = new StringWriter(sb))
+              {
+                serializer.Serialize(writer, obj);
+              }
+              storageString = sb.ToString();
+              break;
           }
 
           //Write content to file
@@ -162,7 +162,7 @@ namespace Q42.WinRT.Storage
     /// <returns></returns>
     public async Task<T> LoadAsync(string fileName)
     {
-        fileName = fileName + GetFileExtension();
+      fileName = fileName + GetFileExtension();
       try
       {
 
@@ -176,22 +176,22 @@ namespace Q42.WinRT.Storage
 
           var data = await FileIO.ReadTextAsync(file);
 
-          //Deserialize to object
+          //Deserialize to object with JSON or XML serializer
           T result = default(T);
           switch (_serializerType)
           {
-              case StorageSerializer.JSON:
-                  result = JsonConvert.DeserializeObject<T>(data);
-                  break;
-              case StorageSerializer.XML:
-                  XmlSerializer serializer = new XmlSerializer(typeof(T));
-                  object xmlResult;
-                  using (TextReader reader = new StringReader(data))
-                  {
-                      xmlResult = serializer.Deserialize(reader);
-                  }
-                  result = (T)xmlResult;
-                  break;
+            case StorageSerializer.JSON:
+              result = JsonConvert.DeserializeObject<T>(data);
+              break;
+            case StorageSerializer.XML:
+              XmlSerializer serializer = new XmlSerializer(typeof(T));
+              object xmlResult;
+              using (TextReader reader = new StringReader(data))
+              {
+                xmlResult = serializer.Deserialize(reader);
+              }
+              result = (T)xmlResult;
+              break;
           }
 
           return result;
@@ -269,6 +269,7 @@ namespace Q42.WinRT.Storage
         StorageHelper<object> storage = new StorageHelper<object>(StorageType.Local);
         var folder = await storage.GetFolderAsync().ConfigureAwait(false);
 
+        //Remove subfolders
         foreach (var sub in await folder.GetFoldersAsync())
         {
           try
@@ -280,6 +281,7 @@ namespace Q42.WinRT.Storage
           }
         }
 
+        //Remove files
         foreach (var file in await folder.GetFilesAsync())
         {
           try
