@@ -75,12 +75,12 @@ namespace Q42.WinRT
                     </head>
                 </html>";
 
-            webView.LoadCompleted += (sender, e) =>
+            webView.NavigationCompleted += async (sender, e) =>
             {
                 try
                 {
                     //Invoke the javascript when the html load is complete
-                    string result = webView.InvokeScript("GetUserAgent", null);
+                    string result = await webView.InvokeScriptAsync("GetUserAgent", null);
 
                     //Set the task result
                     tcs.TrySetResult(result);
