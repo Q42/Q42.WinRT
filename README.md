@@ -19,7 +19,7 @@ With this library comes a fully functional sample application that shows off mos
 | Data     | Windows 8 | Windows Phone | 
 | ------------- |:---------:|:-------------:|
 | DataLoader      | x |x | 
-| JsonCache      | x |x |  
+| DataCache      | x |x |  
 | WebDataCache      | x|x|
 | StorageHelper      | x|x|
 | ImageExtensions.CacheUri      | x|x|
@@ -46,10 +46,10 @@ With this library comes a fully functional sample application that shows off mos
 
 ### Data
 * `DataLoader` - Input a task, enables easy binding to Loading / Finished / Error properties (show progress bar as long as task is running)
-* `JsonCache` - Input a Cache Key and API call. Will run the task to get the response (for example a web call with json result) and write it to the cache. On next call, will return response directly from cache. Can be used in combination with DataLoader.
+* `DataCache` - Input a Cache Key and API call. Will run the task to get the response (for example a web call with json result) and write it to the cache. On next call, will return response directly from cache. Can be used in combination with DataLoader.
 * `DataLoader.LoadCacheThenRefreshAsync` - Input two methods which get data from cache and web. Callback will fire twice. You can bind to the dataloader to show a progress bar.
 * `WebDataCache` - Input an URI. Will get the data from the web and write raw bytes to local storage. On next call, it will return the cached data from the local storage.
-* `StorageHelper` - Save and retreive objects to the local storage. Json serialization is used.
+* `StorageHelper` - Save and retreive objects to the local storage. Json or XML serialization is used.
 * `ImageExtensions.CacheUri` - Alternative to Source property for images. Will get image from web and cache it. On a next run, will return cached image.
 
 ### Converters
@@ -96,15 +96,15 @@ You can now bind your ProgressBar to the DataLoader's IsBusy property in your XA
 	
 For more advanced scenarios, see the included sample apps and unit tests.
 
-### JsonCache introduction
+### DataCache introduction
 Let's say you want to cache the result when you grab some data from an external source
 
-	List<MyData> result = JsonCache.GetAsync("your_key", () => LoadWebData());
+	List<MyData> result = DataCache.GetAsync("your_key", () => LoadWebData());
 	
 The next time you do the same call, you get the cached result.
 You can combine this with the DataLoader to show a ProgressBar:
 
-	List<MyData> result = DL.LoadAsync(() => JsonCache.GetAsync("your_key", () => LoadWebData()));
+	List<MyData> result = DL.LoadAsync(() => DataCache.GetAsync("your_key", () => LoadWebData()));
 
 For more advanced scenarios, see the included sample apps and unit tests.
 

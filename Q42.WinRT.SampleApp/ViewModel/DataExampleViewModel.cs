@@ -137,7 +137,7 @@ namespace Q42.WinRT.SampleApp.ViewModel
         {
             //Fire task
             //Will show loader in the UI
-            string result = await CacheDataLoader.LoadAsync(() => JsonCache.GetAsync("samplekey", () => LongRunningOperation()));
+            string result = await CacheDataLoader.LoadAsync(() => DataCache.GetAsync("samplekey", () => LongRunningOperation()));
         }
 
 
@@ -148,7 +148,7 @@ namespace Q42.WinRT.SampleApp.ViewModel
         {
             //Fire task
             //Will show loader in the UI
-            string result = await CacheWithExceptionDataLoader.LoadAsync(() => JsonCache.GetAsync("samplekey_exception", () => LongRunningOperationWithException(), expireDate: DateTime.Now.AddDays(1)));
+            string result = await CacheWithExceptionDataLoader.LoadAsync(() => DataCache.GetAsync("samplekey_exception", () => LongRunningOperationWithException(), expireDate: DateTime.Now.AddDays(1)));
 
 
         }
@@ -203,7 +203,7 @@ namespace Q42.WinRT.SampleApp.ViewModel
 
             //Fire task
             //Will show loader in the UI
-            CacheRefreshDataLoader.LoadCacheThenRefreshAsync(() => JsonCache.GetFromCache<string>("key6"), () => JsonCache.GetAsync("key6", () => LongRunningOperation(DateTime.Now.Second.ToString()), expireDate: DateTime.Now.AddDays(1), forceRefresh: true), x =>
+            CacheRefreshDataLoader.LoadCacheThenRefreshAsync(() => DataCache.GetFromCache<string>("key6"), () => DataCache.GetAsync("key6", () => LongRunningOperation(DateTime.Now.Second.ToString()), expireDate: DateTime.Now.AddDays(1), forceRefresh: true), x =>
             {
                 CacheRefreshResult = x;
             });
@@ -230,11 +230,11 @@ namespace Q42.WinRT.SampleApp.ViewModel
         }
 
         /// <summary>
-        /// Clears the JsonCache
+        /// Clears the DataCache
         /// </summary>
         private void ClearCacheAction()
         {
-            JsonCache.ClearAll();
+            DataCache.ClearAll();
         }
 
 

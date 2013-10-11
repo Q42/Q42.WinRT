@@ -6,19 +6,19 @@ using Q42.WinRT.Data;
 namespace Q42.WinRT.UnitTests.Data
 {
     [TestClass]
-    public class JsonCacheTest
+    public class DataCacheTest
     {
 
         [TestMethod]
         public async Task GetCacheTest()
         {
             //Clear the cache
-            await JsonCache.ClearAll();
+            await DataCache.ClearAll();
 
-            var result1 = await JsonCache.GetAsync("test", () => LongRunningOperation("result"));
+            var result1 = await DataCache.GetAsync("test", () => LongRunningOperation("result"));
             Assert.AreEqual("result", result1);
 
-            var result2 = await JsonCache.GetAsync("test", () => LongRunningOperation("result 2"));
+            var result2 = await DataCache.GetAsync("test", () => LongRunningOperation("result 2"));
             Assert.AreEqual("result", result2);
 
 
@@ -28,15 +28,15 @@ namespace Q42.WinRT.UnitTests.Data
         public async Task ClearCache()
         {
             //Clear the cache
-            await JsonCache.ClearAll();
+            await DataCache.ClearAll();
 
-            var result1 = await JsonCache.GetAsync("test", () => LongRunningOperation("result"));
+            var result1 = await DataCache.GetAsync("test", () => LongRunningOperation("result"));
             Assert.AreEqual("result", result1);
 
-            await JsonCache.ClearAll();
+            await DataCache.ClearAll();
 
 
-            var result2 = await JsonCache.GetAsync("test", () => LongRunningOperation("result 2"));
+            var result2 = await DataCache.GetAsync("test", () => LongRunningOperation("result 2"));
             Assert.AreEqual("result 2", result2); //Not from cache
 
 
@@ -46,15 +46,15 @@ namespace Q42.WinRT.UnitTests.Data
         public async Task DeleteCacheKeyTest()
         {
             //Clear the cache
-            await JsonCache.ClearAll();
+            await DataCache.ClearAll();
 
-            var result1 = await JsonCache.GetAsync("test", () => LongRunningOperation("result"));
+            var result1 = await DataCache.GetAsync("test", () => LongRunningOperation("result"));
             Assert.AreEqual("result", result1);
 
-            await JsonCache.Delete("test");
+            await DataCache.Delete("test");
 
 
-            var result2 = await JsonCache.GetAsync("test", () => LongRunningOperation("result 2"));
+            var result2 = await DataCache.GetAsync("test", () => LongRunningOperation("result 2"));
             Assert.AreEqual("result 2", result2); //Not from cache
 
 
@@ -64,12 +64,12 @@ namespace Q42.WinRT.UnitTests.Data
         public async Task ForceGetTest()
         {
             //Clear the cache
-            await JsonCache.ClearAll();
+            await DataCache.ClearAll();
 
-            var result1 = await JsonCache.GetAsync("test", () => LongRunningOperation("result"));
+            var result1 = await DataCache.GetAsync("test", () => LongRunningOperation("result"));
             Assert.AreEqual("result", result1);
 
-            var result2 = await JsonCache.GetAsync("test", () => LongRunningOperation("result 2"), forceRefresh: true);
+            var result2 = await DataCache.GetAsync("test", () => LongRunningOperation("result 2"), forceRefresh: true);
             Assert.AreEqual("result 2", result2); //Not from cache
 
 
@@ -79,11 +79,11 @@ namespace Q42.WinRT.UnitTests.Data
         public async Task SetCacheKeyTest()
         {
             //Clear the cache
-            await JsonCache.ClearAll();
+            await DataCache.ClearAll();
 
-            await JsonCache.Set("test", "result set");
+            await DataCache.Set("test", "result set");
 
-            var result = await JsonCache.GetAsync("test", () => LongRunningOperation("result 2"));
+            var result = await DataCache.GetAsync("test", () => LongRunningOperation("result 2"));
             Assert.AreEqual("result set", result);
         }
 
@@ -91,14 +91,14 @@ namespace Q42.WinRT.UnitTests.Data
         public async Task GetCacheKeyTest()
         {
             //Clear the cache
-            await JsonCache.ClearAll();
+            await DataCache.ClearAll();
 
-            var emptyResult = await JsonCache.GetFromCache<string>("test");
+            var emptyResult = await DataCache.GetFromCache<string>("test");
             Assert.AreEqual(null, emptyResult);
 
-            await JsonCache.Set("test", "result set");
+            await DataCache.Set("test", "result set");
 
-            var result = await JsonCache.GetFromCache<string>("test");
+            var result = await DataCache.GetFromCache<string>("test");
             Assert.AreEqual("result set", result);
         }
 
@@ -107,11 +107,11 @@ namespace Q42.WinRT.UnitTests.Data
         public async Task SetExpireDateValidTest()
         {
             //Clear the cache
-            await JsonCache.ClearAll();
+            await DataCache.ClearAll();
 
-            await JsonCache.Set("test", "result set", DateTime.Now.AddDays(1));
+            await DataCache.Set("test", "result set", DateTime.Now.AddDays(1));
 
-            var result = await JsonCache.GetFromCache<string>("test");
+            var result = await DataCache.GetFromCache<string>("test");
             Assert.AreEqual("result set", result);
         }
 
@@ -119,11 +119,11 @@ namespace Q42.WinRT.UnitTests.Data
         public async Task SetExpireDateInValidTest()
         {
             //Clear the cache
-            await JsonCache.ClearAll();
+            await DataCache.ClearAll();
 
-            await JsonCache.Set("test", "result set", DateTime.Now.AddDays(-1));
+            await DataCache.Set("test", "result set", DateTime.Now.AddDays(-1));
 
-            var emptyResult = await JsonCache.GetFromCache<string>("test");
+            var emptyResult = await DataCache.GetFromCache<string>("test");
             Assert.AreEqual(null, emptyResult);
         }
 

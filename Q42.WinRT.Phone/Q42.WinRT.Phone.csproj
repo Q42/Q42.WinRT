@@ -99,8 +99,8 @@
     <Compile Include="..\Q42.WinRT\Converters\VisibilityConverter.cs">
       <Link>Converters\VisibilityConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Q42.WinRT\Data\JsonCache.cs">
-      <Link>Data\JsonCache.cs</Link>
+    <Compile Include="..\Q42.WinRT\Data\DataCache.cs">
+      <Link>Data\DataCache.cs</Link>
     </Compile>
     <Compile Include="..\Q42.WinRT\Data\WebDataCache.cs">
       <Link>Data\WebDataCache.cs</Link>

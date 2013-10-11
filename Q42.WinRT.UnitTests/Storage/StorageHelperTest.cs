@@ -18,11 +18,49 @@ namespace Q42.WinRT.UnitTests.Storage
     }
 
     [TestMethod]
-    public async Task StorageHelperSaveTest()
+    public async Task StorageHelperJsonTest()
+    {
+        await StorageHelperSaveTest(StorageSerializer.JSON);
+        await StorageHelperSaveOverwriteTest(StorageSerializer.JSON);
+        await StorageHelperDeleteTest(StorageSerializer.JSON);
+        await StorageHelperDeleteNotExistingTest(StorageSerializer.JSON);
+        await StorageHelperNotExistingTest(StorageSerializer.JSON);
+    }
+
+    [TestMethod]
+    public async Task StorageHelperXmlTest()
+    {
+        await StorageHelperSaveTest(StorageSerializer.XML);
+        await StorageHelperSaveOverwriteTest(StorageSerializer.XML);
+        await StorageHelperDeleteTest(StorageSerializer.XML);
+        await StorageHelperDeleteNotExistingTest(StorageSerializer.XML);
+        await StorageHelperNotExistingTest(StorageSerializer.XML);
+    }
+
+    [TestMethod]
+    public async Task StorageHelperDifferentSerializerTest()
+    {
+        var myObject = new MyModel() { Name = "Michiel", Age = 29 };
+
+        IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local);
+
+        await sh.SaveAsync(myObject, "myfile");
+
+        IStorageHelper<MyModel> shXml = new StorageHelper<MyModel>(StorageType.Local, serializerType:  StorageSerializer.XML);
+
+        var loadedObject = await shXml.LoadAsync("myfile");
+
+        Assert.IsNull(loadedObject);
+
+        await sh.DeleteAsync("myfile");
+
+    }
+
+    public async Task StorageHelperSaveTest(StorageSerializer serializerType)
     {
       var myObject = new MyModel() { Name = "Michiel", Age = 29 };
 
-      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local);
+      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local, serializerType: serializerType);
 
       await sh.SaveAsync(myObject, "myfile");
 
@@ -35,12 +73,11 @@ namespace Q42.WinRT.UnitTests.Storage
 
     }
 
-    [TestMethod]
-    public async Task StorageHelperSaveOverwriteTest()
+    public async Task StorageHelperSaveOverwriteTest(StorageSerializer serializerType)
     {
       var myObject = new MyModel() { Name = "Michiel", Age = 29 };
 
-      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local);
+      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local, serializerType: serializerType);
 
       await sh.SaveAsync(myObject, "myfile");
 
@@ -57,12 +94,11 @@ namespace Q42.WinRT.UnitTests.Storage
 
     }
 
-    [TestMethod]
-    public async Task StorageHelperDeleteTest()
+    public async Task StorageHelperDeleteTest(StorageSerializer serializerType)
     {
       var myObject = new MyModel() { Name = "Michiel", Age = 29 };
 
-      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local);
+      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local, serializerType: serializerType);
 
       await sh.SaveAsync(myObject, "myfile");
 
@@ -75,10 +111,9 @@ namespace Q42.WinRT.UnitTests.Storage
 
     }
 
-    [TestMethod]
-    public async Task StorageHelperDeleteNotExistingTest()
+    public async Task StorageHelperDeleteNotExistingTest(StorageSerializer serializerType)
     {
-      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local);
+        IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local, serializerType: serializerType);
 
       //Delete non existing object
       await sh.DeleteAsync("myfile6526161651651");
@@ -90,10 +125,9 @@ namespace Q42.WinRT.UnitTests.Storage
     }
 
 
-    [TestMethod]
-    public async Task StorageHelperNotExistingTest()
+    public async Task StorageHelperNotExistingTest(StorageSerializer serializerType)
     {
-      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local);
+        IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local, serializerType: serializerType);
 
       var loadedObject = await sh.LoadAsync("myfile561616516");
 

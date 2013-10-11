@@ -33,9 +33,9 @@ namespace Q42.WinRT.Data
   }
 
   /// <summary>
-  /// Stores objects as json in the localstorage
+  /// Stores objects as json or xml in the localstorage
   /// </summary>
-  public static class JsonCache
+  public static class DataCache
   {
     private static readonly string CacheFolder = "_jsoncache";
 
@@ -48,7 +48,7 @@ namespace Q42.WinRT.Data
     /// <param name="expireDate"></param>
     /// <param name="forceRefresh"></param>
     /// <returns></returns>
-    public async static Task<T> GetAsync<T>(string key, Func<Task<T>> generate, DateTime? expireDate = null, bool forceRefresh = false)
+    public async static Task<T> GetAsync<T>(string key, Func<Task<T>> generate, DateTime? expireDate = null, bool forceRefresh = false, StorageSerializer serializerType = StorageSerializer.JSON)
     {
       object value;
 
@@ -56,7 +56,7 @@ namespace Q42.WinRT.Data
       if (!forceRefresh)
       {
         //Check cache
-        value = await GetFromCache<T>(key).ConfigureAwait(false);
+        value = await GetFromCache<T>(key, serializerType).ConfigureAwait(false);
         if (value != null)
         {
           return (T)value;
@@ -76,9 +76,9 @@ namespace Q42.WinRT.Data
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
     /// <returns></returns>
-    public async static Task<T> GetFromCache<T>(string key)
+    public async static Task<T> GetFromCache<T>(string key, StorageSerializer serializerType = StorageSerializer.JSON)
     {
-      IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder);
+        IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder, serializerType);
 
       //Get cache value
       var value = await storage.LoadAsync(key).ConfigureAwait(false);
@@ -91,7 +91,7 @@ namespace Q42.WinRT.Data
       {
         //Delete old value
         //Do not await
-        Delete(key);
+        Delete(key, serializerType);
 
         return default(T);
       }
@@ -105,9 +105,9 @@ namespace Q42.WinRT.Data
     /// <param name="value"></param>
     /// <param name="expireDate"></param>
     /// <returns></returns>
-    public static Task Set<T>(string key, T value, DateTime? expireDate = null)
+    public static Task Set<T>(string key, T value, DateTime? expireDate = null, StorageSerializer serializerType = StorageSerializer.JSON)
     {
-      IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder);
+      IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder, serializerType);
 
       CacheObject<T> cacheFile = new CacheObject<T>() { File = value, ExpireDateTime = expireDate };
 
@@ -119,9 +119,9 @@ namespace Q42.WinRT.Data
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public static Task Delete(string key)
+    public static Task Delete(string key, StorageSerializer serializerType = StorageSerializer.JSON)
     {
-      IStorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
+      IStorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder, serializerType);
 
       return storage.DeleteAsync(key);
     }

@@ -79,11 +79,11 @@
     <Compile Include="..\Q42.WinRT.UnitTests\Converters\VisibilityConverterTest.cs">
       <Link>Converters\VisibilityConverterTest.cs</Link>
     </Compile>
+    <Compile Include="..\Q42.WinRT.UnitTests\Data\DataCacheTest.cs">
+      <Link>Data\DataCacheTest.cs</Link>
+    </Compile>
     <Compile Include="..\Q42.WinRT.UnitTests\Data\DataLoaderTest.cs">
       <Link>Data\DataLoaderTest.cs</Link>
-    </Compile>
-    <Compile Include="..\Q42.WinRT.UnitTests\Data\JsonCacheTest.cs">
-      <Link>Data\JsonCacheTest.cs</Link>
     </Compile>
     <Compile Include="..\Q42.WinRT.UnitTests\Data\WebDataCacheTest.cs">
       <Link>Data\WebDataCacheTest.cs</Link>

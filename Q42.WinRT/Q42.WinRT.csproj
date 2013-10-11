@@ -114,7 +114,7 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Converters\TextToLowerConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
-    <Compile Include="Data\JsonCache.cs" />
+    <Compile Include="Data\DataCache.cs" />
     <Compile Include="Data\WebDataCache.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
