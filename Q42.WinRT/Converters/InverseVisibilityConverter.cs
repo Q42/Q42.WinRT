@@ -32,12 +32,12 @@ namespace Q42.WinRT.Converters
 #endif
         {
 
-#if DEBUG
+#if DEBUG && NETFX_CORE
             //Always return true for the designer, for easy blend support
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return Visibility.Visible;
 #endif
-        
+
             bool visible = true;
             if (value is Visibility)
             {

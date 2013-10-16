@@ -28,8 +28,8 @@ namespace Q42.WinRT.Converters
 #elif WINDOWS_PHONE
       public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #endif
-      {
-#if DEBUG
+        {
+#if DEBUG && NETFX_CORE
             //Always return true for the designer, for easy blend support
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return Visibility.Visible;
