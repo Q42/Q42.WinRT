@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Q42.WinRT.Portable</id>
-    <version>1.0.14.42</version>
+    <version>1.2.0.42</version>
     <summary>Open source library for Windows Phone and Windows 8 XAML applications.</summary>
     <description><![CDATA[This is the portable library that's compatible with WP, WinRT and .Net 4.5. It includes the DataLoader which functions as a wrapper around a Task<T> method. You can bind a progress bar to the DataLoader and show it as long as the task is running.]]></description>
     <authors>Michiel Post, Q42</authors>

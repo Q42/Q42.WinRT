@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Q42.WinRT.Phone</id>
-    <version>1.1.0.42</version>
+    <version>1.2.0.42</version>
     <summary>Open source library for Windows Phone 8 apps.</summary>
     <description><![CDATA[Open source library for Windows Phone 8 apps. This library is focused on web connected and data driven applications. It includes helpers to easily cache data from API calls and cache web images to the local storage. There's also a DataLoader included which functions as a wrapper around a Task<T> method. You can bind a progress bar to the DataLoader and show it as long as the task is running.]]></description>
     <authors>Michiel Post, Q42</authors>
