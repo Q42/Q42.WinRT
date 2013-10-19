@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Q42.WinRT.Data;
+using System.Collections.Generic;
 
 namespace Q42.WinRT.UnitTests.Data
 {
@@ -20,6 +22,21 @@ namespace Q42.WinRT.UnitTests.Data
 
             var result2 = await DataCache.GetAsync("test", () => LongRunningOperation("result 2"));
             Assert.AreEqual("result", result2);
+
+
+        }
+
+        [TestMethod]
+        public async Task GetCacheNullValueTest()
+        {
+          //Clear the cache
+          await DataCache.ClearAll();
+
+          var result1 = await DataCache.GetAsync("test", () => LongRunningOperation(null));
+          Assert.AreEqual(null, result1);
+
+          var result2 = await DataCache.GetAsync("test", () => LongRunningOperation("result 2"));
+          Assert.AreEqual("result 2", result2);
 
 
         }
@@ -134,6 +151,6 @@ namespace Q42.WinRT.UnitTests.Data
 
             return result;
         }
-       
+
     }
 }
