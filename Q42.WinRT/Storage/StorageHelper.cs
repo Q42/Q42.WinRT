@@ -5,6 +5,7 @@ using Windows.Storage;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text;
+using Windows.Storage.Streams;
 
 #if WINDOWS_PHONE
 using Q42.WinRT.Phone;
@@ -133,23 +134,24 @@ namespace Q42.WinRT.Storage
           {
             case StorageSerializer.JSON:
               storageString = JsonConvert.SerializeObject(obj);
+              //Write content to file
+              await FileIO.WriteTextAsync(file, storageString);
               break;
             case StorageSerializer.XML:
+
+              IRandomAccessStream sessionRandomAccess = await file.OpenAsync(FileAccessMode.ReadWrite);
+              IOutputStream sessionOutputStream = sessionRandomAccess.GetOutputStreamAt(0);
               XmlSerializer serializer = new XmlSerializer(typeof(T));
-              var sb = new StringBuilder();
-              using (TextWriter writer = new StringWriter(sb))
-              {
-                serializer.Serialize(writer, obj);
-              }
-              storageString = sb.ToString();
+              serializer.Serialize(sessionOutputStream.AsStreamForWrite(), obj);
+              sessionRandomAccess.Dispose();
+              await sessionOutputStream.FlushAsync();
+              sessionOutputStream.Dispose();
               break;
           }
-
-          //Write content to file
-          await FileIO.WriteTextAsync(file, storageString);
+          
         }
       }
-      catch (Exception)
+      catch (Exception ex)
       {
         throw;
       }
@@ -173,24 +175,22 @@ namespace Q42.WinRT.Storage
         if (contains)
         {
           file = await folder.GetFileAsync(fileName);
-
-          var data = await FileIO.ReadTextAsync(file);
-
+          
           //Deserialize to object with JSON or XML serializer
           T result = default(T);
+
           switch (_serializerType)
           {
             case StorageSerializer.JSON:
+              var data = await FileIO.ReadTextAsync(file);
               result = JsonConvert.DeserializeObject<T>(data);
               break;
             case StorageSerializer.XML:
               XmlSerializer serializer = new XmlSerializer(typeof(T));
-              object xmlResult;
-              using (TextReader reader = new StringReader(data))
-              {
-                xmlResult = serializer.Deserialize(reader);
-              }
-              result = (T)xmlResult;
+              IInputStream sessionInputStream = await file.OpenReadAsync();
+              result = (T)serializer.Deserialize(sessionInputStream.AsStreamForRead());
+              sessionInputStream.Dispose();
+
               break;
           }
 
@@ -202,7 +202,7 @@ namespace Q42.WinRT.Storage
         }
 
       }
-      catch (Exception)
+      catch (Exception ex)
       {
         //Unable to load contents of file
         throw;
