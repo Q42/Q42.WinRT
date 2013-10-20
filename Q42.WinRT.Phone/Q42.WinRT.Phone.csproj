@@ -111,6 +111,9 @@
     <Compile Include="..\Q42.WinRT\Storage\IStorageHelper.cs">
       <Link>Storage\IStorageHelper.cs</Link>
     </Compile>
+    <Compile Include="..\Q42.WinRT\Storage\SettingsHelper.cs">
+      <Link>Storage\SettingsHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Q42.WinRT\Storage\StorageHelper.cs">
       <Link>Storage\StorageHelper.cs</Link>
     </Compile>

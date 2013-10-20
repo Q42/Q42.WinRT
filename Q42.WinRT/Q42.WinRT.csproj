@@ -119,6 +119,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\IStorageHelper.cs" />
+    <Compile Include="Storage\SettingsHelper.cs" />
     <Compile Include="Storage\StorageHelper.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
