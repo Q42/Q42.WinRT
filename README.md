@@ -4,6 +4,8 @@ Q42.WinRT
 Open source library for Windows Phone and Windows 8 C#/XAML applications. This library was originally developed for Windows 8, but most functionality is also compatible with Windows Phone.
 The library is focused on web connected and data driven applications. It includes helpers to easily cache data from API calls and cache web images to the local storage.
 
+This library helps to maximize code reuse between Windows 8 and Windows Phone 8
+
 Please checkout the included sample application for Windows 8 and Windows Phone.
 
 Or download directly from NuGet:
@@ -22,6 +24,7 @@ With this library comes a fully functional sample application that shows off mos
 | DataCache      | x |x |  
 | WebDataCache      | x|x|
 | StorageHelper      | x|x|
+| SettingsHelper      | x|x|
 | ImageExtensions.CacheUri      | x|x|
 
 | Converters     | Windows 8 | Windows Phone | 
@@ -50,6 +53,7 @@ With this library comes a fully functional sample application that shows off mos
 * `DataLoader.LoadCacheThenRefreshAsync` - Input two methods which get data from cache and web. Callback will fire twice. You can bind to the dataloader to show a progress bar.
 * `WebDataCache` - Input an URI. Will get the data from the web and write raw bytes to local storage. On next call, it will return the cached data from the local storage.
 * `StorageHelper` - Save and retreive objects to the local storage. Json or XML serialization is used.
+* `SettingsHelper` - Save and retreive settings (wrapper around the different settings api's on Windows 8 or Windows Phone)
 * `ImageExtensions.CacheUri` - Alternative to Source property for images. Will get image from web and cache it. On a next run, will return cached image.
 
 ### Converters
