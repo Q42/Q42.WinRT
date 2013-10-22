@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Q42.WinRT.Storage;
 
@@ -8,17 +9,12 @@ namespace Q42.WinRT.Data
   /// Used as a wrapper around the stored file to keep metadata
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  public class CacheObject<T>
+  public class CacheObject
   {
     /// <summary>
     /// Expire date of cached file
     /// </summary>
     public DateTime? ExpireDateTime { get; set; }
-
-    /// <summary>
-    /// Actual file being stored
-    /// </summary>
-    public T File { get; set; }
 
     /// <summary>
     /// Is the cache file valid?
@@ -30,6 +26,18 @@ namespace Q42.WinRT.Data
         return (ExpireDateTime == null || ExpireDateTime.Value > DateTime.Now);
       }
     }
+  }
+
+  /// <summary>
+  /// Used as a wrapper around the stored file to keep metadata
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  public class CacheObject<T> : CacheObject
+  {
+    /// <summary>
+    /// Actual file being stored
+    /// </summary>
+    public T File { get; set; }
   }
 
   /// <summary>
@@ -138,6 +146,29 @@ namespace Q42.WinRT.Data
     {
       IStorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
       return storage.DeleteAllFiles();
+    }
+
+    /// <summary>
+    /// Clear expired cache files
+    /// </summary>
+    /// <returns></returns>
+    public static async Task ClearInvalid(StorageSerializer serializerType = StorageSerializer.JSON)
+    {
+      StorageHelper<CacheObject> storage = new StorageHelper<CacheObject>(StorageType.Local, CacheFolder, serializerType);
+      var validExtension = storage.GetFileExtension();
+      var folder = await storage.GetFolderAsync().ConfigureAwait(false);
+
+      var files = await folder.GetFilesAsync();
+
+      foreach(var file in files.Where(x => x.FileType == validExtension))
+      {
+        var loadedFile = await storage.LoadAsync(file.DisplayName).ConfigureAwait(false);
+
+        if(loadedFile != null && !loadedFile.IsValid)
+          await file.DeleteAsync();
+
+      }
+
     }
   }
 }

@@ -72,7 +72,7 @@ namespace Q42.WinRT.Storage
     /// Never deserialize with the wrong serializer
     /// </summary>
     /// <returns></returns>
-    private string GetFileExtension()
+    internal string GetFileExtension()
     {
       switch (_serializerType)
       {

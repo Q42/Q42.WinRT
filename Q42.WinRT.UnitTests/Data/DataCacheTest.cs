@@ -60,6 +60,27 @@ namespace Q42.WinRT.UnitTests.Data
         }
 
         [TestMethod]
+        public async Task ClearInvalidCache()
+        {
+          //Clear the cache
+          await DataCache.ClearAll();
+
+          var result1 = await DataCache.GetAsync("test1", () => LongRunningOperation("result1"), DateTime.Now.AddDays(-1));
+          var result2 = await DataCache.GetAsync("test2", () => LongRunningOperation("result2"));
+
+          await DataCache.ClearInvalid();
+
+
+          var result1_new = await DataCache.GetAsync("test1", () => LongRunningOperation("result1_new"));
+          var result2_new = await DataCache.GetAsync("test2", () => LongRunningOperation("result2_new"));
+
+          Assert.AreEqual("result1_new", result1_new); //Not from cache
+          Assert.AreEqual("result2", result2_new); //From cache
+
+
+        }
+
+        [TestMethod]
         public async Task DeleteCacheKeyTest()
         {
             //Clear the cache
