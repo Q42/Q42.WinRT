@@ -23,6 +23,9 @@
   	<files>
 		<file src="..\Q42.WinRT\bin\Release\Q42.WinRT.dll" target="lib\win81" />
 		<file src="..\Q42.WinRT\bin\Release\Q42.WinRT.XML" target="lib\win81" />
+		
+		<file src="..\Q42.WinRT.Phone\bin\Release\Q42.WinRT.Phone.dll" target="lib\wp8" />
+		<file src="..\Q42.WinRT.Phone\bin\Release\Q42.WinRT.Phone.XML" target="lib\wp8" />
 	</files>
 </package>
 
