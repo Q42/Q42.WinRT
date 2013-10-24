@@ -11,11 +11,13 @@
     <projectUrl>https://github.com/Q42/Q42.WinRT</projectUrl>
     <iconUrl>http://a0.twimg.com/profile_images/2142700938/q42-logo-big-square.png</iconUrl>
     <dependencies>
-	  <group>
+	  <group targetFramework="win81">
 	    <dependency id="Newtonsoft.Json" />
 		<dependency id="Q42.WinRT.Portable" />
 	  </group>
       <group targetFramework="wp80">
+	  	<dependency id="Newtonsoft.Json" />
+		<dependency id="Q42.WinRT.Portable" />
         <dependency id="Microsoft.Net.Http" />
 	  </group>
     </dependencies>  
