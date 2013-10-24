@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Q42.WinRT.Phone</id>
-    <version>1.2.2.42</version>
+    <version>1.2.3.42</version>
     <summary>Open source library for Windows Phone 8 apps.</summary>
     <description><![CDATA[Open source library for Windows Phone 8 apps. This library is focused on web connected and data driven applications. It includes helpers to easily cache data from API calls and cache web images to the local storage. There's also a DataLoader included which functions as a wrapper around a Task<T> method. You can bind a progress bar to the DataLoader and show it as long as the task is running.]]></description>
     <authors>Michiel Post, Q42</authors>
@@ -11,10 +11,18 @@
     <projectUrl>https://github.com/Q42/Q42.WinRT</projectUrl>
     <iconUrl>http://a0.twimg.com/profile_images/2142700938/q42-logo-big-square.png</iconUrl>
     <dependencies>
-      <dependency id="Newtonsoft.Json" />
-	  <dependency id="Q42.WinRT.Portable" />
-	  <dependency id="Microsoft.Net.Http" />
+	  <group>
+	    <dependency id="Newtonsoft.Json" />
+		<dependency id="Q42.WinRT.Portable" />
+	  </group>
+      <group targetFramework="wp80">
+        <dependency id="Microsoft.Net.Http" />
+	  </group>
     </dependencies>  
   </metadata>
+  	<files>
+		<file src="..\Q42.WinRT\bin\Release\Q42.WinRT.dll" target="lib\win81" />
+		<file src="..\Q42.WinRT\bin\Release\Q42.WinRT.XML" target="lib\win81" />
+	</files>
 </package>
 
