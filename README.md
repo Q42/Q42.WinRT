@@ -87,17 +87,20 @@ Let's say you have a long running async operation which gets some data from the 
 
 	var result = await LoadWebData();
 	
-You want to show a nice progress bar when you're busy loading the data. Use the DataLoader for that, it wraps around your existing code:
+You want to show a nice progress bar when you're busy loading the data. Use the DataLoader for that, it wraps around your existing code. Place this code in your ViewModel:
 
 	//public property you can bind to
 	public DataLoader DL { get; set; }
 	
+	//Place this in the constructor of your ViewModel:
 	DL = new DataLoader();
+	
+	//Somewhere where you want to start loading data
 	var result = await DL.LoadAsync(() => LoadWebData());
 	
 You can now bind your ProgressBar to the DataLoader's IsBusy property in your XAML:
 	
-	<ProgressBar DataContext="{Binding DL}" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+	<ProgressBar IsIndeterminate="{Binding DL.IsBusy}"></ProgressBar>
 	
 For more advanced scenarios, see the included sample apps and unit tests.
 
