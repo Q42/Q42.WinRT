@@ -6,12 +6,16 @@
     <summary>Open source library for Windows Phone and Windows 8 XAML applications.</summary>
     <description><![CDATA[Open source library for Windows Phone and Windows 8 XAML applications. This library is focused on web connected and data driven applications. It includes helpers to easily cache data from API calls and cache web images to the local storage. There's also a DataLoader included which functions as a wrapper around a Task<T> method. You can bind a progress bar to the DataLoader and show it as long as the task is running.]]></description>
     <authors>Michiel Post, Q42</authors>
-    <tags>winrt metro xaml wp wp8 phone</tags>
+    <tags>winrt metro xaml wp wp8 wpa81 phone</tags>
     <language>en-US</language> 
     <projectUrl>https://github.com/Q42/Q42.WinRT</projectUrl>
     <iconUrl>http://a0.twimg.com/profile_images/2142700938/q42-logo-big-square.png</iconUrl>
     <dependencies>
 	  <group targetFramework="win81">
+	    <dependency id="Newtonsoft.Json" />
+		<dependency id="Q42.WinRT.Portable" />
+	  </group>
+	  <group targetFramework="wpa81">
 	    <dependency id="Newtonsoft.Json" />
 		<dependency id="Q42.WinRT.Portable" />
 	  </group>
@@ -25,6 +29,9 @@
   	<files>
 		<file src="..\Q42.WinRT\bin\Release\Q42.WinRT.dll" target="lib\win81" />
 		<file src="..\Q42.WinRT\bin\Release\Q42.WinRT.XML" target="lib\win81" />
+		
+		<file src="..\Q42.WinRT\bin\Release\Q42.WinRT.dll" target="lib\wpa81" />
+		<file src="..\Q42.WinRT\bin\Release\Q42.WinRT.XML" target="lib\wpa81" />
 		
 		<file src="..\Q42.WinRT.Phone\bin\Release\Q42.WinRT.Phone.dll" target="lib\wp8" />
 		<file src="..\Q42.WinRT.Phone\bin\Release\Q42.WinRT.Phone.XML" target="lib\wp8" />
