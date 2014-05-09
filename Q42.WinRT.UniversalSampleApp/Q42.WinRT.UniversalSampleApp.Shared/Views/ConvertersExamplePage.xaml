@@ -1,0 +1,67 @@
+﻿<Page
+    x:Class="Q42.WinRT.UniversalSampleApp.Views.ConvertersExamplePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Q42.WinRT.UniversalSampleApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:q42converters="using:Q42.WinRT.Converters"
+    DataContext="{Binding Source={StaticResource Locator}, Path=ConvertersExample}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <q42converters:VisibilityConverter x:Key="Vis" />
+        <q42converters:InverseVisibilityConverter x:Key="InverseVis" />
+        <q42converters:ByteToStringConverter x:Key="BytesToString" />
+        <q42converters:TextToLowerConverter x:Key="ToLower" />
+        <q42converters:StringFormatConverter x:Key="StringFormat" />
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <StackPanel Margin="20,0">
+            <TextBlock FontSize="18">Demo of anything-to-visibility converter</TextBlock>
+            <TextBlock FontSize="18">Works with bools, int, strings, objects etc</TextBlock>
+            <TextBlock><LineBreak /></TextBlock>
+
+            <Button Command="{Binding ToggleCommand}">Toggle values</Button>
+
+            <Grid Margin="0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel>
+                    <TextBlock FontSize="20">Visible converter</TextBlock>
+                    <TextBlock Visibility="{Binding ObjectProp, Converter={StaticResource Vis}}">Visible because object is not null</TextBlock>
+                    <TextBlock Visibility="{Binding IntProp, Converter={StaticResource Vis}}">Visible because int is not 0</TextBlock>
+                    <TextBlock Visibility="{Binding StringProp, Converter={StaticResource Vis}}">Visible because string is not empty</TextBlock>
+                    <TextBlock Visibility="{Binding BoolProp, Converter={StaticResource Vis}}">Visible because bool is true</TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <TextBlock FontSize="20">Inverse Visible converter</TextBlock>
+                    <TextBlock Visibility="{Binding ObjectProp, Converter={StaticResource InverseVis}}">Visible because object is null</TextBlock>
+                    <TextBlock Visibility="{Binding IntProp, Converter={StaticResource InverseVis}}">Visible because int is 0</TextBlock>
+                    <TextBlock Visibility="{Binding StringProp, Converter={StaticResource InverseVis}}">Visible because string is empty</TextBlock>
+                    <TextBlock Visibility="{Binding BoolProp, Converter={StaticResource InverseVis}}">Visible because bool is false</TextBlock>
+                </StackPanel>
+            </Grid>
+
+            <TextBlock FontSize="20">ByteToStringConverter</TextBlock>
+            <Slider x:Name="slider" Width="500" Maximum="2300000000" HorizontalAlignment="Left"></Slider>
+            <TextBlock Text="{Binding ElementName=slider,Path=Value}"></TextBlock>
+            <TextBlock Text="{Binding ElementName=slider,Path=Value, Converter={StaticResource BytesToString}}"></TextBlock>
+
+
+            <TextBlock FontSize="20" Margin="0,20,0,0">To lower case converter</TextBlock>
+            <TextBlock Text="{Binding CapitalText, Converter={StaticResource ToLower}}" />
+
+            <TextBlock FontSize="20" Margin="0,20,0,0">String format converter</TextBlock>
+            <TextBlock Text="{Binding CapitalText, Converter={StaticResource StringFormat}, ConverterParameter='string format {0} ok'}" />
+            <TextBlock Text="{Binding CapitalText, Converter={StaticResource StringFormat}, ConverterParameter='{}{0} string format ok'}" />
+        </StackPanel>
+
+    </Grid>
+</Page>

@@ -1,0 +1,136 @@
+﻿<Page
+    x:Class="Q42.WinRT.UniversalSampleApp.Views.DataExamplePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Q42.WinRT.UniversalSampleApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:q42converters="using:Q42.WinRT.Converters"
+    xmlns:q42controls="using:Q42.WinRT.Controls"
+     DataContext="{Binding Source={StaticResource Locator}, Path=DataExample}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <q42converters:VisibilityConverter x:Key="Vis" />
+        <q42converters:InverseVisibilityConverter x:Key="InverseVis" />
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer ZoomMode="Disabled" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled">
+
+            <StackPanel Margin="20,0">
+                <TextBlock FontSize="18">Demo of DataLoader wrapper around task</TextBlock>
+                <TextBlock FontSize="18">Used for easy databinding to progress bar. When the task runs, the progress bar will become active</TextBlock>
+                <TextBlock><LineBreak /></TextBlock>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding StartLongRunningCommand}">Start long running operation</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding StartLongRunningDataLoader}">
+                        <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+                        <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
+                        <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
+                        <TextBlock Visibility="{Binding IsError, Converter={StaticResource Vis}}">Error</TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding StartLongRunningWithExceptionCommand}">Start long running operation with exception</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding StartLongRunningWithExceptionDataLoader}">
+                        <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+                        <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
+                        <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
+                        <TextBlock Visibility="{Binding IsError, Converter={StaticResource Vis}}">Error</TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+
+
+
+                <TextBlock Margin="0,50,0,0" FontSize="18">Demo of Caching wrapper around task</TextBlock>
+                <TextBlock FontSize="18">Exceptions wont be cached</TextBlock>
+                <TextBlock><LineBreak /></TextBlock>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding CacheCommand}">CACHE long running operation</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding CacheDataLoader}">
+                        <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+                        <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
+                        <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
+                        <TextBlock Visibility="{Binding IsError, Converter={StaticResource Vis}}">Error</TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding CacheWithExceptionCommand}">CACHE long running operation with exception</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding CacheWithExceptionDataLoader}">
+                        <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+                        <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
+                        <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
+                        <TextBlock Visibility="{Binding IsError, Converter={StaticResource Vis}}">Error</TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding CacheRefreshCommand}">CACHE then REFRESH</Button>
+                    <TextBlock Text="{Binding CacheRefreshResult}" />
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding CacheRefreshDataLoader}">
+                        <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+                        <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
+                        <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
+                        <TextBlock Visibility="{Binding IsError, Converter={StaticResource Vis}}">Error</TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+
+
+                <Button Command="{Binding ClearCacheCommand}" Margin="0,0,0,20">Clear Cache</Button>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding SourceABCommand}">get from source A then refresh with source B</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding SourceABDataLoader}">
+                        <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+                        <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
+                        <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
+                        <TextBlock Visibility="{Binding IsError, Converter={StaticResource Vis}}">Error</TextBlock>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Result}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding FailCacheSuccessCommand}">get from source A if it fails from source B (success)</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding FailCacheSuccessDataLoader}">
+                        <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+                        <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
+                        <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
+                        <TextBlock Visibility="{Binding IsError, Converter={StaticResource Vis}}">Error</TextBlock>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Result2}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding FailCacheCommand}">get from source A if it fails from source B (fail)</Button>
+                    <StackPanel Orientation="Horizontal" DataContext="{Binding FailCacheDataLoader}">
+                        <ProgressBar Width="200" Margin="20,0" IsIndeterminate="{Binding IsBusy}"></ProgressBar>
+                        <ProgressRing Margin="20,0" IsActive="{Binding IsBusy}"></ProgressRing>
+                        <TextBlock Visibility="{Binding IsFinished, Converter={StaticResource Vis}}">Finished</TextBlock>
+                        <TextBlock Visibility="{Binding IsError, Converter={StaticResource Vis}}">Error</TextBlock>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Result3}" />
+                </StackPanel>
+
+
+                <TextBlock Margin="0,50,0,0" FontSize="18">WebData cache</TextBlock>
+                <TextBlock Margin="0,20,0,0" FontSize="18">Cache images with HTTPS uri. This image is downloaded once and cached locally</TextBlock>
+                <TextBlock FontSize="18">Source already caches http uri's by default. This extension can be used when you want to cache https data.</TextBlock>
+                <Image HorizontalAlignment="Left" Stretch="None" q42controls:ImageExtensions.CacheUri="https://www.google.nl/favicon.ico" />
+                <TextBlock>Normal:</TextBlock>
+                <Image HorizontalAlignment="Left" Stretch="None" Source="https://www.google.nl/favicon.ico" />
+
+                <TextBlock Margin="0,30,0,0" FontSize="18">Experimental: Uri result caching (debug to see in action)</TextBlock>
+                <Button Command="{Binding GetUriCommand}">Get result of Uri http://microsoft.com (from cache or internet)</Button>
+                <!--<Button Command="{Binding ClearWebDataCacheCommand}">Clear WebData cache</Button>-->
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Page>

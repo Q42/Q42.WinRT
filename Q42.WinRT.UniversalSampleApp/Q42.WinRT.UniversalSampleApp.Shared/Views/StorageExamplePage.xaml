@@ -1,0 +1,28 @@
+﻿<Page
+    x:Class="Q42.WinRT.UniversalSampleApp.Views.StorageExamplePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Q42.WinRT.UniversalSampleApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=StorageExample}"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel  Margin="20,0">
+            <TextBlock FontSize="18">Storage helper to store objects to LocalStorage</TextBlock>
+            <TextBlock FontSize="18">Objects will be serialized to json</TextBlock>
+            <TextBlock><LineBreak /></TextBlock>
+
+            <StackPanel Margin="0,20">
+                <Button Command="{Binding SaveCommand}">Save list of objects to local storage</Button>
+                <Button Command="{Binding LoadCommand}">Get list of objects from local storage</Button>
+                <Button Command="{Binding DeleteCommand}">Delete file from local storage</Button>
+
+                <TextBlock FontSize="24" Margin="0,20" Text="{Binding Result}" />
+            </StackPanel>
+
+
+        </StackPanel>
+    </Grid>
+</Page>

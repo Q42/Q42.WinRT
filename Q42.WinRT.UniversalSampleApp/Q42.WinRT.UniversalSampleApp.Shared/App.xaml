@@ -1,0 +1,12 @@
+﻿<Application
+    x:Class="Q42.WinRT.UniversalSampleApp.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Q42.WinRT.UniversalSampleApp"
+    xmlns:vm="using:Q42.WinRT.UniversalSampleApp.ViewModel">
+    
+    <Application.Resources>
+        <x:String x:Key="AppName">Q42.WinRT Library Sample App</x:String>
+        <vm:ViewModelLocator x:Key="Locator" />
+    </Application.Resources>
+</Application>
