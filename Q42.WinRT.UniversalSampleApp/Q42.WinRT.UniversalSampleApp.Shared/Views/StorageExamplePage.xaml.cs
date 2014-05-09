@@ -17,14 +17,37 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Q42.WinRT.UniversalSampleApp.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class StorageExamplePage : Page
+  /// <summary>
+  /// An empty page that can be used on its own or navigated to within a Frame.
+  /// </summary>
+  public sealed partial class StorageExamplePage : Page
+  {
+    public StorageExamplePage()
     {
-        public StorageExamplePage()
-        {
-            this.InitializeComponent();
-        }
+      this.InitializeComponent();
     }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+#if WINDOWS_PHONE_APP
+      Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+#endif
+    }
+
+    protected override void OnNavigatedFrom(NavigationEventArgs e)
+    {
+#if WINDOWS_PHONE_APP
+      Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+#endif
+    }
+
+#if WINDOWS_PHONE_APP
+    void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
+    {
+      e.Handled = true;
+      if (this.Frame.CanGoBack)
+        this.Frame.GoBack();
+    }
+#endif
+  }
 }
