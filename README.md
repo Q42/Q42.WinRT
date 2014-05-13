@@ -1,12 +1,12 @@
 Q42.WinRT
 =========
 
-Open source library for Windows Phone and Windows 8 C#/XAML applications. This library was originally developed for Windows 8, but most functionality is also compatible with Windows Phone.
+Open source library for Universal Apps, Windows Phone and Windows 8 C#/XAML applications. This library was originally developed for Windows 8 and is fully compatible with Universal Apps (Windows Phone and Windows 8.1). There's also a version for Windows Phone 8.
 The library is focused on web connected and data driven applications. It includes helpers to easily cache data from API calls and cache web images to the local storage.
 
 This library helps to maximize code reuse between Windows 8 and Windows Phone 8
 
-Please checkout the included sample application for Windows 8 and Windows Phone.
+Please checkout the included sample application for Universal Apps, Windows 8 and Windows Phone.
 
 Or download directly from NuGet:
 - [Q42.WinRT on NuGet](https://nuget.org/packages/Q42.WinRT)
@@ -18,7 +18,7 @@ Looking for the old version compatible with Windows 8.0?
 ## What's included?
 With this library comes a fully functional sample application that shows off most of the functionality. There's also a unit test project included.
 
-| Data     | Windows 8 | Windows Phone | 
+| Data     | Universal apps (W8.1 and WP81) | Windows Phone 8 | 
 | ------------- |:---------:|:-------------:|
 | DataLoader      | x |x | 
 | DataCache      | x |x |  
@@ -27,7 +27,7 @@ With this library comes a fully functional sample application that shows off mos
 | SettingsHelper      | x|x|
 | ImageExtensions.CacheUri      | x|x|
 
-| Converters     | Windows 8 | Windows Phone | 
+| Converters     | Universal apps (W8.1 and WP81) | Windows Phone 8 | 
 | ------------- |:---------:|:-------------:|
 | VisibilityConverter      | x |x |  
 | InverseVisibilityConverter      | x |x |  
@@ -35,13 +35,13 @@ With this library comes a fully functional sample application that shows off mos
 | StringFormatConverter      | x||
 | TextToLowerConverter      | x||
 
-| Helpers     | Windows 8 | Windows Phone | 
+| Helpers     | Universal apps (W8.1 and WP81) | Windows Phone 8 | 
 | ------------- |:---------:|:-------------:|
 | Util.GetAppVersion      | x||
 | Util.GetOsVersion      | x||
 | Util.GetMachineName      | x||
 
-| Controls     | Windows 8 | Windows Phone | 
+| Controls     | Universal apps (W8.1 and WP81) | Windows Phone 8 | 
 | ------------- |:---------:|:-------------:|
 | WrapPanel      | x||
 | Background Parallax      | x||
