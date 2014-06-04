@@ -116,6 +116,8 @@ You can combine this with the DataLoader to show a ProgressBar:
 
 For more advanced scenarios, see the included sample apps and unit tests.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/gxy0p9vcqf9pl0nd)](https://ci.appveyor.com/project/michielpost/q42-winrt)
+
 ## License
 Q42.WinRT is licensed under [MIT](http://www.opensource.org/licenses/mit-license.php "Read more about the MIT license form"). Refer to [license.txt](https://github.com/Q42/Q42.WinRT/blob/master/LICENSE.txt) for more information.
 
