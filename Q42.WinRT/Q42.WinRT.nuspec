@@ -11,15 +11,10 @@
     <projectUrl>https://github.com/Q42/Q42.WinRT</projectUrl>
     <iconUrl>https://nugetgallery.blob.core.windows.net/icons/DotLessMinification.0.42.1.png</iconUrl>
     <dependencies>
-	  <group targetFramework="portable-win81+wpa81">
-	    <dependency id="Newtonsoft.Json" />
+	  
 		<dependency id="Q42.WinRT.Portable" />
-	  </group>
-      <group targetFramework="wp80">
-	  	<dependency id="Newtonsoft.Json" />
-		<dependency id="Q42.WinRT.Portable" />
-        <dependency id="Microsoft.Net.Http" />
-	  </group>
+	 
+
     </dependencies>  
   </metadata>
   	<files>
