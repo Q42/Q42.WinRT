@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 #if NETFX_CORE
 using Windows.UI.Xaml;
@@ -54,6 +56,10 @@ namespace Q42.WinRT.Converters
             else if (value is string && string.IsNullOrEmpty((string)value))
             {
                 visible = false;
+            }
+            else if (value is IEnumerable<object>)
+            {
+              visible = ((IEnumerable<object>)value).Any();
             }
             else if (value == null)
             {
