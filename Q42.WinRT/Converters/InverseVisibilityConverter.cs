@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -64,6 +65,10 @@ namespace Q42.WinRT.Converters
             else if (value is IEnumerable<object>)
             {
               visible = ((IEnumerable<object>)value).Any();
+            }
+            else if (value is IEnumerable)
+            {
+              visible = ((IEnumerable)value).GetEnumerator().MoveNext();
             }
             else if (value == null)
             {

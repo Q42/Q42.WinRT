@@ -38,6 +38,7 @@
                     <TextBlock Visibility="{Binding IntProp, Converter={StaticResource Vis}}">Visible because int is not 0</TextBlock>
                     <TextBlock Visibility="{Binding StringProp, Converter={StaticResource Vis}}">Visible because string is not empty</TextBlock>
                     <TextBlock Visibility="{Binding BoolProp, Converter={StaticResource Vis}}">Visible because bool is true</TextBlock>
+                    <TextBlock Visibility="{Binding EnumProp, Converter={StaticResource Vis}}">Visible because IEnumerable has items</TextBlock>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
@@ -46,6 +47,7 @@
                     <TextBlock Visibility="{Binding IntProp, Converter={StaticResource InverseVis}}">Visible because int is 0</TextBlock>
                     <TextBlock Visibility="{Binding StringProp, Converter={StaticResource InverseVis}}">Visible because string is empty</TextBlock>
                     <TextBlock Visibility="{Binding BoolProp, Converter={StaticResource InverseVis}}">Visible because bool is false</TextBlock>
+                    <TextBlock Visibility="{Binding EnumProp, Converter={StaticResource InverseVis}}">Visible because IEnumerable is empty</TextBlock>
                 </StackPanel>
             </Grid>
 

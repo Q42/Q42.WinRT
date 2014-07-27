@@ -52,6 +52,18 @@ namespace Q42.WinRT.UniversalSampleApp.ViewModel
             }
         }
 
+        private IEnumerable<string> _enumProp = new List<string>();
+
+        public IEnumerable<string> EnumProp
+        {
+          get { return _enumProp; }
+          set
+          {
+            _enumProp = value;
+            RaisePropertyChanged(() => EnumProp);
+          }
+        }
+
         public string CapitalText
         {
             get
@@ -79,6 +91,7 @@ namespace Q42.WinRT.UniversalSampleApp.ViewModel
                 ObjectProp = null;
                 StringProp = string.Empty;
                 IntProp = 0;
+                EnumProp = new List<string>();
             }
             else
             {
@@ -86,6 +99,8 @@ namespace Q42.WinRT.UniversalSampleApp.ViewModel
                 ObjectProp = new object();
                 StringProp = "test";
                 IntProp = 5;
+                EnumProp = new List<string>() { "test" };
+
             }
         }
 

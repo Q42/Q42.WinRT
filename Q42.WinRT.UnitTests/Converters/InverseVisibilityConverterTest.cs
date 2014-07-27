@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Q42.WinRT.Converters;
+using System.Collections.Generic;
 
 #if NETFX_CORE
 using Windows.UI.Xaml;
@@ -98,6 +99,50 @@ namespace Q42.WinRT.UnitTests.Converters
             Visibility result = (Visibility)converter.Convert(input, typeof(Visibility), null, null);
 
             Assert.AreEqual(Visibility.Visible, result);
+        }
+
+        [TestMethod]
+        public void TestEmptyCollection()
+        {
+          IEnumerable<string> input = new List<string>();
+
+          InverseVisibilityConverter converter = new InverseVisibilityConverter();
+          Visibility result = (Visibility)converter.Convert(input, typeof(Visibility), null, null);
+
+          Assert.AreEqual(Visibility.Visible, result);
+        }
+
+        [TestMethod]
+        public void TestFilledCollection()
+        {
+          IEnumerable<string> input = new List<string>() { "test" };
+
+          InverseVisibilityConverter converter = new InverseVisibilityConverter();
+          Visibility result = (Visibility)converter.Convert(input, typeof(Visibility), null, null);
+
+          Assert.AreEqual(Visibility.Collapsed, result);
+        }
+
+        [TestMethod]
+        public void TestEmptyIntCollection()
+        {
+          IEnumerable<int> input = new List<int>();
+
+          InverseVisibilityConverter converter = new InverseVisibilityConverter();
+          Visibility result = (Visibility)converter.Convert(input, typeof(Visibility), null, null);
+
+          Assert.AreEqual(Visibility.Visible, result);
+        }
+
+        [TestMethod]
+        public void TestFilledIntCollection()
+        {
+          IEnumerable<int> input = new List<int>() { 1, 2, 3 };
+
+          InverseVisibilityConverter converter = new InverseVisibilityConverter();
+          Visibility result = (Visibility)converter.Convert(input, typeof(Visibility), null, null);
+
+          Assert.AreEqual(Visibility.Collapsed, result);
         }
 
         [TestMethod]
