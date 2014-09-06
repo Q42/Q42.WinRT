@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Q42.WinRT.Portable.Data;
+using Q42.WinRT.Data;
 
 namespace Q42.WinRT.UnitTests.Data
 {
@@ -186,6 +187,20 @@ namespace Q42.WinRT.UnitTests.Data
 
         }
 
+        [TestMethod]
+        public async Task DataLoaderCacheCombinationTest()
+        {
+          DataLoader a = new DataLoader();
+
+          var result = await a.LoadAsync(() => DataCache.GetAsync("testkey", async () => await LongRunningOperation("result_1"), expireDate: DateTime.Now.AddDays(8)));
+          Assert.AreEqual("result_1", result);
+
+          //Should get value from cache
+          var result_2 = await a.LoadAsync(() => DataCache.GetAsync("testkey", async () => await LongRunningOperation("result_2"), expireDate: DateTime.Now.AddDays(8)));
+          Assert.AreEqual("result_1", result_2);
+
+        }
+
 
 
         private async Task<string> LongRunningOperation()
@@ -195,6 +210,14 @@ namespace Q42.WinRT.UnitTests.Data
             return "result";
         }
 
+        private async Task<string> LongRunningOperation(string result)
+        {
+          await Task.Delay(1000);
+
+          return result;
+        }
+
+
         private async Task<string> LongRunningOperationThrowsError()
         {
             await Task.Delay(1000);
@@ -202,5 +225,7 @@ namespace Q42.WinRT.UnitTests.Data
             throw new Exception("Error during long running operation");
             
         }
+
+
     }
 }
