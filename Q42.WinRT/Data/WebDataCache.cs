@@ -155,5 +155,13 @@ namespace Q42.WinRT.Data
                 }
             });
         }
+
+        public static async Task Clear(ulong maxSize)
+        {
+          var folder = await GetFolderAsync().ConfigureAwait(false);
+
+          await folder.Clear(maxSize);
+
+        }
     }
 }

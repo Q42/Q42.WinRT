@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Q42.WinRT.Storage;
+using System.Collections.Generic;
+using Windows.Storage;
 
 namespace Q42.WinRT.Data
 {
@@ -169,6 +171,70 @@ namespace Q42.WinRT.Data
 
       }
 
+    }
+
+    /// <summary>
+    /// Clears the cache untill the total size is below the maxSize
+    /// </summary>
+    /// <param name="maxSize">MaxSize in bytes</param>
+    /// <returns></returns>
+    public static async Task Clear(ulong maxSize)
+    {
+      StorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
+      var folder = await storage.GetFolderAsync();
+
+      await Clear(folder, maxSize);
+     
+    }
+
+    public static async Task Clear(this StorageFolder folder, ulong maxSize)
+    {
+      var files = await folder.GetFilesAsync();
+
+      var list = new List<FileMetaData>();
+
+      foreach (var file in files)
+      {
+        var props = await file.GetBasicPropertiesAsync();
+
+        list.Add(new FileMetaData() { Name = file.Name, Size = props.Size, Modified = props.DateModified });
+      }
+
+      //Order list by Modified date so it deletes old files first
+      list = list.OrderBy(x => x.Modified).ToList();
+
+      await Clear(list, maxSize).ConfigureAwait(false);
+
+    }
+
+    private static async Task Clear(List<FileMetaData> list, ulong maxSize)
+    {
+      if (list == null || !list.Any())
+        return;
+
+      var total = (ulong)list.Sum(x => (long)x.Size);
+
+      if(total > maxSize)
+      {
+        //Delete file
+        StorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
+        var folder = await storage.GetFolderAsync();
+        var file = await folder.GetFileAsync(list.First().Name);
+        await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+
+        list.RemoveAt(0);
+
+        //Recursive
+        await Clear(list, maxSize).ConfigureAwait(false);
+     
+      }
+    }
+
+    internal class FileMetaData
+    {
+      public string Name { get; set; }
+      public ulong Size { get; set; }
+      public DateTimeOffset Modified { get; set; }
     }
   }
 }

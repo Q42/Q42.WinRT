@@ -183,5 +183,27 @@ namespace Q42.WinRT.UnitTests.Data
             return result;
         }
 
+        [TestMethod]
+        public async Task ClearCacheMaxSizeTest()
+        {
+          //Clear the cache
+          await DataCache.ClearAll();
+
+          await DataCache.Set("first", "first result");
+          await DataCache.Set("second", "second result");
+
+          await DataCache.Clear(100);
+
+          //First is gone
+          var firstResult = await DataCache.GetFromCache<string>("first");
+          Assert.IsNull(firstResult);
+
+          //Second is still available
+          var secondResult = await DataCache.GetFromCache<string>("second");
+          Assert.AreEqual("second result", secondResult);
+
+
+        }
+
     }
 }
