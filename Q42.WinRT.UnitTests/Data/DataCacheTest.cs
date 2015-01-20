@@ -99,6 +99,16 @@ namespace Q42.WinRT.UnitTests.Data
         }
 
         [TestMethod]
+        public async Task DeleteNotExistingCacheKeyTest()
+        {
+          //Clear the cache
+          await DataCache.ClearAll();
+
+          await DataCache.Delete("not_exist");
+
+        }
+
+        [TestMethod]
         public async Task ForceGetTest()
         {
             //Clear the cache

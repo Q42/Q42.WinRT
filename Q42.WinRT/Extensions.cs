@@ -81,27 +81,36 @@ namespace Q42.WinRT
         /// <param name="folder"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static async Task<bool> ContainsFileAsync(this StorageFolder folder, string fileName)
+      public static async Task<bool> ContainsFileAsync(this StorageFolder folder, string fileName)
+      {
+        //This looks nicer, but gave a COM errors in some situations
+        //TODO: Check again in final release of Windows 8 (or 9, or 10)
+        //return (await folder.GetFilesAsync()).Where(file => file.Name == fileName).Any();
+
+#if WINDOWS_PHONE
+        return System.IO.File.Exists(string.Format(@"{0}\{1}", folder.Path, fileName));
+#endif
+
+//#if NETFX_CORE
+//        var item = await ApplicationData.Current.LocalFolder.TryGetItemAsync(fileName);
+//        return item != null;
+//#endif
+
+        try
         {
-            //This looks nicer, but gave a COM errors in some situations
-            //TODO: Check again in final release of Windows 8 (or 9, or 10)
-            //return (await folder.GetFilesAsync()).Where(file => file.Name == fileName).Any();
-
-            try
-            {
-                await folder.GetFileAsync(fileName);
-                return true;
-            }
-            catch (FileNotFoundException)
-            {
-                return false;
-            }
-            catch(Exception)
-            {
-                return false;
-            }
-
+          await folder.GetFileAsync(fileName);
+          return true;
         }
+        catch (FileNotFoundException)
+        {
+          return false;
+        }
+        catch (Exception)
+        {
+          return false;
+        }
+
+      }
 
 
        
