@@ -54,6 +54,8 @@ namespace Q42.WinRT
 
       /// <summary>
       /// Converts Uri to cache key extension method
+      /// The cache key has a maximum length, because it is stored a file and there is a max path length and because not all characters in an uri are allowed in a file path.
+      /// Simply filtering those characters could also cause duplicate cache keys.
       /// </summary>
       /// <param name="uri"></param>
       /// <returns></returns>
