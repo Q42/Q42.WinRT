@@ -128,7 +128,7 @@
 
                 <TextBlock Margin="0,30,0,0" FontSize="18">Experimental: Uri result caching (debug to see in action)</TextBlock>
                 <Button Command="{Binding GetUriCommand}">Get result of Uri http://microsoft.com (from cache or internet)</Button>
-                <!--<Button Command="{Binding ClearWebDataCacheCommand}">Clear WebData cache</Button>-->
+                <Button Command="{Binding ClearWebDataCacheCommand}">Clear WebData cache</Button>
             </StackPanel>
         </ScrollViewer>
 

@@ -140,20 +140,17 @@ namespace Q42.WinRT.Data
         /// Clear the complete webcache
         /// </summary>
         /// <returns></returns>
-        public static Task ClearAll()
+        public static async Task ClearAll()
         {
-            return Task.Run(async () =>
-            {
-              var folder = await GetFolderAsync().ConfigureAwait(false);
+            var folder = await GetFolderAsync().ConfigureAwait(false);
 
-                try
-                {
-                  await folder.DeleteAsync(StorageDeleteOption.PermanentDelete).AsTask().ConfigureAwait(false);
-                }
-                catch (UnauthorizedAccessException)
-                {
-                }
-            });
+              try
+              {
+                await folder.DeleteAsync(StorageDeleteOption.PermanentDelete).AsTask().ConfigureAwait(false);
+              }
+              catch (UnauthorizedAccessException)
+              {
+              }
         }
 
         public static async Task Clear(ulong maxSize)
