@@ -112,13 +112,15 @@ namespace Q42.WinRT.Data
 
             var folder = await GetFolderAsync();
 
-            HttpClient webClient = new HttpClient();
-            var bytes = await webClient.GetByteArrayAsync(uri).ConfigureAwait(false);
+            using (HttpClient webClient = new HttpClient())
+            {
+              var bytes = await webClient.GetByteArrayAsync(uri).ConfigureAwait(false);
 
-            //Save data to cache
-            var file = await folder.CreateFileAsync(key, Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteBytesAsync(file, bytes);
-            return file;
+              //Save data to cache
+              var file = await folder.CreateFileAsync(key, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+              await FileIO.WriteBytesAsync(file, bytes);
+              return file;
+            }
         }
 
         /// <summary>

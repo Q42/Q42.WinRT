@@ -35,14 +35,15 @@ namespace Q42.WinRT.Phone
     {
       string text;
 
-      IRandomAccessStream accessStream = await storageFile.OpenReadAsync();
-
-      using (Stream stream = accessStream.AsStreamForRead((int)accessStream.Size))
+      using (IRandomAccessStream accessStream = await storageFile.OpenReadAsync())
       {
-        byte[] content = new byte[stream.Length];
-        await stream.ReadAsync(content, 0, (int)stream.Length);
+        using (Stream stream = accessStream.AsStreamForRead((int)accessStream.Size))
+        {
+          byte[] content = new byte[stream.Length];
+          await stream.ReadAsync(content, 0, (int)stream.Length);
 
-        text = Encoding.UTF8.GetString(content, 0, content.Length);
+          text = Encoding.UTF8.GetString(content, 0, content.Length);
+        }
       }
 
       return text;
