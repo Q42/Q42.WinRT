@@ -230,6 +230,19 @@ namespace Q42.WinRT.Data
       }
     }
 
+    /// <summary>
+    ///     Touches a file to update the DateModified property.
+    ///     http://stackoverflow.com/questions/12604110/an-elegant-performant-way-to-touch-a-file-in-update-modifiedtime-in-winrt
+    /// </summary>
+    public static async Task TouchAsync(this StorageFile file)
+    {
+      using (var touch = await file.OpenTransactedWriteAsync())
+      {
+        await touch.CommitAsync();
+      }
+    }
+
+
     internal class FileMetaData
     {
       public string Name { get; set; }
