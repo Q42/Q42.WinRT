@@ -174,6 +174,38 @@ namespace Q42.WinRT.Data
     }
 
     /// <summary>
+    /// Clears the cache by removing all the files which have not been modified
+    /// for a given time
+    /// </summary>
+    /// <param name="maxAge">
+    /// Files that have not been modified for more than this time span will be deleted
+    /// </param>
+    public static async Task Clear(TimeSpan maxAge)
+    {
+        var storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
+        var folder = await storage.GetFolderAsync();
+
+        await Clear(folder, maxAge);
+
+    }
+      
+    public static async Task Clear(this StorageFolder folder, TimeSpan maxAge)
+    {
+        var files = await folder.GetFilesAsync();
+
+        foreach (var file in files)
+        {
+            var props = await file.GetBasicPropertiesAsync();
+            var age = DateTimeOffset.UtcNow - props.DateModified;
+            if (age >= maxAge)
+            {
+                await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+            }
+        }
+    }
+
+
+    /// <summary>
     /// Clears the cache untill the total size is below the maxSize
     /// </summary>
     /// <param name="maxSize">MaxSize in bytes</param>
