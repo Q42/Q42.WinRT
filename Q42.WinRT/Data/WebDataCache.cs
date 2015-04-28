@@ -162,5 +162,12 @@ namespace Q42.WinRT.Data
           await folder.Clear(maxSize);
 
         }
+
+        public static async Task Clear(TimeSpan maxAge)
+        {
+            var folder = await GetFolderAsync().ConfigureAwait(false);
+
+            await folder.Clear(maxAge);
+        }
     }
 }
