@@ -188,20 +188,27 @@ namespace Q42.WinRT.Data
         await Clear(folder, maxAge);
 
     }
-      
+
     public static async Task Clear(this StorageFolder folder, TimeSpan maxAge)
     {
-        var files = await folder.GetFilesAsync();
+      var files = await folder.GetFilesAsync();
 
-        foreach (var file in files)
+      foreach (var file in files)
+      {
+        var props = await file.GetBasicPropertiesAsync();
+        var age = DateTimeOffset.UtcNow - props.DateModified;
+        if (age >= maxAge)
         {
-            var props = await file.GetBasicPropertiesAsync();
-            var age = DateTimeOffset.UtcNow - props.DateModified;
-            if (age >= maxAge)
-            {
-                await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
-            }
+          try
+          {
+            await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+          }
+          catch (UnauthorizedAccessException)
+          {
+            //File might be in use. Ignore it and continue with the other files
+          }
         }
+      }
     }
 
 

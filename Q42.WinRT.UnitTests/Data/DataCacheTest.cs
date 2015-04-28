@@ -205,5 +205,37 @@ namespace Q42.WinRT.UnitTests.Data
 
         }
 
+        [TestMethod]
+        public async Task ClearCacheMaxAgeTest()
+        {
+          //Clear the cache
+          await DataCache.ClearAll();
+
+          await DataCache.Set("first", "first result");
+          await DataCache.Set("second", "second result");
+
+          await DataCache.Clear(TimeSpan.FromHours(1));
+
+          //Nothing is gone
+          var firstResult = await DataCache.GetFromCache<string>("first");
+          Assert.IsNotNull(firstResult);
+
+          //Second is still available
+          var secondResult = await DataCache.GetFromCache<string>("second");
+          Assert.AreEqual("second result", secondResult);
+
+          //Clear everything until now
+          await DataCache.Clear(TimeSpan.FromSeconds(0));
+
+          //Everything should be gone
+          firstResult = await DataCache.GetFromCache<string>("first");
+          Assert.IsNull(firstResult);
+
+          secondResult = await DataCache.GetFromCache<string>("second");
+          Assert.IsNull(secondResult);
+
+
+        }
+
     }
 }

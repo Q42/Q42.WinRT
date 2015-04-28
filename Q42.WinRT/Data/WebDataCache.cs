@@ -110,7 +110,7 @@ namespace Q42.WinRT.Data
         {
             string key = uri.ToCacheKey();
 
-            var folder = await GetFolderAsync();
+            var folder = await GetFolderAsync().ConfigureAwait(false);
 
             using (HttpClient webClient = new HttpClient())
             {
@@ -159,7 +159,7 @@ namespace Q42.WinRT.Data
         {
           var folder = await GetFolderAsync().ConfigureAwait(false);
 
-          await folder.Clear(maxSize);
+          await folder.Clear(maxSize).ConfigureAwait(false);
 
         }
 
