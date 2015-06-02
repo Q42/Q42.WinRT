@@ -167,7 +167,7 @@ namespace Q42.WinRT.Data
         {
             var folder = await GetFolderAsync().ConfigureAwait(false);
 
-            await folder.Clear(maxAge);
+            await folder.Clear(maxAge).ConfigureAwait(false);
         }
     }
 }
