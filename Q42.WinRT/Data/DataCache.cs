@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Q42.WinRT.Storage;
@@ -203,6 +204,10 @@ namespace Q42.WinRT.Data
           {
             await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
           }
+          catch (FileNotFoundException)
+          {
+              //Already deleted
+          }
           catch (UnauthorizedAccessException)
           {
             //File might be in use. Ignore it and continue with the other files
@@ -242,11 +247,11 @@ namespace Q42.WinRT.Data
       //Order list by Modified date so it deletes old files first
       list = list.OrderBy(x => x.Modified).ToList();
 
-      await Clear(list, maxSize).ConfigureAwait(false);
+      await folder.Clear(list, maxSize).ConfigureAwait(false);
 
     }
 
-    private static async Task Clear(List<FileMetaData> list, ulong maxSize)
+    private static async Task Clear(this StorageFolder folder, List<FileMetaData> list, ulong maxSize)
     {
       if (list == null || !list.Any())
         return;
@@ -255,16 +260,26 @@ namespace Q42.WinRT.Data
 
       if(total > maxSize)
       {
-        //Delete file
-        StorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
-        var folder = await storage.GetFolderAsync();
-        var file = await folder.GetFileAsync(list.First().Name);
-        await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
-
-        list.RemoveAt(0);
+        try
+        {
+            var file = await folder.GetFileAsync(list.First().Name);
+            await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+        }
+        catch (FileNotFoundException)
+        {
+            //Already deleted
+        }
+        catch (UnauthorizedAccessException)
+        {
+            //File might be in use. Ignore it and continue with the other files
+        }
+        finally
+        {
+            list.RemoveAt(0);
+        }
 
         //Recursive
-        await Clear(list, maxSize).ConfigureAwait(false);
+        await folder.Clear(list, maxSize).ConfigureAwait(false);
      
       }
     }
