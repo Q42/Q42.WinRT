@@ -11,6 +11,11 @@ namespace Q42.WinRT.UnitTests.Data
     [TestClass]
     public class WebDataCacheTest
     {
+        [TestInitialize]
+        public async Task Init()
+        {
+            await WebDataCache.Init();
+        }
 
         [TestMethod]
         public async Task GetAsyncTest()
