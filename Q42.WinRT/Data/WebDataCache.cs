@@ -114,7 +114,12 @@ namespace Q42.WinRT.Data
             }
 
 
+#if NETFX_CORE
             string localUri = string.Format("ms-appdata:///local/{0}/{1}", CacheFolder, key);
+            
+#elif WINDOWS_PHONE
+          string localUri = string.Format("isostore:/{0}/{1}", CacheFolder, key);
+#endif
 
 
             return new Uri(localUri);
