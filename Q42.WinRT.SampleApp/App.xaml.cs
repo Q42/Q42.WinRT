@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Q42.WinRT.Data;
 using Q42.WinRT.SampleApp.Views;
 
 // The Split App template is documented at http://go.microsoft.com/fwlink/?LinkId=234228
@@ -44,6 +45,8 @@ namespace Q42.WinRT.SampleApp
         /// <param name="args">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
+            await WebDataCache.Init();
+
             // Do not repeat app initialization when already running, just ensure that
             // the window is active
             if (args.PreviousExecutionState == ApplicationExecutionState.Running)
