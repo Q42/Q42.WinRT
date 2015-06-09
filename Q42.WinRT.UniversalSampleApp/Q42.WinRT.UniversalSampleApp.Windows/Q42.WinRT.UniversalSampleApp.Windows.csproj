@@ -18,7 +18,7 @@
     <PackageCertificateKeyFile>Q42.WinRT.UniversalSampleApp.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <PackageCertificateThumbprint>466CE21542FDABD4525CE95864901F07C2F41EFE</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>FB173AEA8810A11CB2B2F974A00C5A1BC7D26E16</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
