@@ -125,11 +125,26 @@
                 <TextBlock FontSize="18">Source already caches http uri's by default. This extension can be used when you want to cache https data.</TextBlock>
                 <Image HorizontalAlignment="Left" Stretch="None" q42controls:ImageExtensions.CacheUri="https://www.google.nl/favicon.ico" />
                 <TextBlock>Normal:</TextBlock>    
-            <Image HorizontalAlignment="Left" Stretch="None" Source="https://www.google.nl/favicon.ico" />
+                <Image HorizontalAlignment="Left" Stretch="None" Source="https://www.google.nl/favicon.ico" />
 
+                <TextBlock>Image brush:</TextBlock>
+
+                <Ellipse
+                    Height="80"
+                    Width="80"
+                    HorizontalAlignment="Left"
+                    >
+                    <Ellipse.Fill>
+                        <ImageBrush 
+                            Stretch="UniformToFill"
+                            q42controls:ImageExtensions.CacheUri="{Binding ImageBrushUri}"
+                            />
+                    </Ellipse.Fill>
+                </Ellipse>
+                
                 <TextBlock Margin="0,30,0,0" FontSize="18">Experimental: Uri result caching (debug to see in action)</TextBlock>
                 <Button Command="{Binding GetUriCommand}">Get result of Uri http://microsoft.com (from cache or internet)</Button>
-                <!--<Button Command="{Binding ClearWebDataCacheCommand}">Clear WebData cache</Button>-->
+                <Button Command="{Binding ClearWebDataCacheCommand}">Clear WebData cache</Button>
             </StackPanel>
         </ScrollViewer>
 
