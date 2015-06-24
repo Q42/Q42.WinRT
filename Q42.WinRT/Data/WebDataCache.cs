@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Q42.WinRT.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -17,22 +18,86 @@ namespace Q42.WinRT.Data
     public static class WebDataCache
     {
         private static readonly string CacheFolder = "_webdatacache";
+        private static readonly string IndexCacheFile = "_index";
 
-        private static HashSet<string> _files;
+        private static Dictionary<string, string> _files;
 
         private static readonly object Lock = new object();
 
         public static async Task Init()
         {
-            _files=new HashSet<string>();
+
+            _files = await GetIndexFile().ConfigureAwait(false);
+
+            if (_files == null)
+            {
+
+                _files = new Dictionary<string, string>();
+
+                await SaveIndexFile().ConfigureAwait(false);
+
+            }
+
+
+        }
+
+        private static async Task SaveIndexFile()
+        {
+            try
+            {
+                var folder = await GetFolderAsync().ConfigureAwait(false);
+
+                IStorageHelper<Dictionary<string, string>> storage = new StorageHelper<Dictionary<string, string>>(StorageType.Local, CacheFolder, StorageSerializer.JSON);
+
+                await storage.SaveAsync(_files, IndexCacheFile);
+            }
+            catch (Exception)
+            {
+
+            }
+
+
+        }
+
+
+        /// <summary>
+        /// Get index file
+        /// </summary>
+        /// <returns></returns>
+        public async static Task<Dictionary<string, string>> GetIndexFile()
+        {
 
             var folder = await GetFolderAsync().ConfigureAwait(false);
-            _files.Clear();
-            var files = await folder.GetFilesAsync();
-            foreach (var file in files)
-            {
-                _files.Add(file.Name);
-            }
+
+            IStorageHelper<Dictionary<string, string>> storage = new StorageHelper<Dictionary<string, string>>(StorageType.Local, CacheFolder, StorageSerializer.JSON);
+
+            //Get cache value
+            var value = await storage.LoadAsync(IndexCacheFile).ConfigureAwait(false);
+
+            if (value == null) { return default(Dictionary<string, string>); }
+            else
+                return value;
+
+        }
+
+        /// <summary>
+        /// Returns file reference in dictionary
+        /// </summary>
+        /// <param name="sUri"></param>
+        /// <returns></returns>
+        public static KeyValuePair<string, string> GetFileReferenceByUri(string sUri)
+        {
+            return _files.Where(x => x.Value == sUri).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Returns file reference in dictionary
+        /// </summary>
+        /// <param name="sUri"></param>
+        /// <returns></returns>
+        public static KeyValuePair<string, string> GetFileReferenceByUri(Uri uri)
+        {
+            return GetFileReferenceByUri(uri.ToString());
         }
 
         /// <summary>
@@ -49,29 +114,34 @@ namespace Q42.WinRT.Data
                 throw new Exception("Use Init to initialize the cache first");
             }
 
-            string key = uri.ToCacheKey();
+            string sUri = uri.ToString();
 
             StorageFile file = null;
 
             //Try get the data from the cache
 
-            bool exist;
+            bool exist = false;
+            KeyValuePair<string, string> fileRef;
+
             lock (Lock)
             {
-                exist = _files.Contains(key);
+                fileRef = GetFileReferenceByUri(sUri);
+                exist = !string.IsNullOrEmpty(fileRef.Key);
             }
 
             //If file is not available or we want to force getting this file
             if (!exist || forceGet)
             {
                 //else, load the data
-                file = await SetAsync(uri).ConfigureAwait(false);
+                fileRef = await SetAsyncRef(uri).ConfigureAwait(false);
+                var folder = await GetFolderAsync().ConfigureAwait(false);
+                file = await folder.GetFileAsync(fileRef.Key).AsTask().ConfigureAwait(false);
             }
 
             if (file == null)
             {
                 var folder = await GetFolderAsync().ConfigureAwait(false);
-                file = await folder.GetFileAsync(key);
+                file = await folder.GetFileAsync(fileRef.Key);
             }
 
             return file;
@@ -97,28 +167,31 @@ namespace Q42.WinRT.Data
               || uri.Scheme == "isostore")
                 return uri;
 
-            string key = uri.ToCacheKey();
+            string value = uri.ToString();
 
             //Try get the data from the cache
 
             var contains = false;
+            KeyValuePair<string, string> fileRef;
+
             lock (Lock)
             {
-                contains = _files.Contains(key);
+                fileRef = GetFileReferenceByUri(uri.ToString());
+                contains = !string.IsNullOrEmpty(fileRef.Key);
             }
 
             if (!contains)
             {
                 //else, load the data
-                await SetAsync(uri).ConfigureAwait(false);
+                fileRef = await SetAsyncRef(uri).ConfigureAwait(false);
             }
 
 
 #if NETFX_CORE
-            string localUri = string.Format("ms-appdata:///local/{0}/{1}", CacheFolder, key);
-            
+            string localUri = string.Format("ms-appdata:///local/{0}/{1}", CacheFolder, fileRef.Key);
+
 #elif WINDOWS_PHONE
-          string localUri = string.Format("isostore:/{0}/{1}", CacheFolder, key);
+            string localUri = string.Format("isostore:/{0}/{1}", CacheFolder, fileRef.Key);
 #endif
 
 
@@ -149,9 +222,11 @@ namespace Q42.WinRT.Data
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        private static async Task<StorageFile> SetAsync(Uri uri)
+        private static async Task<KeyValuePair<string,string>> SetAsyncRef(Uri uri)
         {
-            string key = uri.ToCacheKey();
+            string sUri = uri.ToString();
+
+            var reg = new KeyValuePair<string, string>(Guid.NewGuid().ToString(), sUri);
 
             var folder = await GetFolderAsync().ConfigureAwait(false);
 
@@ -160,15 +235,17 @@ namespace Q42.WinRT.Data
                 var bytes = await webClient.GetByteArrayAsync(uri).ConfigureAwait(false);
 
                 //Save data to cache
-                var file = await folder.CreateFileAsync(key, CreationCollisionOption.ReplaceExisting);
+                var file = await folder.CreateFileAsync(reg.Key, CreationCollisionOption.ReplaceExisting);
                 await FileIO.WriteBytesAsync(file, bytes);
                 lock (Lock)
                 {
-                    _files.Add(file.Name);
+                    _files.Add(reg.Key, reg.Value);
                 }
-                return file;
+                await SaveIndexFile().ConfigureAwait(false);
+                return reg;
             }
         }
+
 
         /// <summary>
         /// Delete from cache based on Uri (=key)
@@ -187,9 +264,17 @@ namespace Q42.WinRT.Data
                     var file = await GetAsync(uri).ConfigureAwait(false);
                     lock (Lock)
                     {
-                        _files.Remove(file.Name);
+                        var reg = _files.Where(x => x.Value == file.Name).FirstOrDefault();
+
+                        if (reg.Equals(default(KeyValuePair<string, string>)))
+                        {
+                            _files.Remove(reg.Key);
+
+                        }
                     }
-                    await file.DeleteAsync();                    
+
+                    await file.DeleteAsync();
+                    await SaveIndexFile().ConfigureAwait(false);
                 });
         }
 
@@ -208,15 +293,19 @@ namespace Q42.WinRT.Data
             lock (Lock)
             {
                 _files.Clear();
+
             }
 
             try
             {
-                await folder.DeleteAsync(StorageDeleteOption.PermanentDelete).AsTask().ConfigureAwait(false);
+                await folder.DeleteAsync().AsTask().ConfigureAwait(false);
+                await SaveIndexFile().ConfigureAwait(false);
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException uex)
             {
             }
+
+
         }
 
         public static async Task Clear(ulong maxSize)

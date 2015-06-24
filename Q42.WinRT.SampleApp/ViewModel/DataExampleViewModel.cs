@@ -56,7 +56,16 @@ namespace Q42.WinRT.SampleApp.ViewModel
                 RaisePropertyChanged("CacheRefreshResult");
             }
         }
-        
+
+        private Uri _imageBrushUri;
+
+        public Uri ImageBrushUri
+        {
+            get { return _imageBrushUri; }
+            set { Set(ref _imageBrushUri, value); }
+        }
+
+
 
         public DataLoader StartLongRunningDataLoader { get; set; }
         public DataLoader StartLongRunningWithExceptionDataLoader { get; set; }
@@ -106,6 +115,10 @@ namespace Q42.WinRT.SampleApp.ViewModel
 
             ClearWebDataCacheCommand = new RelayCommand(() => ClearWebDataCacheCommandAction());
             GetUriCommand = new RelayCommand(() => GetUriCommandAction());
+
+            ImageBrushUri = new Uri("https://pbs.twimg.com/profile_images/478304416148099072/1_rxoQgR.png");
+
+            WebDataCache.Init();
 
         }
 
