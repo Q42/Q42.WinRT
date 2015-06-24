@@ -60,54 +60,19 @@ namespace Q42.WinRT.Controls
 
             if (newCacheUri != null)
             {
-                //Get image from cache (download and set in cache if needed)
-                var cacheUri = await WebDataCache.GetLocalUriAsync(newCacheUri);
 
-                // Check if the wanted image uri has not changed while we were loading
-                if (newCacheUri != (Uri)d.GetValue(CacheUriProperty)) return;
-
-                if (d is Image)
+                try
                 {
-                    SetSourceOnImageControl((Image)d, cacheUri, newCacheUri);
-                }
-                else
-                {
-                    if (d is ImageBrush)
-                    {
-                        SetSourceOnImageBrushControl((ImageBrush)d, cacheUri, newCacheUri);
-                    }
-                }
-            }
-            else
-            {
 
-                if (d is Image)
-                {
-                    ((Image)d).Source = null;
-                }
-                else
-                {
-                    if (d is ImageBrush)
-                    {
-                        ((ImageBrush)d).ImageSource = null;
-                    }
-                }
-            }
+                    //Get image from cache (download and set in cache if needed)
+                    var cacheUri = await WebDataCache.GetLocalUriAsync(newCacheUri);
 
-
-
-        }
-
-
-        private static void SetSourceOnImageBrushControl(ImageBrush imageBrush, Uri cacheUri, Uri newCacheUri)
-        {
-            try
-            {
-
+                    // Check if the wanted image uri has not changed while we were loading
+                    if (newCacheUri != (Uri)d.GetValue(CacheUriProperty)) return;
 
 #if NETFX_CORE
-                //Set cache uri as source for the image
-                imageBrush.ImageSource = new BitmapImage(cacheUri);
+                    //Set cache uri as source for the image
+                    SetSourceOnObject(d, new BitmapImage(cacheUri));
 
 #elif WINDOWS_PHONE
                 BitmapImage bimg = new BitmapImage();
@@ -120,53 +85,58 @@ namespace Q42.WinRT.Controls
                     }
                 }
                 //Set cache uri as source for the image
-                imageBrush.ImageSource = bimg;
+                 SetSourceOnObject(d, bimg);
 #endif
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
 
-                //Revert to using passed URI
-                imageBrush.ImageSource = new BitmapImage(newCacheUri);
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+
+                    //Revert to using passed URI
+                    SetSourceOnObject(d, new BitmapImage(newCacheUri), false);
+                }
+
             }
+            else
+            {
+                SetSourceOnObject(d, null, false);
+            }
+
         }
 
-
-        private static void SetSourceOnImageControl(Image image, Uri cacheUri, Uri newCacheUri)
+        private static void SetSourceOnObject(object imgControl, ImageSource imageSource, bool throwEx = true)
         {
+
             try
             {
-
-
-#if NETFX_CORE
-                //Set cache uri as source for the image
-                image.Source = new BitmapImage(cacheUri);
-
-#elif WINDOWS_PHONE
-                        BitmapImage bimg = new BitmapImage();
-
-                        using (IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication())
-                        {
-                            using (IsolatedStorageFileStream stream = iso.OpenFile(cacheUri.PathAndQuery, FileMode.Open, FileAccess.Read))
-                            {
-                                bimg.SetSource(stream);
-                            }
-                        }
-                        //Set cache uri as source for the image
-                        image.Source = bimg;
-#endif
+                if (imgControl is Image)
+                {
+                    ((Image)imgControl).Source = imageSource;
+                }
+                else
+                {
+                    if (imgControl is ImageBrush)
+                    {
+                        ((ImageBrush)imgControl).ImageSource = imageSource;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
 
-                //Revert to using passed URI
-                image.Source = new BitmapImage(newCacheUri);
+                if (throwEx)
+                {
+                    throw ex;
+                }
             }
-
+            
         }
 
+
+     
     }
 
     
