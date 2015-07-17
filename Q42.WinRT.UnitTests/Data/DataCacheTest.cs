@@ -183,6 +183,13 @@ namespace Q42.WinRT.UnitTests.Data
             return result;
         }
 
+        private async Task<DateTime> LongRunningOperationDateTimeResult(DateTime result)
+        {
+          await Task.Delay(1000);
+
+          return result;
+        }
+
         [TestMethod]
         public async Task ClearCacheMaxSizeTest()
         {
@@ -233,6 +240,25 @@ namespace Q42.WinRT.UnitTests.Data
 
           secondResult = await DataCache.GetFromCache<string>("second");
           Assert.IsNull(secondResult);
+
+
+        }
+
+        [TestMethod]
+        public async Task GetCacheWrongObjectTest()
+        {
+          //Clear the cache
+          await DataCache.ClearAll();
+
+          var result1 = await DataCache.GetAsync("test", () => LongRunningOperation("result"));
+          Assert.AreEqual("result", result1);
+
+          var secondResult = DateTime.Now;
+
+          var result2 = await DataCache.GetAsync("test", () => LongRunningOperationDateTimeResult(secondResult));
+
+          //Cache fails, because it can't create a DateTime from a string, so runs the provided method.
+          Assert.AreEqual(secondResult, result2);
 
 
         }

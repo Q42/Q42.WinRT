@@ -60,25 +60,26 @@ namespace Q42.WinRT.Data
     /// <param name="forceRefresh"></param>
     /// <param name="serializerType">JSON or XML serializer</param>
     /// <returns></returns>
-    public async static Task<T> GetAsync<T>(string key, Func<Task<T>> generate, DateTime? expireDate = null, bool forceRefresh = false, StorageSerializer serializerType = StorageSerializer.JSON)
+    public async static Task<T> GetAsync<T>(string key, Func<Task<T>> generate, DateTime? expireDate = null, bool forceRefresh = false, StorageSerializer serializerType = StorageSerializer.JSON) 
     {
-      object value;
+      T value;
 
       //Force bypass of cache?
       if (!forceRefresh)
       {
         //Check cache
         value = await GetFromCache<T>(key, serializerType).ConfigureAwait(false);
-        if (value != null)
+
+        if (!EqualityComparer<T>.Default.Equals(value, default(T)))
         {
-          return (T)value;
+          return value;
         }
       }
 
       value = await generate().ConfigureAwait(false);
       await Set(key, value, expireDate).ConfigureAwait(false);
 
-      return (T)value;
+      return value;
 
     }
 
@@ -94,20 +95,28 @@ namespace Q42.WinRT.Data
         IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder, serializerType);
 
       //Get cache value
-      var value = await storage.LoadAsync(key).ConfigureAwait(false);
+        try
+        {
+          var value = await storage.LoadAsync(key).ConfigureAwait(false);
 
-      if (value == null)
-        return default(T);
-      else if (value.IsValid)
-        return value.File;
-      else
-      {
-        //Delete old value
-        //Do not await
-        Delete(key, serializerType);
+          if (value == null)
+            return default(T);
+          else if (value.IsValid)
+            return value.File;
+          else
+          {
+            //Delete old value
+            //Do not await
+            Delete(key, serializerType);
+          }
+        }
+        catch 
+        {
+          //Restoring from cache might throw an error
+          //Don't crash the app, return default value
+        }
 
         return default(T);
-      }
     }
 
     /// <summary>
