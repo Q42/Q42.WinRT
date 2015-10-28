@@ -24,20 +24,24 @@ namespace Q42.WinRT.Data
 
         private static readonly object Lock = new object();
 
-        public static async Task Init()
+        private static StorageFolder _storageFolder;
+
+        public static async Task Init(StorageFolder folder = null)
         {
+          if (folder == null)
+            folder = Windows.Storage.ApplicationData.Current.LocalFolder;
+          _storageFolder = folder;
 
-            _files = await GetIndexFile().ConfigureAwait(false);
+          _files = await GetIndexFile().ConfigureAwait(false);
 
-            if (_files == null)
-            {
+          if (_files == null)
+          {
 
-                _files = new Dictionary<string, string>();
+            _files = new Dictionary<string, string>();
 
-                await SaveIndexFile().ConfigureAwait(false);
+            await SaveIndexFile().ConfigureAwait(false);
 
-            }
-
+          }
 
         }
 
@@ -47,7 +51,7 @@ namespace Q42.WinRT.Data
             {
                 var folder = await GetFolderAsync().ConfigureAwait(false);
 
-                IStorageHelper<Dictionary<string, string>> storage = new StorageHelper<Dictionary<string, string>>(StorageType.Local, CacheFolder, StorageSerializer.JSON);
+                IStorageHelper<Dictionary<string, string>> storage = new StorageHelper<Dictionary<string, string>>(_storageFolder, CacheFolder, StorageSerializer.JSON);
 
                 await storage.SaveAsync(_files, IndexCacheFile);
             }
@@ -69,7 +73,7 @@ namespace Q42.WinRT.Data
 
             var folder = await GetFolderAsync().ConfigureAwait(false);
 
-            IStorageHelper<Dictionary<string, string>> storage = new StorageHelper<Dictionary<string, string>>(StorageType.Local, CacheFolder, StorageSerializer.JSON);
+            IStorageHelper<Dictionary<string, string>> storage = new StorageHelper<Dictionary<string, string>>(_storageFolder, CacheFolder, StorageSerializer.JSON);
 
             //Get cache value
             var value = await storage.LoadAsync(IndexCacheFile).ConfigureAwait(false);
@@ -322,6 +326,6 @@ namespace Q42.WinRT.Data
 
             await folder.Clear(maxAge).ConfigureAwait(false);
             await Init().ConfigureAwait(false);
-        }
-    }
+        }   
+  }
 }

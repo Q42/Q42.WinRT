@@ -50,6 +50,16 @@ namespace Q42.WinRT.Data
   {
     private static readonly string CacheFolder = "_jsoncache";
 
+    private static StorageFolder _storageFolder;
+
+    public static async Task Init(StorageFolder folder = null)
+    {
+      if (folder == null)
+        folder = Windows.Storage.ApplicationData.Current.LocalFolder;
+      _storageFolder = folder;
+    }
+
+
     /// <summary>
     /// Get object based on key, or generate the value
     /// </summary>
@@ -92,7 +102,7 @@ namespace Q42.WinRT.Data
     /// <returns></returns>
     public async static Task<T> GetFromCache<T>(string key, StorageSerializer serializerType = StorageSerializer.JSON)
     {
-        IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder, serializerType);
+        IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(_storageFolder, CacheFolder, serializerType);
 
       //Get cache value
         try
@@ -130,7 +140,7 @@ namespace Q42.WinRT.Data
     /// <returns></returns>
     public static Task Set<T>(string key, T value, DateTime? expireDate = null, StorageSerializer serializerType = StorageSerializer.JSON)
     {
-      IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(StorageType.Local, CacheFolder, serializerType);
+      IStorageHelper<CacheObject<T>> storage = new StorageHelper<CacheObject<T>>(_storageFolder, CacheFolder, serializerType);
 
       CacheObject<T> cacheFile = new CacheObject<T>() { File = value, ExpireDateTime = expireDate };
 
@@ -145,7 +155,7 @@ namespace Q42.WinRT.Data
     /// <returns></returns>
     public static Task Delete(string key, StorageSerializer serializerType = StorageSerializer.JSON)
     {
-      IStorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder, serializerType);
+      IStorageHelper<object> storage = new StorageHelper<object>(_storageFolder, CacheFolder, serializerType);
 
       return storage.DeleteAsync(key);
     }
@@ -156,7 +166,7 @@ namespace Q42.WinRT.Data
     /// <returns></returns>
     public static Task ClearAll()
     {
-      IStorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
+      IStorageHelper<object> storage = new StorageHelper<object>(_storageFolder, CacheFolder);
       return storage.DeleteAllFiles();
     }
 
@@ -166,7 +176,7 @@ namespace Q42.WinRT.Data
     /// <returns></returns>
     public static async Task ClearInvalid(StorageSerializer serializerType = StorageSerializer.JSON)
     {
-      StorageHelper<CacheObject> storage = new StorageHelper<CacheObject>(StorageType.Local, CacheFolder, serializerType);
+      StorageHelper<CacheObject> storage = new StorageHelper<CacheObject>(_storageFolder, CacheFolder, serializerType);
       var validExtension = storage.GetFileExtension();
       var folder = await storage.GetFolderAsync().ConfigureAwait(false);
 
@@ -192,7 +202,7 @@ namespace Q42.WinRT.Data
     /// </param>
     public static async Task Clear(TimeSpan maxAge)
     {
-        var storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
+        var storage = new StorageHelper<object>(_storageFolder, CacheFolder);
         var folder = await storage.GetFolderAsync();
 
         await Clear(folder, maxAge);
@@ -233,7 +243,7 @@ namespace Q42.WinRT.Data
     /// <returns></returns>
     public static async Task Clear(ulong maxSize)
     {
-      StorageHelper<object> storage = new StorageHelper<object>(StorageType.Local, CacheFolder);
+      StorageHelper<object> storage = new StorageHelper<object>(_storageFolder, CacheFolder);
       var folder = await storage.GetFolderAsync();
 
       await Clear(folder, maxSize);
@@ -304,7 +314,6 @@ namespace Q42.WinRT.Data
         await touch.CommitAsync();
       }
     }
-
 
     internal class FileMetaData
     {

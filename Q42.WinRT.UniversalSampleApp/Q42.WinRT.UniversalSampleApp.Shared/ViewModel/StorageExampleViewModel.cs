@@ -8,7 +8,7 @@ namespace Q42.WinRT.UniversalSampleApp.ViewModel
     public class StorageExampleViewModel : ViewModelBase
     {
 
-        private StorageHelper<List<MyModel>> storageHelper = new StorageHelper<List<MyModel>>(StorageType.Local);
+        private StorageHelper<List<MyModel>> storageHelper = new StorageHelper<List<MyModel>>(Windows.Storage.ApplicationData.Current.LocalFolder);
 
         private string _result;
 

@@ -48,18 +48,22 @@ namespace Q42.WinRT.Storage
   public class StorageHelper<T> : IStorageHelper<T>
   {
     private ApplicationData _appData = Windows.Storage.ApplicationData.Current;
+
+    [Obsolete]
     private StorageType _storageType;
+
     private string _subFolder;
     private StorageSerializer _serializerType;
-
+    private StorageFolder _storageFolder;
 
 
     /// <summary>
-    /// Default constructor
+    /// Deprecated constructor, will be removed in a future version
     /// </summary>
     /// <param name="StorageType"></param>
     /// <param name="subFolder"></param>
     /// <param name="serializerType"></param>
+    [Obsolete]
     public StorageHelper(StorageType StorageType, string subFolder = null, StorageSerializer serializerType = StorageSerializer.JSON)
     {
       _storageType = StorageType;
@@ -68,11 +72,24 @@ namespace Q42.WinRT.Storage
     }
 
     /// <summary>
-    /// Gets file extension based on serializer type
-    /// Never deserialize with the wrong serializer
+    /// Constructor that takes a storageFolder as input
     /// </summary>
-    /// <returns></returns>
-    internal string GetFileExtension()
+    /// <param name="storageFolder">For example: Windows.Storage.ApplicationData.Current.LocalFolder</param>
+    /// <param name="subFolder"></param>
+    /// <param name="serializerType"></param>
+    public StorageHelper(StorageFolder storageFolder, string subFolder = null, StorageSerializer serializerType = StorageSerializer.JSON)
+	{
+      _storageFolder = storageFolder;
+		_subFolder = subFolder;
+		_serializerType = serializerType;
+	}
+
+		/// <summary>
+		/// Gets file extension based on serializer type
+		/// Never deserialize with the wrong serializer
+		/// </summary>
+		/// <returns></returns>
+		internal string GetFileExtension()
     {
       switch (_serializerType)
       {
@@ -213,14 +230,21 @@ namespace Q42.WinRT.Storage
     /// Get folder based on storagetype
     /// </summary>
     /// <returns></returns>
-    public async Task<StorageFolder> GetFolderAsync()
+	public async Task<StorageFolder> GetFolderAsync()
     {
+
       StorageFolder folder;
-      switch (_storageType)
+
+      if (_storageFolder != null)
+        folder = _storageFolder;
+      else
       {
-        case StorageType.Local:
-          folder = _appData.LocalFolder;
-          break;
+        //This part is obsolete and will be removed
+        switch (_storageType)
+        {
+          case StorageType.Local:
+            folder = _appData.LocalFolder;
+            break;
 #if NETFX_CORE
         case StorageType.Roaming:
           folder = _appData.RoamingFolder;
@@ -229,8 +253,9 @@ namespace Q42.WinRT.Storage
           folder = _appData.TemporaryFolder;
           break;
 #endif
-        default:
-          throw new Exception(String.Format("Unknown StorageType: {0}", _storageType));
+          default:
+            throw new Exception(String.Format("Unknown StorageType: {0}", _storageType));
+        }
       }
 
       if (!string.IsNullOrEmpty(_subFolder))
@@ -262,11 +287,11 @@ namespace Q42.WinRT.Storage
     /// Clear the complete cache
     /// </summary>
     /// <returns></returns>
-    public static Task ClearLocalAll()
+    public static Task ClearAll(StorageFolder storageFolder)
     {
       return Task.Run(async () =>
       {
-        StorageHelper<object> storage = new StorageHelper<object>(StorageType.Local);
+        StorageHelper<object> storage = new StorageHelper<object>(storageFolder);
         var folder = await storage.GetFolderAsync().ConfigureAwait(false);
 
         //Remove subfolders

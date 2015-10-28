@@ -42,11 +42,11 @@ namespace Q42.WinRT.UnitTests.Storage
     {
         var myObject = new MyModel() { Name = "Michiel", Age = 29 };
 
-        IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local);
+        IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(Windows.Storage.ApplicationData.Current.LocalFolder);
 
         await sh.SaveAsync(myObject, "myfile");
 
-        IStorageHelper<MyModel> shXml = new StorageHelper<MyModel>(StorageType.Local, serializerType:  StorageSerializer.XML);
+        IStorageHelper<MyModel> shXml = new StorageHelper<MyModel>(Windows.Storage.ApplicationData.Current.LocalFolder, serializerType:  StorageSerializer.XML);
 
         var loadedObject = await shXml.LoadAsync("myfile");
 
@@ -60,7 +60,7 @@ namespace Q42.WinRT.UnitTests.Storage
     {
       var myObject = new MyModel() { Name = "Michiel", Age = 29 };
 
-      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local, serializerType: serializerType);
+      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(Windows.Storage.ApplicationData.Current.LocalFolder, serializerType: serializerType);
 
       await sh.SaveAsync(myObject, "myfile");
 
@@ -77,7 +77,7 @@ namespace Q42.WinRT.UnitTests.Storage
     {
       var myObject = new MyModel() { Name = "Michiel", Age = 29 };
 
-      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local, serializerType: serializerType);
+      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(Windows.Storage.ApplicationData.Current.LocalFolder, serializerType: serializerType);
 
       await sh.SaveAsync(myObject, "myfile");
 
@@ -98,7 +98,7 @@ namespace Q42.WinRT.UnitTests.Storage
     {
       var myObject = new MyModel() { Name = "Michiel", Age = 29 };
 
-      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local, serializerType: serializerType);
+      IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(Windows.Storage.ApplicationData.Current.LocalFolder, serializerType: serializerType);
 
       await sh.SaveAsync(myObject, "myfile");
 
@@ -113,7 +113,7 @@ namespace Q42.WinRT.UnitTests.Storage
 
     public async Task StorageHelperDeleteNotExistingTest(StorageSerializer serializerType)
     {
-        IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local, serializerType: serializerType);
+        IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(Windows.Storage.ApplicationData.Current.LocalFolder, serializerType: serializerType);
 
       //Delete non existing object
       await sh.DeleteAsync("myfile6526161651651");
@@ -127,7 +127,7 @@ namespace Q42.WinRT.UnitTests.Storage
 
     public async Task StorageHelperNotExistingTest(StorageSerializer serializerType)
     {
-        IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(StorageType.Local, serializerType: serializerType);
+        IStorageHelper<MyModel> sh = new StorageHelper<MyModel>(Windows.Storage.ApplicationData.Current.LocalFolder, serializerType: serializerType);
 
       var loadedObject = await sh.LoadAsync("myfile561616516");
 

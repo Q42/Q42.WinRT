@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Q42.WinRT.UniversalSampleAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Q42.WinRT.UniversalSampleApp.WindowsPhone", "Q42.WinRT.UniversalSampleApp\Q42.WinRT.UniversalSampleApp.WindowsPhone\Q42.WinRT.UniversalSampleApp.WindowsPhone.csproj", "{9B3FDBCA-23A2-4D06-A554-FD5EBB324746}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Q42.WinRT.UWP.SampleApp", "Q42.WinRT.UWP.SampleApp\Q42.WinRT.UWP.SampleApp.csproj", "{B39AB58C-BD27-4967-B914-9002ADF57FB1}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Q42.WinRT.UniversalSampleApp\Q42.WinRT.UniversalSampleApp.Shared\Q42.WinRT.UniversalSampleApp.Shared.projitems*{e9e9d41e-66d6-4ce2-ae36-ad6938db06ad}*SharedItemsImports = 4
@@ -264,6 +266,32 @@ Global
 		{9B3FDBCA-23A2-4D06-A554-FD5EBB324746}.Release|x86.ActiveCfg = Release|x86
 		{9B3FDBCA-23A2-4D06-A554-FD5EBB324746}.Release|x86.Build.0 = Release|x86
 		{9B3FDBCA-23A2-4D06-A554-FD5EBB324746}.Release|x86.Deploy.0 = Release|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|ARM.ActiveCfg = Debug|ARM
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|ARM.Build.0 = Debug|ARM
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|ARM.Deploy.0 = Debug|ARM
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|x64.ActiveCfg = Debug|x64
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|x64.Build.0 = Debug|x64
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|x64.Deploy.0 = Debug|x64
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|x86.ActiveCfg = Debug|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|x86.Build.0 = Debug|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Debug|x86.Deploy.0 = Debug|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|Any CPU.ActiveCfg = Release|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|ARM.ActiveCfg = Release|ARM
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|ARM.Build.0 = Release|ARM
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|ARM.Deploy.0 = Release|ARM
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|Mixed Platforms.Build.0 = Release|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|Mixed Platforms.Deploy.0 = Release|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|x64.ActiveCfg = Release|x64
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|x64.Build.0 = Release|x64
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|x64.Deploy.0 = Release|x64
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|x86.ActiveCfg = Release|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|x86.Build.0 = Release|x86
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -276,5 +304,6 @@ Global
 		{2C96DB26-64CE-47D1-909D-1730EC85F05F} = {81350EFD-899F-4CDF-849D-7D2C533ECCCA}
 		{E9E9D41E-66D6-4CE2-AE36-AD6938DB06AD} = {81350EFD-899F-4CDF-849D-7D2C533ECCCA}
 		{9B3FDBCA-23A2-4D06-A554-FD5EBB324746} = {81350EFD-899F-4CDF-849D-7D2C533ECCCA}
+		{B39AB58C-BD27-4967-B914-9002ADF57FB1} = {87B41AA7-AFD2-49E0-AEF5-0E76AF357FB1}
 	EndGlobalSection
 EndGlobal
