@@ -268,12 +268,11 @@ namespace Q42.WinRT.Data
                     var file = await GetAsync(uri).ConfigureAwait(false);
                     lock (Lock)
                     {
-                        var reg = _files.Where(x => x.Value == file.Name).FirstOrDefault();
+                        var reg = _files.Where(x => x.Key == file.Name).FirstOrDefault();
 
-                        if (reg.Equals(default(KeyValuePair<string, string>)))
+                        if (!reg.Equals(default(KeyValuePair<string, string>)))
                         {
                             _files.Remove(reg.Key);
-
                         }
                     }
 
