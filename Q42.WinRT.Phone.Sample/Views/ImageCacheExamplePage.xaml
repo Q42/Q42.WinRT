@@ -35,6 +35,7 @@
             <TextBlock>Normal:</TextBlock>
             <Image Height="200" HorizontalAlignment="Left" Stretch="Uniform" Source="https://www.google.com/images/logo.png" />
 
+            <Button Click="DeleteButton_Click">Delete Image From Cache</Button>
             
         </StackPanel>
     </Grid>

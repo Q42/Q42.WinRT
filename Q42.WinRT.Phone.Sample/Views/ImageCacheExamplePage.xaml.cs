@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Q42.WinRT.Data;
 
 namespace Q42.WinRT.Phone.Sample.Views
 {
@@ -16,5 +17,10 @@ namespace Q42.WinRT.Phone.Sample.Views
         {
             InitializeComponent();
         }
-    }
+
+		private void DeleteButton_Click(object sender, RoutedEventArgs e)
+		{
+			WebDataCache.Delete(new Uri("https://www.google.com/images/logo.png"));
+		}
+	}
 }
