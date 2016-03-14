@@ -1,5 +1,6 @@
 ﻿using Q42.WinRT.Storage;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -282,6 +283,35 @@ namespace Q42.WinRT.Data
         }
 
         /// <summary>
+        /// Delete from cache based on file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static Task Delete(StorageFile file)
+        {
+            if (_files == null)
+            {
+                throw new Exception("Use Init to initialize the cache first");
+            }
+
+            return Task.Run(async () =>
+            {
+                lock (Lock)
+                {
+                    var reg = _files.Where(x => x.Key == file.Name).FirstOrDefault();
+
+                    if (!reg.Equals(default(KeyValuePair<string, string>)))
+                    {
+                        _files.Remove(reg.Key);
+                    }
+                }
+
+                await file.DeleteAsync();
+                await SaveIndexFile().ConfigureAwait(false);
+            });
+        }
+
+        /// <summary>
         /// Clear the complete webcache
         /// </summary>
         /// <returns></returns>
@@ -323,8 +353,37 @@ namespace Q42.WinRT.Data
         {
             var folder = await GetFolderAsync().ConfigureAwait(false);
 
-            await folder.Clear(maxAge).ConfigureAwait(false);
-            await Init().ConfigureAwait(false);
+            // Gets all files from cache folder
+            var files = await folder.GetFilesAsync();
+
+            foreach (var file in files)
+            {
+                // Avoid deleting the IndexCacheFile
+                if (file.Name.Equals(IndexCacheFile))
+                {
+                    continue;
+                }
+
+                var props = await file.GetBasicPropertiesAsync();
+                var age = DateTimeOffset.UtcNow - props.DateModified;
+                if (age >= maxAge)
+                {
+                    try
+                    {
+                        // Need to use the delete method from WebDataCache because it will delete the file and
+                        // remove the key entry from the IndexCacheFile so we could cache it again later if needed
+                        await WebDataCache.Delete(file);
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        //Already deleted
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        //File might be in use. Ignore it and continue with the other files
+                    }
+                }
+            }
         }   
   }
 }
