@@ -1,4 +1,4 @@
-Q42.WinRT
+Q42.WinRT [Archived]
 =========
 
 Open source library for Universal Apps, Windows Phone and Windows 8 C#/XAML applications. This library was originally developed for Windows 8 and is fully compatible with Universal Apps (Windows Phone and Windows 8.1). There's also a version for Windows Phone 8.
@@ -115,8 +115,6 @@ You can combine this with the DataLoader to show a ProgressBar:
 	List<MyData> result = await DL.LoadAsync(() => DataCache.GetAsync("your_key", () => LoadWebData()));
 
 For more advanced scenarios, see the included sample apps and unit tests.
-
-[![Build status](https://ci.appveyor.com/api/projects/status/gxy0p9vcqf9pl0nd/branch/master?svg=true)](https://ci.appveyor.com/project/michielpost/q42-winrt/branch/master)
 
 ## License
 Q42.WinRT is licensed under [MIT](http://www.opensource.org/licenses/mit-license.php "Read more about the MIT license form"). Refer to [license.txt](https://github.com/Q42/Q42.WinRT/blob/master/LICENSE.txt) for more information.
